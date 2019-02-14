@@ -1,32 +1,38 @@
 language: node_js
 node_js:
-  - "10"
+- '10'
 dist: trusty
 sudo: required
+env:
+- CHANGE_MINIKUBE_NONE_USER=true
 addons:
   firefox: latest
   chrome: stable
 services:
-  - docker
+- docker
 cache:
   directories:
-    - node_modules
+  - node_modules
 install:
-  - npm install
-  - apt-get install snapd
-  - snap install kubectl --classic
+- npm install
 before_script:
-  - npm run lint
-  - npm run build
+- npm run lint
+- npm run build
+- curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl && \
+    chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+- curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && \
+    chmod +x minikube && sudo mv minikube /usr/local/bin/
+- sudo minikube start --vm-driver=none --kubernetes-version=v1.7.0
+- minikube update-context
 script:
-  - xvfb-run npm run test
+- xvfb-run npm run test
 after_success:
-  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
-  - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD 
-  - docker build -t $DOCKERHUB_USERNAME/ozark-www .
-  - docker push $DOCKERHUB_USERNAME/ozark-www:latest
+- if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+- docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+- docker build -t $DOCKERHUB_USERNAME/ozark-www .
+- docker push $DOCKERHUB_USERNAME/ozark-www:latest
 notifications:
   email: false
-
-
-
+before_install:
+- openssl aes-256-cbc -K $encrypted_de5aa8f11a37_key -iv $encrypted_de5aa8f11a37_iv
+  -in ozark-www-kubeconfig.yaml.enc -out ozark-www-kubeconfig.yaml -d

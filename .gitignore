@@ -59,5 +59,12 @@ typings/
 
 # next.js build output
 .next
+
+# Polymers build directory
 build/
+
+# MacOS fragments
 .DS_Store
+
+# Kubernetes config
+*kubeconfig.yaml

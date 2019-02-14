@@ -20,9 +20,9 @@ script:
   - xvfb-run npm run test
 after_success:
   - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
-    docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD 
-    docker build -t oinke/ozark-www .
-    docker push oinke/ozark-www:latest
+  - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD 
+  - docker build -t $DOCKERHUB_USERNAME/ozark-www .
+  - docker push $DOCKERHUB_USERNAME/ozark-www:latest
 notifications:
   email: false
 

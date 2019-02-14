@@ -19,6 +19,9 @@ install:
 before_script:
 - npm run lint
 - npm run build
+- kubectl --kubeconfig="ozark-www-kubeconfig.yaml" get nodes
+- kubectl apply -f service.yml
+- kubectl apply -f deployment.yml
 script:
 - xvfb-run npm run test
 after_success:
@@ -26,9 +29,6 @@ after_success:
 - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
 - docker build -t $DOCKERHUB_USERNAME/ozark-www .
 - docker push $DOCKERHUB_USERNAME/ozark-www:latest
-- kubectl --kubeconfig=".kube/ozark-www-kubeconfig.yaml" get nodes
-- kubectl apply -f .kube/service.yml
-- kubectl apply -f .kube/deployment.yml
 notifications:
   email: false
 before_install:

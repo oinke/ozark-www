@@ -14,16 +14,12 @@ cache:
   directories:
   - node_modules
 install:
+- curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 - npm install
 before_script:
 - npm run lint
 - npm run build
-- curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl && \
-    chmod +x kubectl && sudo mv kubectl /usr/local/bin/
-- curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && \
-    chmod +x minikube && sudo mv minikube /usr/local/bin/
-- sudo minikube start --vm-driver=none --kubernetes-version=v1.7.0
-- minikube update-context
+- kubectl --kubeconfig="ozark-www-kubeconfig.yaml" get nodes
 script:
 - xvfb-run npm run test
 after_success:

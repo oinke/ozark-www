@@ -147,7 +147,7 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
       },
       results: {
         type: Object,
-        value: {'name': [{'title': 'Haisoo Shin', 'subtitle': '(haisooeller)', 'avatar': '../../images/avatar.png'}, {'title': 'Jimothy Hill', 'subtitle': '(bkawk)', 'avatar': '../../images/avatar.png'}], 'email': [{'title': 'Colin Frank', 'subtitle': '(colinator)', 'avatar': '../../images/avatar.png'}]}
+        value: {'name': [{'title': 'Haisoo Shin', 'subtitle': '(haisooeller)', 'avatar': '../../images/avatar.png'}, {'title': 'Jimothy Hill', 'subtitle': '(bkawk)', 'avatar': '../../images/avatar.png'}], 'email': [{'title': 'Colin Frank', 'subtitle': '(colinator)', 'avatar': '../../images/avatar.png'}]},
       },
     };
   }

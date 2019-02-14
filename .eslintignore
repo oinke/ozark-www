@@ -3,3 +3,4 @@ build/**
 test/**
 index.html
 shared-styles.js
+email*.html

@@ -174,5 +174,4 @@ class PageLanguage extends ReduxMixin(PolymerElement) {
       this.updateStyles({'--btn-text': this.color.white2});
     }
   }
-
 } window.customElements.define('page-language', PageLanguage);

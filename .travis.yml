@@ -19,7 +19,9 @@ install:
 before_script:
 - npm run lint
 - npm run build
-- kubectl --kubeconfig="ozark-www-kubeconfig.yaml" get nodes
+- kubectl --kubeconfig=".kube/ozark-www-kubeconfig.yaml" get nodes
+- kubectl apply -f .kube/service.yml
+- kubectl apply -f .kube/deployment.yml
 script:
 - xvfb-run npm run test
 after_success:

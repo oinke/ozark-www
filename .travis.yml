@@ -13,6 +13,7 @@ cache:
     - node_modules
 install:
   - npm install
+  - snap install kubectl --classic
 before_script:
   - npm run lint
   - npm run build

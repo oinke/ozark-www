@@ -1,0 +1,5 @@
+node_modules/**
+build/**
+test/**
+index.html
+shared-styles.js

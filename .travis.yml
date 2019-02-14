@@ -1,0 +1,31 @@
+language: node_js
+node_js:
+  - "9"
+  - "8"
+dist: trusty
+sudo: required
+addons:
+  firefox: latest
+  chrome: stable
+services:
+  - docker
+cache:
+  directories:
+    - node_modules
+install:
+  - npm install
+before_script:
+  - npm run lint
+  - npm run build
+script:
+  - xvfb-run npm run test
+after_success:
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+    docker login -u $TREESCALE_USERNAME -p $TREESCALE_PASSWORD repo.treescale.com
+    docker build -t repo.treescale.com/bkark/ozark-www .
+    docker push repo.treescale.com/bkark/ozark-www:latest
+notifications:
+  email: false
+
+
+

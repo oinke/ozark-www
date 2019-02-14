@@ -1,0 +1,53 @@
+{
+  "name": "ozark",
+  "version": "1.0.0",
+  "description": "Ozark",
+  "author": "@bkawk",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "cd build && prpl-server --root . --config polymer.json --port 8081 --host 0.0.0.0 && cd ../",
+    "build": "polymer build",
+    "lint": "npm run lint:javascript",
+    "lint:javascript": "eslint . --ext js,html --ignore-path .eslintignore",
+    "test": "polymer test",
+    "docker": "npm run build && npm run dockerBuild && npm run dockerRun",
+    "dockerBuild": "docker build -t ozark-www .",
+    "dockerRun": "docker run --name ozark-www -p 8081:8081 -d ozark-www",
+    "test:integration": "polymer build"
+  },
+  "dependencies": {
+    "@polymer/app-layout": "^3.0.2",
+    "@polymer/app-route": "^3.0.0-pre.15",
+    "@polymer/iron-pages": "^3.0.0-pre.15",
+    "@polymer/iron-selector": "^3.0.1",
+    "@polymer/polymer": "^3.0.0",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "polymer-redux": "^2.0.0-beta.2",
+    "prpl-server": "^1.4.0",
+    "redux": "^4.0.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^5.13.0",
+    "eslint-config-google": "^0.12.0",
+    "polymer-cli": "^1.7.1",
+    "wct-browser-legacy": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=8.0"
+  },
+  "main": "ecosystem.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bkawk/ozark.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bkawk/ozark/issues"
+  },
+  "homepage": "https://github.com/bkawk/ozark#readme"
+}

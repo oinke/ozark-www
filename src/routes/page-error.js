@@ -13,7 +13,7 @@ class PageError extends ReduxMixin(PolymerElement) {
           height: 100vh;
         }
       </style>
-      Oops you hit a 404. <a href="[[rootPath]]">Head back to home.</a>
+      Oops you hit a 404. <a href="[[rootPath]]" id="error">Head back to home.</a>
     `;
   }
 } window.customElements.define('page-error', PageError);

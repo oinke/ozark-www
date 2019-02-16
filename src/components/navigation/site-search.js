@@ -97,8 +97,8 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
                   <li class="container">
                     <img src="../../images/avatar.png">
                     <div>
-                      <div class="title">[[item.title]]</div>
-                      <div class="subtitle">[[item.subtitle]]</div> 
+                      <div class="title">[[item.name]]</div>
+                      <div class="subtitle">[[item.email]]</div> 
                     </div>
                   </li>
                 </template>
@@ -113,8 +113,8 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
                   <li class="container">
                     <img src="[[item.avatar]]">
                     <div>
-                      <div class="title">[[item.title]]</div>
-                      <div class="subtitle">[[item.subtitle]]</div>
+                      <div class="title">[[item.name]]</div>
+                      <div class="subtitle">[[item.email]]</div>
                     </div>
                   </li>
                 </template>
@@ -147,7 +147,6 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
       },
       results: {
         type: Object,
-        value: {'name': [{'title': 'Haisoo Shin', 'subtitle': '(haisooeller)', 'avatar': '../../images/avatar.png'}, {'title': 'Jimothy Hill', 'subtitle': '(bkawk)', 'avatar': '../../images/avatar.png'}], 'email': [{'title': 'Colin Frank', 'subtitle': '(colinator)', 'avatar': '../../images/avatar.png'}]},
       },
     };
   }
@@ -189,7 +188,8 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
         })
         .then((response) => {
           this.updateStyles({'--show-search': 'block'});
-          this.results = response;
+          this.results = response.results;
+          console.log(response.results);
         });
   }
 

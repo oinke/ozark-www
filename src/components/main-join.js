@@ -281,8 +281,9 @@ class MainJoin extends ReduxMixin(PolymerElement) {
       if (localStorage.getItem('language') === null) {
         localStorage.setItem('language', 'English');
       }
-      const language = localStorage.getItem('language');
-      const data = {name, email, password, language};
+      const language = 'English' || localStorage.getItem('language');
+      const mode = 'light' || localStorage.getItem('mode');
+      const data = {name, email, password, language, mode};
       fetch(url, {
         method: 'POST',
         body: JSON.stringify(data),

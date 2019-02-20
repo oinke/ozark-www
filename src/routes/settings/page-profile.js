@@ -61,6 +61,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
           width: 250px;
           text-indent: 24px;
           font-size: 15px;
+          display: none;
         }
 
         article {
@@ -82,7 +83,6 @@ class PageProfile extends ReduxMixin(PolymerElement) {
         }
         input[type=text]  {
           width:100%;
-          max-width: 280px;
           padding: 8px;
           display: block;
           overflow: hidden;
@@ -93,6 +93,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
           font-size: 14px;
           font-weight: 400;
           background: var(--input-background);
+          box-sizing: border-box;
         }
         input:focus {
           outline: 0;
@@ -101,6 +102,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
         }
         .inputs{
           flex: 1;
+          padding: 12px;
         }
         .comment {
           margin: 6px 0 0 0;
@@ -112,6 +114,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
         .radio label {
           display: inline-block;
           margin-right: 12px;
+          padding: 4px;
         }
         input[type=radio]{
           display: inline-block;
@@ -125,10 +128,22 @@ class PageProfile extends ReduxMixin(PolymerElement) {
         .photo-label{
           margin-bottom: 12px;
         }
+        .gender{
+          margin-top:24px;
+        }
 
         @media screen and (min-width: 900px){
           article {
             margin: 24px 12px 0 0;
+          }
+          .title {
+            display: block;
+          }
+          input[type=text]  {
+            max-width: 300px;
+          }
+          .inputs {
+            padding: 0;
           }
         } 
       </style>
@@ -350,7 +365,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
             <option value="31">31</option>
 					</select>
           <div class="radio">
-          <label>Gender</label></br>
+          <label class="gender">Gender</label></br>
             <input type="radio" name="gender" value="male" id="gender1" checked="">
             <label for="gender1" class="label">Male</label>
             <input type="radio" name="gender" value="female" id="gender2">
@@ -358,8 +373,9 @@ class PageProfile extends ReduxMixin(PolymerElement) {
             <input type="radio" name="gender" value="none" id="gender3">
             <label for="gender3" class="label">Non-binary</label>
           </div>
-                </div>
-              </div>
+         
+                </div> 
+              </div><hr/>
             </article>
           </div>
       </main-layout>

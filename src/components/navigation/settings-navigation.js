@@ -11,18 +11,24 @@ class SettingsNavigation extends ReduxMixin(PolymerElement) {
     return html`
       <style include="shared-styles">
         .side-nav {
-          display: block;
           position: relative;
           list-style-type: none;
-          padding-left: 12px;
           margin-top: 20px;
+          background-color: var(--header-background-color);
+          width: 242px;
+          padding: 0;
+          border-radius: 3px;
+          padding-top: 12px;
+          padding-bottom: 12px;
+          margin-left: 12px;
+          box-shadow: 0 1px 0px 0px var(--border-color), 0 0px 0px 1px var(--border-color);
         }
         .side-nav a{
           color: var(--host-color);
           text-decoration: none;
           line-height: 40px;
-          margin-right: 24px;
           white-space: nowrap;
+          text-indent: 24px;
         }
         .side-nav a:hover {
           color: var(--hover-color);
@@ -34,7 +40,6 @@ class SettingsNavigation extends ReduxMixin(PolymerElement) {
         @media screen and (min-width: 900px){
           .side-nav {
             display:block;
-            padding-left: 12px;
             position: fixed;
             z-index: 5px;
           }
@@ -98,10 +103,12 @@ class SettingsNavigation extends ReduxMixin(PolymerElement) {
       this.updateStyles({'--header-background-color': this.color.white1});
       this.updateStyles({'--host-color': this.color.black2});
       this.updateStyles({'--hover-color': this.color.grey});
+      this.updateStyles({'--border-color': this.color.white3});
     } else {
       this.updateStyles({'--header-background-color': this.color.black2});
       this.updateStyles({'--host-color': this.color.white2});
       this.updateStyles({'--hover-color': this.color.grey});
+      this.updateStyles({'--border-color': this.color.black1});
     }
   }
 } window.customElements.define('settings-navigation', SettingsNavigation);

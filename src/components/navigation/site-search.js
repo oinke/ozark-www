@@ -75,6 +75,7 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
           margin-top: 6px;
           font-size: 14px;
           font-weight: 600;
+          text-transform: capitalize;
         }
         .subtitle{
           font-size: 12px;
@@ -95,7 +96,7 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
               <dom-repeat items="{{results.name}}">
                 <template>
                   <li class="container">
-                    <img src="../../images/avatar.png">
+                  <img src="https://s3-us-west-1.amazonaws.com/ozark/[[item._id]]/pfp_200x200.jpg">
                     <div>
                       <div class="title">[[item.name]]</div>
                       <div class="subtitle">[[item.email]]</div> 
@@ -111,7 +112,7 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
               <dom-repeat items="{{results.email}}">
                 <template>
                   <li class="container">
-                    <img src="[[item.avatar]]">
+                    <img src="https://s3-us-west-1.amazonaws.com/ozark/[[item._id]]/pfp_200x200.jpg">
                     <div>
                       <div class="title">[[item.name]]</div>
                       <div class="subtitle">[[item.email]]</div>

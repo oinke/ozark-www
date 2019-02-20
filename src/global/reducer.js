@@ -1,10 +1,40 @@
-const savedLanguage = localStorage.getItem('language') || 'English';
-const savedMode = localStorage.getItem('mode') || 'light';
+let loggedin;
+if (localStorage.getItem('loggedin')) {
+  if (localStorage.getItem('loggedin') === 'true') {
+    loggedin = true;
+  } else {
+    loggedin = false;
+  }
+} else {
+  loggedin = false;
+  localStorage.setItem('loggedin', 'false');
+}
+
+let mode;
+if (localStorage.getItem('mode')) {
+  mode = localStorage.getItem('mode');
+} else {
+  mode = 'light';
+  localStorage.setItem('mode', 'light');
+}
+
+let language;
+if (localStorage.getItem('language')) {
+  language = localStorage.getItem('language');
+} else {
+  language = 'English';
+  localStorage.setItem('language', 'English');
+}
+
+const userid = localStorage.getItem('id');
+
+
 import {env} from '../../env.js';
 
 const initial = {
-  language: savedLanguage,
-  mode: savedMode,
+  userid: userid,
+  language: language,
+  mode: mode,
   env: env,
   color: {
     black1: '#121212',
@@ -18,6 +48,7 @@ const initial = {
     white2: '#EEEEEE',
     white1: '#FFFFFF',
   },
+  loggedin: loggedin,
 };
 
 export default (state = initial, action) => {
@@ -29,6 +60,14 @@ export default (state = initial, action) => {
     case 'CHANGE_MODE':
       return Object.assign({}, state, {
         mode: action.mode,
+      });
+    case 'CHANGE_STATUS':
+      return Object.assign({}, state, {
+        loggedin: action.loggedin,
+      });
+    case 'CHANGE_USERID':
+      return Object.assign({}, state, {
+        userid: action.userid,
       });
     default:
       return state;

@@ -5,6 +5,7 @@ import '../css/shared-styles.js';
 import '../components/navigation/site-search.js';
 import './navigation/mobile-navigation.js';
 import './navigation/logged-out.js';
+import './navigation/logged-in.js';
 
 const ReduxMixin = createMixin(store);
 class MainHeader extends ReduxMixin(PolymerElement) {
@@ -80,7 +81,12 @@ class MainHeader extends ReduxMixin(PolymerElement) {
           <h1><a href="/">[[siteName]]</a></h1>
         </div>
         <div class="right">
-          <logged-out></logged-out>
+          <template is="dom-if" if="{{!loggedin}}">
+            <logged-out></logged-out>
+          </template>
+          <template is="dom-if" if="{{loggedin}}">
+            <logged-in></logged-in>
+          </template>
         </div>
       </div>
     `;
@@ -108,6 +114,10 @@ class MainHeader extends ReduxMixin(PolymerElement) {
         type: Object,
         readOnly: true,
       },
+      loggedin: {
+        type: Boolean,
+        readOnly: true,
+      },
     };
   }
 
@@ -115,6 +125,7 @@ class MainHeader extends ReduxMixin(PolymerElement) {
     return {
       mode: state.mode,
       color: state.color,
+      loggedin: state.loggedin,
     };
   }
 

@@ -144,7 +144,7 @@ class MainLogin extends ReduxMixin(PolymerElement) {
           <template is="dom-if" if="{{!issuePassword}}"><small>[[txt.passwordLength]]</small></template>
           <small class="issue">[[issuePassword]]</small>
         </p>
-        <button class="btn-login" on-click="_join">[[txt.login]]</button>
+        <button class="btn-login" on-click="_login">[[txt.login]]</button>
         <center><p class="inline-flex">[[txt.dontHaveAccount]] &nbsp; <a href="/join/" class="mobile-link-join">[[txt.join]] [[env.siteName]]</a> <a on-click="_join" class="desktop-link-join">[[txt.join]] [[env.siteName]]</a></p></center>
         </div>
     `;
@@ -234,7 +234,17 @@ class MainLogin extends ReduxMixin(PolymerElement) {
           })
           .then((response) => {
             localStorage.setItem('jwt', response.jwt);
-            // TODO: hide modal set state to logged in
+            localStorage.setItem('id', response.id);
+            localStorage.setItem('loggedin', true);
+            this.dispatchEvent(new CustomEvent('hideModal', {bubbles: true, composed: true, detail: {action: 'hideModal'}}));
+            this.dispatchAction({
+              type: 'CHANGE_STATUS',
+              loggedin: true,
+            });
+            this.dispatchAction({
+              type: 'CHANGE_USERID',
+              userid: response.id,
+            });
           })
           .catch((error) => console.log('Error:', error));
     }

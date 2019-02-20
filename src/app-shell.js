@@ -28,6 +28,7 @@ class AppShell extends ReduxMixin(PolymerElement) {
       <main>
         <iron-pages selected="[[page]]" attr-for-selected="name" role="main">
           <page-home name="home"></page-home>
+          <router-settings name="settings"></router-settings>
           <router-help name="help"></router-help>
           <page-join name="join"></page-join>
           <page-login name="login"></page-login>
@@ -71,7 +72,7 @@ class AppShell extends ReduxMixin(PolymerElement) {
   _routePageChanged(page) {
     if (!page) {
       this.page = 'home';
-    } else if (['home', 'help', 'join', 'login', 'search', 'language'].indexOf(page) !== -1) {
+    } else if (['home', 'help', 'settings', 'join', 'login', 'search', 'language'].indexOf(page) !== -1) {
       this.page = page;
     } else {
       this.page = 'error';
@@ -89,6 +90,9 @@ class AppShell extends ReduxMixin(PolymerElement) {
         break;
       case 'help':
         import('./routes/help/router-help.js');
+        break;
+      case 'settings':
+        import('./routes/settings/router-settings.js');
         break;
       case 'join':
         import('./routes/mobile/page-join.js');

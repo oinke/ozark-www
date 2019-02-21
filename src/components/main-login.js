@@ -11,72 +11,19 @@ class MainLogin extends ReduxMixin(PolymerElement) {
     return html`
       <style include="shared-styles">
         :host {
-          color: var(--host-color);
-        }
-        input {
-          width:100%;
-          max-width: 280px;
-          padding: 8px;
-          display: block;
-          overflow: hidden;
-          color: var(--input-color);
-          line-height: 17px;
-          border: 1px solid var(--border-color);
-          border-radius: 3px;
-          font-size: 14px;
-          font-weight: 400;
-          background: var(--input-background);
-        }
-        input:focus {
-          outline: 0;
-          border: 1px solid var(--active-color);
-          box-shadow: none;
-        }
-        label {
-          margin: 16px 0 6px 0px;
-          display: block;
-          font-weight:500;
-          font-size:14px;
+          color: var(--white2-black2);
         }
         h1 {
           font-size: 35px;
           font-weight: 300;
           margin-top: 0px;
         }
-        small {
-          margin: 6px 0 0 0;
-          font-size: 12px;
-          display: block;
-          color: var(--grey-color);
-          line-height: 1.5em;
-        }
         .value {
           margin-bottom: 50px;
           line-height: 1.5em;
         }
-        .btn-login{
-          display: block;
-          width: 100%;
-          font-weight: bold;
-          padding: 0 12px;
-          line-height: 36px;
-          font-size: 14px;
-          border: 1px solid;
-          border-radius: 3px;
-          color: var(--btn-text);
-          text-shadow: 0 1px 0 var(--btn-top);
-          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-          border-color: var(--btn-border);
-          background: var(--btn-bottom);
-          background: -webkit-linear-gradient(top, var(--btn-top), var(--btn-bottom));
-          background: -ms-linear-gradient(top, var(--btn-top), var(--btn-bottom));
-          background: -moz-linear-gradient(top, var(--btn-top), var(--btn-bottom));
-          background: -o-linear-gradient(top, var(--btn-top), var(--btn-bottom));
-          margin: 12px 0 24px 0;
-          cursor: pointer;
-        }
         a {
-          color: var(--active-color);
+          color: var(--blue-color);
           text-decoration: none;
         }
         center {
@@ -86,16 +33,6 @@ class MainLogin extends ReduxMixin(PolymerElement) {
         }
         center a {
           font-weight: 500;
-        }
-        .issue {
-          color: #B50000;
-
-        }
-        button:focus {
-          outline:0;
-        }
-        .error{
-          border: 1px solid #B50000;
         }
         .area {
           display: block;
@@ -117,7 +54,6 @@ class MainLogin extends ReduxMixin(PolymerElement) {
         .inline-flex{
           display: inline-flex;
         }
-
         @media screen and (min-width: 900px){
           .mobile-link-join{
             display:none;
@@ -141,10 +77,9 @@ class MainLogin extends ReduxMixin(PolymerElement) {
         <p>
           <label for="password">[[txt.password]]</label>
           <input type="password" name="password" id="password" on-keydown="_password" value="{{password::input}}" required>
-          <template is="dom-if" if="{{!issuePassword}}"><small>[[txt.passwordLength]]</small></template>
-          <small class="issue">[[issuePassword]]</small>
+          <template is="dom-if" if="{{issuePassword}}"><small class="issue">[[issuePassword]]</small></template>
         </p>
-        <button class="btn-login" on-click="_login">[[txt.login]]</button>
+        <button class="modal-btn" on-click="_login">[[txt.login]]</button>
         <center><p class="inline-flex">[[txt.dontHaveAccount]] &nbsp; <a href="/join/" class="mobile-link-join">[[txt.join]] [[env.siteName]]</a> <a on-click="_join" class="desktop-link-join">[[txt.join]] [[env.siteName]]</a></p></center>
         </div>
     `;
@@ -205,15 +140,15 @@ class MainLogin extends ReduxMixin(PolymerElement) {
     this.issuePassword = '';
 
     if (!email) {
-      this.issueEmail = 'Enter your email';
+      this.issueEmail = this.txt.enterYourEmail;
       this.shadowRoot.querySelector('#email').classList.add('error');
     }
     if (!password) {
-      this.issuePassword = 'Enter your password';
+      this.issuePassword = this.txt.enterYourPassword;
       this.shadowRoot.querySelector('#password').classList.add('error');
     }
     if (password && password.length < 6) {
-      this.issuePassword = 'Passwords must be at least 6 characters.';
+      this.issuePassword = this.txt.passwordLength;
       this.shadowRoot.querySelector('#password').classList.add('error');
     }
 
@@ -272,28 +207,26 @@ class MainLogin extends ReduxMixin(PolymerElement) {
   }
 
   _mode() {
-    this.updateStyles({'--active-color': this.color.blue});
+    this.updateStyles({'--blue-color': this.color.blue});
     this.updateStyles({'--grey-color': this.color.grey});
-    this.updateStyles({'--error-color': this.color.red});
+    this.updateStyles({'--red-color': this.color.red});
     this.updateStyles({'--green-color': this.color.green});
     if (this.mode === 'light') {
-      this.updateStyles({'--input-background': this.color.white2});
-      this.updateStyles({'--border-color': this.color.white3});
-      this.updateStyles({'--input-color': this.color.black1});
-      this.updateStyles({'--host-color': this.color.black2});
-      this.updateStyles({'--btn-top': this.color.white1});
-      this.updateStyles({'--btn-bottom': this.color.white2});
-      this.updateStyles({'--btn-border': this.color.white3});
-      this.updateStyles({'--btn-text': this.color.black3});
+      this.updateStyles({'--black3-white3': this.color.white3});
+      this.updateStyles({'--white1-black1': this.color.black1});
+      this.updateStyles({'--white2-black2': this.color.black2});
+      this.updateStyles({'--black3-white1': this.color.white1});
+      this.updateStyles({'--black1-white2': this.color.white2});
+      this.updateStyles({'--black1-white3': this.color.white3});
+      this.updateStyles({'--white2-black3': this.color.black3});
     } else {
-      this.updateStyles({'--input-background': this.color.black1});
-      this.updateStyles({'--border-color': this.color.black3});
-      this.updateStyles({'--input-color': this.color.white1});
-      this.updateStyles({'--host-color': this.color.white2});
-      this.updateStyles({'--btn-top': this.color.black3});
-      this.updateStyles({'--btn-bottom': this.color.black1});
-      this.updateStyles({'--btn-border': this.color.black1});
-      this.updateStyles({'--btn-text': this.color.white2});
+      this.updateStyles({'--black3-white3': this.color.black3});
+      this.updateStyles({'--white1-black1': this.color.white1});
+      this.updateStyles({'--white2-black2': this.color.white2});
+      this.updateStyles({'--black3-white1': this.color.black3});
+      this.updateStyles({'--black1-white2': this.color.black1});
+      this.updateStyles({'--black1-white3': this.color.black1});
+      this.updateStyles({'--white2-black3': this.color.white2});
     }
   }
 } window.customElements.define('main-login', MainLogin);

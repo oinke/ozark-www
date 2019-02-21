@@ -44,7 +44,7 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
         } 
       </style>
   
-      <main-layout> 
+      <main-layout narrow> 
           <div slot="aside">
           <settings-navigation></settings-navigation>
           </div>

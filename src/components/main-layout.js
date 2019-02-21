@@ -117,12 +117,12 @@ class MainLayout extends ReduxMixin(PolymerElement) {
   static get properties() {
     return {
       language: {
-        type: Text,
+        type: String,
         readOnly: true,
         observer: '_language',
       },
       mode: {
-        type: Text,
+        type: String,
         readOnly: true,
         observer: '_mode',
       },

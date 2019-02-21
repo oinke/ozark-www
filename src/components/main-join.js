@@ -3,7 +3,6 @@ import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {translations} from '../translations/languages.js';
 import store from '../global/store.js';
 import '../css/shared-styles.js';
-import '../components/loading/loading-circular.js';
 
 const ReduxMixin = createMixin(store);
 class MainJoin extends ReduxMixin(PolymerElement) {
@@ -11,72 +10,19 @@ class MainJoin extends ReduxMixin(PolymerElement) {
     return html`
       <style include="shared-styles">
         :host {
-          color: var(--host-color);
-        }
-        input {
-          width:100%;
-          max-width: 280px;
-          padding: 8px;
-          display: block;
-          overflow: hidden;
-          color: var(--input-color);
-          line-height: 17px;
-          border: 1px solid var(--border-color);
-          border-radius: 3px;
-          font-size: 14px;
-          font-weight: 400;
-          background: var(--input-background);
-        }
-        input:focus {
-          outline: 0;
-          border: 1px solid var(--active-color);
-          box-shadow: none;
-        }
-        label {
-          margin: 16px 0 6px 0px;
-          display: block;
-          font-weight:500;
-          font-size:14px;
+          color: var(--white2-black2);
         }
         h1 {
           font-size: 35px;
           font-weight: 300;
           margin-top: 0px;
         }
-        small {
-          margin: 6px 0 0 0;
-          font-size: 12px;
-          display: block;
-          color: var(--grey-color);
-          line-height: 1.5em;
-        }
         .value {
           margin-bottom: 50px;
           line-height: 1.5em;
         }
-        .btn-join{
-          display: block;
-          width: 100%;
-          font-weight: bold;
-          padding: 0 12px;
-          line-height: 36px;
-          font-size: 14px;
-          border: 1px solid;
-          border-radius: 3px;
-          color: var(--btn-text);
-          text-shadow: 0 1px 0 var(--btn-top);
-          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-          border-color: var(--btn-border);
-          background: var(--btn-bottom);
-          background: -webkit-linear-gradient(top, var(--btn-top), var(--btn-bottom));
-          background: -ms-linear-gradient(top, var(--btn-top), var(--btn-bottom));
-          background: -moz-linear-gradient(top, var(--btn-top), var(--btn-bottom));
-          background: -o-linear-gradient(top, var(--btn-top), var(--btn-bottom));
-          margin: 12px 0 24px 0;
-          cursor: pointer;
-        }
         a {
-          color: var(--active-color);
+          color: var(--blue-color);
           text-decoration: none;
         }
         center {
@@ -87,22 +33,9 @@ class MainJoin extends ReduxMixin(PolymerElement) {
         center a {
           font-weight: 500;
         }
-        .issue {
-          color: #B50000;
-
-        }
-        button:focus {
-          outline:0;
-        }
-        .error{
-          border: 1px solid #B50000;
-        }
         .area {
           display: block;
           max-width: 300px;
-        }
-        loading-circular{
-          padding-top: 170px;
         }
         .resend-code{
           margin-bottom: 30px;
@@ -112,18 +45,17 @@ class MainJoin extends ReduxMixin(PolymerElement) {
           color: var(--green-color);
         }
         .desktop-link-login{
-          display:none;
+          display: none;
         }
         .inline-flex{
           display: inline-flex;
         }
         @media screen and (min-width: 900px){
           .mobile-link-login{
-            display:none;
-            background-color: red;
+            display: none;
           }
           .desktop-link-login{
-            display:block;
+            display: block;
             cursor: pointer;
           }
         } 
@@ -153,7 +85,7 @@ class MainJoin extends ReduxMixin(PolymerElement) {
           <input type="password" name="repassword" id="repassword" on-keydown="_reEnter" value="{{confirmPassword::input}}" required>
           <small class="issue">[[issueConfirmPassword]]</small>
         </p>
-        <button class="btn-join" on-click="_join">[[txt.join]]</button>
+        <button class="modal-btn" on-click="_join">[[txt.join]]</button>
         <small>[[txt.byJoining]] [[env.siteName]] <a href="/help/terms/">[[txt.termsOfService]]</a> & <a href="/help/privacy/">[[txt.privacyNotice]]</a></small>
         <center><p class="inline-flex">[[txt.alreadyOn]] [[env.siteName]]? &nbsp; <a href="/login/" class="mobile-link-login">[[txt.login]]</a> <a on-click="_login" class="desktop-link-login">[[txt.login]]</a></p></center>
         </div>
@@ -169,7 +101,7 @@ class MainJoin extends ReduxMixin(PolymerElement) {
             <small class="issue">[[issueCode]]</small>
           </p>
           <template is="dom-if" if="{{resent}}"><small class="resent">[[txt.newCodeSent]]</small></template>
-          <button class="btn-join" on-click="_verify">[[txt.verify]]</button>
+          <button class="modal-btn" on-click="_verify">[[txt.verify]]</button>
           <small class="resend-code"><a on-click="_resend">[[txt.resendCode]]</a></small>
           <small>[[txt.verifyNote]]</small>
           <ul>
@@ -393,28 +325,26 @@ class MainJoin extends ReduxMixin(PolymerElement) {
   }
 
   _mode() {
-    this.updateStyles({'--active-color': this.color.blue});
+    this.updateStyles({'--blue-color': this.color.blue});
     this.updateStyles({'--grey-color': this.color.grey});
-    this.updateStyles({'--error-color': this.color.red});
+    this.updateStyles({'--red-color': this.color.red});
     this.updateStyles({'--green-color': this.color.green});
     if (this.mode === 'light') {
-      this.updateStyles({'--input-background': this.color.white2});
-      this.updateStyles({'--border-color': this.color.white3});
-      this.updateStyles({'--input-color': this.color.black1});
-      this.updateStyles({'--host-color': this.color.black2});
-      this.updateStyles({'--btn-top': this.color.white1});
-      this.updateStyles({'--btn-bottom': this.color.white2});
-      this.updateStyles({'--btn-border': this.color.white3});
-      this.updateStyles({'--btn-text': this.color.black3});
+      this.updateStyles({'--black3-white3': this.color.white3});
+      this.updateStyles({'--white1-black1': this.color.black1});
+      this.updateStyles({'--white2-black2': this.color.black2});
+      this.updateStyles({'--black3-white1': this.color.white1});
+      this.updateStyles({'--black1-white2': this.color.white2});
+      this.updateStyles({'--black1-white3': this.color.white3});
+      this.updateStyles({'--white2-black3': this.color.black3});
     } else {
-      this.updateStyles({'--input-background': this.color.black1});
-      this.updateStyles({'--border-color': this.color.black3});
-      this.updateStyles({'--input-color': this.color.white1});
-      this.updateStyles({'--host-color': this.color.white2});
-      this.updateStyles({'--btn-top': this.color.black3});
-      this.updateStyles({'--btn-bottom': this.color.black1});
-      this.updateStyles({'--btn-border': this.color.black1});
-      this.updateStyles({'--btn-text': this.color.white2});
+      this.updateStyles({'--black3-white3': this.color.black3});
+      this.updateStyles({'--white1-black1': this.color.white1});
+      this.updateStyles({'--white2-black2': this.color.white2});
+      this.updateStyles({'--black3-white1': this.color.black3});
+      this.updateStyles({'--black1-white2': this.color.black1});
+      this.updateStyles({'--black1-white3': this.color.black1});
+      this.updateStyles({'--white2-black3': this.color.white2});
     }
   }
 } window.customElements.define('main-join', MainJoin);

@@ -88,7 +88,7 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
           padding: 0 12px 3px 12px;
         }
       </style>
-          <input class="search-box" placeholder="[[txt.search]] [[siteName]]" autocomplete="off" value="{{term::input}}" on-keydown="_search" on-blur="_close";>  
+          <input class="search-box" placeholder="[[txt.search]] [[siteName]]" autocomplete="off" value="{{term::input}}" on-keyup="_search" on-blur="_close";>  
           <div class="search-results">
             <ul>
               <li class="header">Name</li>
@@ -190,7 +190,6 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
         .then((response) => {
           this.updateStyles({'--show-search': 'block'});
           this.results = response.results;
-          console.log(response.results);
         });
   }
 

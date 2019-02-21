@@ -59,7 +59,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
           
         }
         .title{
-          width: 250px;
+          width: 200px;
           text-indent: 24px;
           font-size: 15px;
           display: none;
@@ -187,7 +187,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
         } 
       </style>
       <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
-      <main-layout> 
+      <main-layout narrow> 
           <div slot="aside">
           <settings-navigation></settings-navigation>
           </div>

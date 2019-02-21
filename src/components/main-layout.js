@@ -36,7 +36,7 @@ class MainLayout extends ReduxMixin(PolymerElement) {
           .horizontal-container {
             display: flex;
             margin: auto;
-            max-width: 75rem; 
+            max-width: var(--width-narrow, 75rem); 
             flex-direction: var(--row-reverse, row);
           }
         } 
@@ -52,7 +52,7 @@ class MainLayout extends ReduxMixin(PolymerElement) {
           color: var(--placeholder-color);
         }
         footer .inner {
-          max-width: 75rem; 
+          max-width: var(--width-narrow, 75rem); 
           margin: 0 auto;
           display: flex;
         }
@@ -143,6 +143,11 @@ class MainLayout extends ReduxMixin(PolymerElement) {
         type: Boolean,
         value: false,
       },
+      narrow: {
+        type: Boolean,
+        value: false,
+        observer: '_narrow',
+      },
     };
   }
 
@@ -152,6 +157,12 @@ class MainLayout extends ReduxMixin(PolymerElement) {
       mode: state.mode,
       color: state.color,
     };
+  }
+
+  _narrow() {
+    if (this.narrow) {
+      this.updateStyles({'--width-narrow': '60rem'});
+    }
   }
 
   _language(e) {

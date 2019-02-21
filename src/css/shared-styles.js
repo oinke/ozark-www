@@ -12,6 +12,16 @@ $_documentContainer.innerHTML = `
     * {
       user-select: none;
     }
+    .flat-btn{
+      width:120px;
+      height: 40px;
+      margin: 24px;
+      border-radius: 3px;
+      color: var(--white2-black2);
+      background-color: var(--black1-white2);
+      border: 1px solid var(--black3-white3);
+      cursor: pointer;
+    }
     .modal-btn{
       display: block;
       width: 100%;

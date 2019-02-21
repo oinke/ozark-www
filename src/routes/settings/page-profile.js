@@ -54,6 +54,11 @@ class PageProfile extends ReduxMixin(PolymerElement) {
           margin-top: 12px;
           border: 1px solid var(--black1-white2);
         }
+
+        .btn-right {
+          display: block;
+          text-align: right;
+        }
         @media screen and (min-width: 900px){
           article {
             margin: 24px 12px 0 0;
@@ -286,7 +291,9 @@ class PageProfile extends ReduxMixin(PolymerElement) {
                 </div>
               </div> 
             </div>
-            <button class="modal-btn" on-click="_save">Save Profile</button>
+            <div class="btn-right">
+              <button class="flat-btn" on-click="_save">Save Profile</button>
+            </div>
           </div>
         </div>
       </main-layout>

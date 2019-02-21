@@ -3,6 +3,7 @@ import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import '../../css/shared-styles.js';
 import '../../components/main-layout.js';
 import '../../components/navigation/settings-navigation.js';
+import '@polymer/app-route/app-location.js';
 import store from '../../global/store.js';
 const ReduxMixin = createMixin(store);
 
@@ -66,7 +67,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
 
         article {
           margin-top: 24px;
-          padding-bottom: 24px;
+          padding-bottom: 1px;
           background-color: var(--header-background-color);
           display: block;
           border-radius: 3px;
@@ -131,7 +132,45 @@ class PageProfile extends ReduxMixin(PolymerElement) {
         .gender{
           margin-top:24px;
         }
+        .btn-save{
+          display: block;
+          width: 100%;
+          font-weight: bold;
+          padding: 0 12px;
+          line-height: 36px;
+          font-size: 14px;
+          border: 1px solid;
+          border-radius: 3px;
+          color: var(--btn-text);
+          text-shadow: 0 1px 0 var(--btn-top);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+          border-color: var(--btn-border);
+          background: var(--btn-bottom);
+          background: -webkit-linear-gradient(top, var(--btn-top), var(--btn-bottom));
+          background: -ms-linear-gradient(top, var(--btn-top), var(--btn-bottom));
+          background: -moz-linear-gradient(top, var(--btn-top), var(--btn-bottom));
+          background: -o-linear-gradient(top, var(--btn-top), var(--btn-bottom));
+          margin: 12px 0 24px 0;
+          cursor: pointer;
+          margin: 12px;
+          max-width: 200px;
+        }
 
+        .btn-box {
+          display: flex !important;
+          display: block;
+          text-align: right;
+        }
+        .btn-box button{
+          width: 200px;
+        }
+        .delete-account{
+          flex: 1;
+        }
+        .save-button-box{
+          flex: 1;
+          max-width: 230px;
+        }
         @media screen and (min-width: 900px){
           article {
             margin: 24px 12px 0 0;
@@ -147,7 +186,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
           }
         } 
       </style>
-  
+      <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
       <main-layout> 
           <div slot="aside">
           <settings-navigation></settings-navigation>
@@ -162,22 +201,23 @@ class PageProfile extends ReduxMixin(PolymerElement) {
                   <img src="https://s3-us-west-1.amazonaws.com/ozark/5c6bb18d0198f0cc1cc25627/pfp_200x200.jpg" class="profile-photo">
                   <!-- <input id="name" name="setting-fullname" type="file" class="text" value=""> -->
                   <small class="comment">Delete Photo</small>
+                  
                   <label>Full Name</label>
-                  <input id="name" name="setting-fullname" type="text" class="text" value="">
+                  <input id="name" type="text" class="text" value="{{name::input}}">
                   <small class="comment">Your real name, so your friends can find you.</small>
 
                   <label>Username</label>
-                  <input id="name" name="setting-fullname" type="text" class="text" value="">
-                  <small class="comment">http://www.ozark.com/yourname</small>
+                  <input id="username" type="text" class="text" value="{{username::input}}">
+                  <small class="comment">http://www.ozark.com/[[username]]</small>
 
                   <label>Website</label>
-                  <input id="name" name="setting-fullname" type="text" class="text" value="">
+                  <input id="website" type="text" class="text" value="{{website::input}}">
 
                   <label>Location</label>
-                  <input id="name" name="setting-fullname" type="text" class="text" value="">
+                  <input id="location" type="text" class="text" value="{{location::input}}">
 
                   <label>Bio</label>
-                  <input id="name" name="setting-fullname" type="text" class="text" value="">
+                  <input id="bio" type="text" class="text" value="{{bio::input}}">
             
                 </div>
               </div>
@@ -188,11 +228,11 @@ class PageProfile extends ReduxMixin(PolymerElement) {
                 <div class="inputs">
                 
                   <label>Email Address</label>
-                  <input id="name" name="setting-fullname" type="text" class="text" value="">
-                  <small class="comment">Your real name, so your friends can find you.</small>
+                  <input id="email" type="text" class="text" value="{{email::input}}">
+                  <small class="comment">Email will not be publicly displayed.</small>
 
                   <label>Birthday</label>
-                  <select id="birthday_year" name="setting-birthday-year" class="select-boxes2">
+                  <select id="birthday_year" class="select-box" value="{{year::input}}">
                     <option value="0">Year</option>
                     <option value="2019">2019</option>
                     <option value="2018">2018</option>
@@ -315,7 +355,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
                     <option value="1901">1901</option>
                     <option value="1900">1900</option>
 					</select>
-          <select id="birthday_month" name="setting-birthday-month" class="select-boxes2">
+          <select id="birthday_month" class="select-boxes" value="{{month::input}}">
             <option value="0">Month</option>
             <option value="1">January</option>
             <option value="2">February</option>
@@ -330,7 +370,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
             <option value="11">November</option>
             <option value="12">December</option>
 					</select>
-          <select id="birthday_day" name="setting-birthday-day" class="select-boxes2">
+          <select id="birthday_day" class="select-boxes" value="{{day::input}}">
             <option value="0">Day</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -363,19 +403,25 @@ class PageProfile extends ReduxMixin(PolymerElement) {
             <option value="29">29</option>
             <option value="30">30</option>
             <option value="31">31</option>
-					</select>
+          </select>
           <div class="radio">
           <label class="gender">Gender</label></br>
-            <input type="radio" name="gender" value="male" id="gender1" checked="">
-            <label for="gender1" class="label">Male</label>
-            <input type="radio" name="gender" value="female" id="gender2">
-            <label for="gender2" class="label">Female</label>
-            <input type="radio" name="gender" value="none" id="gender3">
-            <label for="gender3" class="label">Non-binary</label>
+            <radiogroup value="{{gender::input}}">
+              <input type="radio" name="gender" value="male" id="male" checked="{{male}}" on-change="_radio">
+              <label for="male" class="label">Male</label>
+              <input type="radio" name="gender" value="female" id="female" checked="{{female}}" on-change="_radio">
+              <label for="female" class="label">Female</label>
+              <input type="radio" name="gender" value="nonbinary" id="nonbinary" checked="{{nonbinary}}" on-change="_radio">
+              <label for="non-binary" class="label">Non-binary</label>
+            </radiogroup>
           </div>
          
                 </div> 
               </div><hr/>
+              <div class="btn-box">
+                <div class="delete-account"></div>
+                <div class="save-button-box"><button class="btn-save" on-click="_save">Save Profile</button></div>
+              </div>
             </article>
           </div>
       </main-layout>
@@ -401,6 +447,10 @@ class PageProfile extends ReduxMixin(PolymerElement) {
         type: Object,
         readOnly: true,
       },
+      route: {
+        type: Object,
+        observer: '_routeChanged',
+      },
     };
   }
 
@@ -413,6 +463,68 @@ class PageProfile extends ReduxMixin(PolymerElement) {
     };
   }
 
+  _radio(e) {
+    this.gender = e.target.value;
+  }
+  _save() {
+    const name = this.name;
+    const username = this.username;
+    const website = this.website;
+    const location = this.location;
+    const bio = this.bio;
+    const dob = `${this.day}/${this.month}/${this.year}`;
+    const gender = this.gender;
+    const data = {name, username, website, location, bio, dob, gender};
+    const token = localStorage.getItem('jwt');
+    const url = `${this.env.apiUrl}/users/profile/`;
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json'},
+    })
+        .then((response) => {
+          return response.json();
+        })
+        .then((response) => {
+
+        })
+        .catch((error) => console.log('Error:', error));
+  }
+
+  _routeChanged() {
+    if (this.route.path == '/settings/profile/') {
+      const token = localStorage.getItem('jwt');
+      const url = `${this.env.apiUrl}/users/profile/`;
+      fetch(url, {
+        method: 'GET',
+        headers: {'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json'},
+      })
+          .then((response) => {
+            return response.json();
+          })
+          .then((response) => {
+            if (response.name) this.name = response.name;
+            if (response.email) this.email = response.email;
+            if (response.username) this.username = response.username;
+            if (response.bio) this.bio = response.bio;
+            if (response.gender) this.gender = response.gender;
+            if (response.location) this.location = response.location;
+            if (response.website) this.website = response.website;
+            if (response.dob) {
+              const dob = response.dob.split('/');
+              this.day = dob[0];
+              this.month = dob[1];
+              this.year = dob[2];
+            };
+            if (response.gender) {
+              if (response.gender == 'male') this.male = true;
+              if (response.gender == 'female') this.female = true;
+              if (response.gender == 'nonbinary') this.nonbinary = true;
+            };
+          })
+          .catch((error) => console.log('Error:', error));
+    }
+  }
   _mode() {
     this.updateStyles({'--active-color': this.color.blue});
     this.updateStyles({'--grey-color': this.color.grey});

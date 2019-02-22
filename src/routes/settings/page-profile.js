@@ -353,8 +353,23 @@ class PageProfile extends ReduxMixin(PolymerElement) {
   }
 
   _upload() {
-    console.log(this.shadowRoot.querySelector('#image').files[0]);
+    const file = this.shadowRoot.querySelector('#image').files[0];
+    const token = localStorage.getItem('jwt');
+    const url = `${this.env.apiUrl}/users/profile/upload-pfp/`;
+    fetch(url, {
+      method: 'POST',
+      body: file,
+      headers: {'Authorization': `Bearer ${token}`, 'Content-Type': 'multipart/form-data'},
+    })
+        .then((response) => {
+          return response.json();
+        })
+        .then((response) => {
+
+        })
+        .catch((error) => console.log('Error:', error));
   }
+
   _radio(e) {
     this.gender = e.target.value;
   }

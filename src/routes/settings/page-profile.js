@@ -96,7 +96,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
                 </label>
                 
                 <label>Full Name</label>
-                <input type="text" class="text" id="fullname" value="{{fullname::input}}">
+                <input type="text" class="text" id="newfullname" value="{{newfullname::input}}">
                 <small>Your real name, so your friends can find you.</small>
                 <label>Username</label>
                 <input type="text" class="text" value="{{username::input}}">
@@ -343,6 +343,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
 
   static mapStateToProps(state, element) {
     return {
+      fullname: state.fullname,
       userid: state.userid,
       language: state.language,
       mode: state.mode,
@@ -359,13 +360,21 @@ class PageProfile extends ReduxMixin(PolymerElement) {
   }
   _save() {
     this.btntext = 'Saving...';
-    const name = this.fullname;
+    const name = this.newfullname;
+    const fullname = name.split(' ')[0];
+    localStorage.setItem('fullname', fullname);
     const username = this.username;
     const website = this.website;
     const location = this.location;
     const bio = this.bio;
     const dob = `${this.day}/${this.month}/${this.year}`;
     const gender = this.gender;
+
+    this.dispatchAction({
+      type: 'CHANGE_NAME',
+      fullname: fullname,
+    });
+
     const data = {name, username, website, location, bio, dob, gender};
     const token = localStorage.getItem('jwt');
     const url = `${this.env.apiUrl}/users/profile/`;
@@ -395,7 +404,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
             return response.json();
           })
           .then((response) => {
-            if (response.name) this.fullname = response.name;
+            if (response.name) this.newfullname = response.name;
             if (response.email) this.email = response.email;
             if (response.username) this.username = response.username;
             if (response.bio) this.bio = response.bio;

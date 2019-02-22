@@ -17,6 +17,11 @@ if (localStorage.getItem('mode')) {
   mode = 'light';
   localStorage.setItem('mode', 'light');
 }
+if (mode == 'dark') {
+  document.body.style.backgroundColor = '#121212';
+} else {
+  document.body.style.backgroundColor = '#EEEEEE';
+}
 
 let fullname;
 if (localStorage.getItem('fullname')) {

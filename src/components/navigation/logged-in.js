@@ -157,9 +157,10 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
     };
   }
   _profile() {
-    this.set('route.path', '/settings/profile/');
+
   }
   _settings() {
+    this.set('route.path', '/settings/profile/');
     this._closeDropdown();
   }
   _signOut() {
@@ -175,9 +176,11 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
     let newMode = '';
     if (this.mode == 'light') {
       newMode = 'dark';
+      document.body.style.backgroundColor = '#121212';
       localStorage.setItem('mode', 'dark');
     } else if (this.mode == 'dark') {
       newMode = 'light';
+      document.body.style.backgroundColor = '#EEEEEE';
       localStorage.setItem('mode', 'light');
     }
     this._closeDropdown();

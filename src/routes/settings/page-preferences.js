@@ -619,7 +619,7 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
                 <div class="radio">
                 <label>Profile visable to:</label></br>
                   <input type="radio" name="profile" value="everyone" id="visabilityEveryone" on-change="_visability" checked>
-                  <label for="everyone" class="side-label"></label>Everyone</label>
+                  <label for="everyone" class="side-label">Everyone</label>
                   <input type="radio" name="profile" value="iFollow" id="visabilityiFollow" on-change="_visability">
                   <label for="iFollow" class="side-label">People I follow</label>
                   <input type="radio" name="profile" value="nobody" id="visabilityNobody" on-change="_visability">

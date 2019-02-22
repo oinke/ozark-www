@@ -152,7 +152,7 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
                 <div class="switch-text">When I recieve a message</div>
                 <div class="right-switch">
                   <label class="switch">
-                    <input type="checkbox" checked value="{{emailMessage::input}}" id="emailMessage" on-change="_tickBox"> 
+                    <input type="checkbox" checked id="emailMessage" on-change="_tickBox"> 
                     <span class="slider round"></span>
                   </label>
                 </div>
@@ -161,7 +161,7 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
               <div class="switch-text">When someone follows me</div>
                 <div class="right-switch">
                   <label class="switch">
-                    <input type="checkbox" checked value="{{emailFollow::input}}" id="emailFollow" on-change="_tickBox">
+                    <input type="checkbox" checked id="emailFollow" on-change="_tickBox">
                     <span class="slider round"></span>
                   </label>
                 </div>
@@ -170,7 +170,7 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
               <div class="switch-text">Newsletter is published</div>
                 <div class="right-switch">
                   <label class="switch">
-                    <input type="checkbox" checked value="{{emailNewsletter::input}}" id="emailNewsletter" on-change="_tickBox">
+                    <input type="checkbox" checked id="emailNewsletter" on-change="_tickBox">
                     <span class="slider round"></span>
                   </label>
                 </div>
@@ -184,7 +184,7 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
                 <div class="switch-text">When I recieve a message</div>
                 <div class="right-switch">
                   <label class="switch">
-                    <input type="checkbox" checked value="{{notifyMessage::input}}" id="notifyMessage" on-change="_tickBox">
+                    <input type="checkbox" checked id="notifyMessage" on-change="_tickBox">
                     <span class="slider round"></span>
                   </label>
                 </div>
@@ -193,16 +193,16 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
               <div class="switch-text">When someone follows me</div>
                 <div class="right-switch">
                   <label class="switch">
-                    <input type="checkbox" checked alue="{{notifyFollow::input}}" id="notifyFollow" on-change="_tickBox">
+                    <input type="checkbox" checked id="notifyFollow" on-change="_tickBox">
                     <span class="slider round"></span>
                   </label>
                 </div>
               </div>
               <div class="notification-container">
-              <div class="switch-text">Newsletter is published [[notifyNewsletter]]</div>
+              <div class="switch-text">Newsletter is published</div>
                 <div class="right-switch">
                   <label class="switch">
-                    <input type="checkbox" checked value="{{notifyNewsletter::input}}" id="notifyNewsletter" on-change="_tickBox">
+                    <input type="checkbox" checked id="notifyNewsletter" on-change="_tickBox">
                     <span class="slider round"></span>
                   </label>
                 </div>
@@ -307,7 +307,12 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
             return response.json();
           })
           .then((response) => {
-            console.log(response);
+            this.shadowRoot.querySelector('#emailMessage').checked = response.emailMessage || true;
+            this.shadowRoot.querySelector('#emailFollow').checked = response.emailFollow || true;
+            this.shadowRoot.querySelector('#emailNewsletter').checked = response.emailNewsletter || true;
+            this.shadowRoot.querySelector('#notifyMessage').checked = response.notifyMessage || true;
+            this.shadowRoot.querySelector('#notifyFollow').checked = response.notifyFollow || true;
+            this.shadowRoot.querySelector('#notifyNewsletter').checked = response.notifyNewsletter || true;
           })
           .catch((error) => console.log('Error:', error));
     }

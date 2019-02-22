@@ -618,21 +618,21 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
 
                 <div class="radio">
                 <label>Profile visable to:</label></br>
-                  <input type="radio" name="profile" value="everyone" id="everyone" checked="{{visabilityEveryone}}" on-change="_visability">
-                  <label for="everyone" class="side-label">Everyone</label>
-                  <input type="radio" name="profile" value="iFollow" id="iFollow" checked="{{visabilityiFollow}}" on-change="_visability">
+                  <input type="radio" name="profile" value="everyone" id="visabilityEveryone" on-change="_visability" checked>
+                  <label for="everyone" class="side-label"></label>Everyone</label>
+                  <input type="radio" name="profile" value="iFollow" id="visabilityiFollow" on-change="_visability">
                   <label for="iFollow" class="side-label">People I follow</label>
-                  <input type="radio" name="profile" value="nobody" id="nobody" checked="{{visabilityNobody}}" on-change="_visability">
+                  <input type="radio" name="profile" value="nobody" id="visabilityNobody" on-change="_visability">
                   <label for="nobody" class="side-label">Nobody</label>
                 </div>
 
                 <div class="radio">
                 <label>Recieve messages from:</label></br>
-                  <input type="radio" name="messages" value="everyone" id="everyone" checked="{{messagesEveryone}}" on-change="_messages">
+                  <input type="radio" name="messages" value="everyone" id="messagesEveryone" on-change="_messages" checked>
                   <label for="everyone" class="side-label">Everyone</label>
-                  <input type="radio" name="messages" value="ifollow" id="ifollow" checked="{{messagesIfollow}}" on-change="_messages">
+                  <input type="radio" name="messages" value="ifollow" id="messagesIfollow" on-change="_messages">
                   <label for="ifollow" class="side-label">People I follow</label>
-                  <input type="radio" name="messages" value="none" id="none" checked="{{messagesNone}}" on-change="_messages">
+                  <input type="radio" name="messages" value="none" id="messagesNobody" on-change="_messages">
                   <label for="none" class="side-label">Nobody</label>
                 </div>
               </div> 
@@ -689,11 +689,15 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
       color: state.color,
     };
   }
-  _visability(e) {
-    this.visability = e.target.value;
+  _visability() {
+    if (this.shadowRoot.querySelector('#visabilityEveryone').checked) this.visability = 'Everyone';
+    if (this.shadowRoot.querySelector('#visabilityiFollow').checked) this.visability = 'Follow';
+    if (this.shadowRoot.querySelector('#visabilityNobody').checked) this.visability = 'Nobody';
   }
-  _messages(e) {
-    this.messages = e.target.value;
+  _messages() {
+    if (this.shadowRoot.querySelector('#messagesEveryone').checked) this.messages = 'Everyone';
+    if (this.shadowRoot.querySelector('#messagesIfollow').checked) this.messages = 'Follow';
+    if (this.shadowRoot.querySelector('#messagesNobody').checked) this.messages = 'Nobody';
   }
   _save() {
     this.btntext = 'Saving...';
@@ -701,6 +705,7 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
     localStorage.setItem('language', this.newLanguage);
     const timeZone = this.timeZone || 'UTC';
     const currency = this.currency || 'BTC';
+
     const visability = this.visability || 'everyone';
     const messages = this.messages || 'everyone';
 
@@ -747,8 +752,9 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
             this.language = response.language;
             this.timeZone = response.timeZone;
             this.currency = response.currency;
-            this.visability = response.visability;
-            this.messages = response.messages;
+            console.log(response.visability);
+            console.log(response.messages);
+            // TODO: Set the radio Checked state based on these
           })
           .catch((error) => console.log('Error:', error));
     }

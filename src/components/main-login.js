@@ -168,10 +168,16 @@ class MainLogin extends ReduxMixin(PolymerElement) {
             return response.json();
           })
           .then((response) => {
+            const fullname = response.name.split(' ')[0];
+            localStorage.setItem('fullname', fullname);
             localStorage.setItem('jwt', response.jwt);
             localStorage.setItem('id', response.id);
             localStorage.setItem('loggedin', true);
             this.dispatchEvent(new CustomEvent('hideModal', {bubbles: true, composed: true, detail: {action: 'hideModal'}}));
+            this.dispatchAction({
+              type: 'CHANGE_NAME',
+              fullname: fullname,
+            });
             this.dispatchAction({
               type: 'CHANGE_STATUS',
               loggedin: true,

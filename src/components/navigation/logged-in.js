@@ -104,7 +104,7 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
         <div class="container">
             <ul class="navigation">
               <li><a on-click="_inbox"><img src="./images/inbox.png" class="inbox"></a></li>
-              <li><a on-click="_dropdown"><img src$="https://s3-us-west-1.amazonaws.com/ozark/[[userid]]/pfp_200x200.jpg" class="avatar">William</a>
+              <li><a on-click="_dropdown"><img src$="https://s3-us-west-1.amazonaws.com/ozark/[[userid]]/pfp_200x200.jpg" class="avatar">[[fullname]]</a>
                 <ul class="dropdown" on-mouseleave="_closeDropdown">
                   <li><a on-click="_profile">Profile</a></li>
                   <li><a on-click="_switch">Switch account</a></li>
@@ -124,12 +124,12 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
   static get properties() {
     return {
       language: {
-        type: Text,
+        type: String,
         readOnly: true,
         // observer: '_language',
       },
       mode: {
-        type: Text,
+        type: String,
         readOnly: true,
         observer: '_mode',
       },
@@ -141,11 +141,15 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
         type: Object,
         readOnly: true,
       },
+      fullname: {
+        type: String,
+      },
     };
   }
 
   static mapStateToProps(state, element) {
     return {
+      fullname: state.fullname,
       language: state.language,
       mode: state.mode,
       color: state.color,
@@ -165,6 +169,7 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
       type: 'CHANGE_STATUS',
       loggedin: false,
     });
+    this.set('route.path', '/');
   }
   _changeMode() {
     let newMode = '';

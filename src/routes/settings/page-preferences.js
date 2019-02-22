@@ -626,19 +626,19 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
 
                 <div class="radio">
                 <label>Profile visibility</label></br>
-                  <input type="radio" name="gender" value="male" id="male" checked="{{male}}" on-change="_radio">
+                  <input type="radio" name="gender" value="male" id="male" checked="{{male}}" on-change="_visability">
                   <label for="male" class="side-label">Everyone</label>
-                  <input type="radio" name="gender" value="female" id="female" checked="{{female}}" on-change="_radio">
+                  <input type="radio" name="gender" value="female" id="female" checked="{{female}}" on-change="_visability">
                   <label for="female" class="side-label">Private</label>
                 </div>
 
                 <div class="radio">
                 <label>Messages</label></br>
-                  <input type="radio" name="gender" value="male" id="male" checked="{{male}}" on-change="_radio">
+                  <input type="radio" name="gender" value="male" id="male" checked="{{male}}" on-change="_messages">
                   <label for="male" class="side-label">Everyone</label>
-                  <input type="radio" name="gender" value="female" id="female" checked="{{female}}" on-change="_radio">
+                  <input type="radio" name="gender" value="female" id="female" checked="{{female}}" on-change="_messages">
                   <label for="female" class="side-label">People I follow</label>
-                  <input type="radio" name="gender" value="female" id="female" checked="{{female}}" on-change="_radio">
+                  <input type="radio" name="gender" value="female" id="female" checked="{{female}}" on-change="_messages">
                   <label for="female" class="side-label">No one</label>
                 </div>
               </div> 
@@ -696,32 +696,32 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
     };
   }
 
-  _upload() {
-    console.log(this.shadowRoot.querySelector('#image').files[0]);
+
+  _visability(e) {
+    this.gender = e.target.value;
   }
-  _radio(e) {
+
+  _messages(e) {
     this.gender = e.target.value;
   }
   _save() {
     this.btntext = 'Saving...';
-    const name = this.newfullname;
-    const fullname = name.split(' ')[0];
-    localStorage.setItem('fullname', fullname);
-    const username = this.username;
-    const website = this.website;
-    const location = this.location;
-    const bio = this.bio;
-    const dob = `${this.day}/${this.month}/${this.year}`;
-    const gender = this.gender;
+    const language = this.language;
+    localStorage.setItem('language', language);
+    const timeZone = this.timeZone;
+    const currency = this.currency;
+    const visability = this.visability;
+    const messages = this.messages;
+
 
     this.dispatchAction({
-      type: 'CHANGE_NAME',
-      fullname: fullname,
+      type: 'CHANGE_LANGUAGE',
+      language: language,
     });
 
-    const data = {name, username, website, location, bio, dob, gender};
+    const data = {language, timeZone, currency, visability, messages};
     const token = localStorage.getItem('jwt');
-    const url = `${this.env.apiUrl}/users/profile/`;
+    const url = `${this.env.apiUrl}/users/preferences/`;
     fetch(url, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -737,9 +737,9 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
   }
 
   _routeChanged() {
-    if (this.route.path == '/settings/profile/') {
+    if (this.route.path == '/settings/preferences/') {
       const token = localStorage.getItem('jwt');
-      const url = `${this.env.apiUrl}/users/profile/`;
+      const url = `${this.env.apiUrl}/users/preferences/`;
       fetch(url, {
         method: 'GET',
         headers: {'Authorization': `Bearer ${token}`},
@@ -748,24 +748,11 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
             return response.json();
           })
           .then((response) => {
-            if (response.name) this.newfullname = response.name;
-            if (response.email) this.email = response.email;
-            if (response.username) this.username = response.username;
-            if (response.bio) this.bio = response.bio;
-            if (response.gender) this.gender = response.gender;
-            if (response.location) this.location = response.location;
-            if (response.website) this.website = response.website;
-            if (response.dob) {
-              const dob = response.dob.split('/');
-              this.day = dob[0];
-              this.month = dob[1];
-              this.year = dob[2];
-            };
-            if (response.gender) {
-              if (response.gender == 'male') this.male = true;
-              if (response.gender == 'female') this.female = true;
-              if (response.gender == 'nonbinary') this.nonbinary = true;
-            };
+            this.language = response.language;
+            this.timeZone = response.timeZone;
+            this.currency = response.currency;
+            this.visability = response.visability;
+            this.messages = response.messages;
           })
           .catch((error) => console.log('Error:', error));
     }

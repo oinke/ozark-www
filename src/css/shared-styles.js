@@ -110,10 +110,13 @@ $_documentContainer.innerHTML = `
     .radio label {
       display: inline-block;
       margin: 24px 0 0 0;
+      font-size: 12px;
+      font-weight: 700;
     }
     .radio .side-label {
       margin: 6px 8px 0 0;
       font-weight: 400;
+      color: var(--grey-color);
     }
     </style>
   </template>

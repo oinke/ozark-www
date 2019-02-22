@@ -46,14 +46,6 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
           flex: 1;
           padding: 12px;
         }
-        .photo{
-          background-color: black;
-          width: 100px;
-          height: 100px;
-          border-radius: 50%;
-          margin-top: 12px;
-          border: 1px solid var(--black1-white2);
-        }
         .btn-right {
           display: block;
           text-align: right;
@@ -95,41 +87,41 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
               <div class="form-title">Localization</div>
               <div class="form-inputs">
                 <label>Language</label>
-                <select name="lang" class="select-boxes2" id="lang" data-langcode="en">                        
-                  <option value="ca">Català</option>
-                  <option value="cs">Česky</option>
-                  <option value="da">Dansk</option>
-                  <option value="de">Deutsch</option>
-                  <option value="el">Ελληνικά</option>
-                  <option value="en" selected="selected">English</option>
-                  <option value="es">Español</option>
-                  <option value="et">Eesti</option>
-                  <option value="eu">Basque</option>
-                  <option value="fil">Filipino</option>
-                  <option value="fr">Français</option>
-                  <option value="id">Indonesian</option>
-                  <option value="is">Íslenska</option>
-                  <option value="it">Italiano</option>
-                  <option value="lt">Lietuviškai</option>
-                  <option value="nl">Nederlands</option>
-                  <option value="no">Norsk</option>
-                  <option value="pl">Polski</option>
-                  <option value="pt-br">Português</option>                  
-                  <option value="ro">Română</option>
-                  <option value="ru">Русский</option>
-                  <option value="sk">Slovenský</option>
-                  <option value="fi">Suomi</option>
-                  <option value="sv">Svenska</option>
-                  <option value="th">ภาษาไทย</option>
-                  <option value="tr">Türkçe</option>
-                  <option value="ja">日本語</option>
-                  <option value="zh-hans">简体中文</option>
-                  <option value="zh-hant">繁體中文</option>
-                  <option value="ko">한국어</option>
+                <select value="{{newLanguage::input}}">                        
+                  <option value="Català">Català</option>
+                  <option value="Česky">Česky</option>
+                  <option value="Dansk">Dansk</option>
+                  <option value="Deutsch">Deutsch</option>
+                  <option value="Ελληνικά">Ελληνικά</option>
+                  <option value="English" selected="">English</option>
+                  <option value="Español">Español</option>
+                  <option value="Eesti">Eesti</option>
+                  <option value="Basque">Basque</option>
+                  <option value="Filipino">Filipino</option>
+                  <option value="Français">Français</option>
+                  <option value="Indonesian">Indonesian</option>
+                  <option value="Íslenska">Íslenska</option>
+                  <option value="Italiano">Italiano</option>
+                  <option value="Lietuviškai">Lietuviškai</option>
+                  <option value="Nederlands">Nederlands</option>
+                  <option value="Norsk">Norsk</option>
+                  <option value="Polski">Polski</option>
+                  <option value="Português">Português</option>                  
+                  <option value="Română">Română</option>
+                  <option value="Русский">Русский</option>
+                  <option value="Slovenský">Slovenský</option>
+                  <option value="Suomi">Suomi</option>
+                  <option value="Svenska">Svenska</option>
+                  <option value="ภาษาไทย">ภาษาไทย</option>
+                  <option value="Türkçe">Türkçe</option>
+                  <option value="日本語">日本語</option>
+                  <option value="简体中文">简体中文</option>
+                  <option value="繁體中文">繁體中文</option>
+                  <option value="한국어">한국어</option>
                 </select>
                 <small>Help us translate the site.</small>
                 <label>Time zone</label>
-                <select name="timezone" id="timezone">
+                <select value="{{timeZone::input}}">
                   <option value="Pacific/Midway">(UTC-11:00) Pacific/Midway</option>
                   <option value="Pacific/Niue">(UTC-11:00) Pacific/Niue</option>
                   <option value="Pacific/Pago_Pago">(UTC-11:00) Pacific/Pago_Pago</option>
@@ -571,7 +563,7 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
                   <option value="Pacific/Kiritimati">(UTC+14:00) Pacific/Kiritimati</option>     
                 </select>
                 <label>Currency</label>
-                <select name="currency" class="select-boxes2" id="currency" data-currency="<fancy.currency_handler.Currency instance at 0x7f7cabd80908>">
+                <select value="{{currency::input}}">
                   <option value="AUD">Australian dollars ($)</option>
                   <option value="BHD">Bahrain dinars (BD)</option>
                   <option value="BTC" selected="">Bitcoin (Ƀ)</option>
@@ -626,20 +618,20 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
 
                 <div class="radio">
                 <label>Profile visibility</label></br>
-                  <input type="radio" name="gender" value="male" id="male" checked="{{male}}" on-change="_visability">
-                  <label for="male" class="side-label">Everyone</label>
-                  <input type="radio" name="gender" value="female" id="female" checked="{{female}}" on-change="_visability">
-                  <label for="female" class="side-label">Private</label>
+                  <input type="radio" name="profile" value="everyone" id="everyone" checked="{{visabilityEveryone}}" on-change="_visability">
+                  <label for="everyone" class="side-label">Everyone</label>
+                  <input type="radio" name="profile" value="private" id="private" checked="{{visabilityPrivate}}" on-change="_visability">
+                  <label for="private" class="side-label">Private</label>
                 </div>
 
                 <div class="radio">
                 <label>Messages</label></br>
-                  <input type="radio" name="gender" value="male" id="male" checked="{{male}}" on-change="_messages">
-                  <label for="male" class="side-label">Everyone</label>
-                  <input type="radio" name="gender" value="female" id="female" checked="{{female}}" on-change="_messages">
-                  <label for="female" class="side-label">People I follow</label>
-                  <input type="radio" name="gender" value="female" id="female" checked="{{female}}" on-change="_messages">
-                  <label for="female" class="side-label">No one</label>
+                  <input type="radio" name="messages" value="everyone" id="everyone" checked="{{messagesEveryone}}" on-change="_messages">
+                  <label for="everyone" class="side-label">Everyone</label>
+                  <input type="radio" name="messages" value="ifollow" id="ifollow" checked="{{messagesIfollow}}" on-change="_messages">
+                  <label for="ifollow" class="side-label">People I follow</label>
+                  <input type="radio" name="messages" value="none" id="none" checked="{{messagesNone}}" on-change="_messages">
+                  <label for="none" class="side-label">No one</label>
                 </div>
               </div> 
             </div>
@@ -698,21 +690,26 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
 
 
   _visability(e) {
-    this.gender = e.target.value;
+    this.visability = e.target.value;
   }
 
   _messages(e) {
-    this.gender = e.target.value;
+    this.messages = e.target.value;
   }
   _save() {
     this.btntext = 'Saving...';
-    const language = this.language;
-    localStorage.setItem('language', language);
-    const timeZone = this.timeZone;
-    const currency = this.currency;
-    const visability = this.visability;
-    const messages = this.messages;
+    const language = this.newLanguage || 'English';
+    localStorage.setItem('language', this.newLanguage);
+    const timeZone = this.timeZone || 'UTC';
+    const currency = this.currency || 'BTC';
+    const visability = this.visability || 'everyone';
+    const messages = this.messages || 'everyone';
 
+    console.log(language);
+    console.log(timeZone);
+    console.log(currency);
+    console.log(visability);
+    console.log(messages);
 
     this.dispatchAction({
       type: 'CHANGE_LANGUAGE',

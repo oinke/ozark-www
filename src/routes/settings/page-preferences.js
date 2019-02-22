@@ -119,7 +119,7 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
                   <option value="繁體中文">繁體中文</option>
                   <option value="한국어">한국어</option>
                 </select>
-                <small>Help us translate the site.</small>
+                <!-- <small>Help us translate the site.</small> -->
                 <label>Time zone</label>
                 <select value="{{timeZone::input}}">
                   <option value="Pacific/Midway">(UTC-11:00) Pacific/Midway</option>
@@ -617,21 +617,23 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
               <div class="form-inputs">
 
                 <div class="radio">
-                <label>Profile visibility</label></br>
+                <label>Profile visable to:</label></br>
                   <input type="radio" name="profile" value="everyone" id="everyone" checked="{{visabilityEveryone}}" on-change="_visability">
                   <label for="everyone" class="side-label">Everyone</label>
-                  <input type="radio" name="profile" value="private" id="private" checked="{{visabilityPrivate}}" on-change="_visability">
-                  <label for="private" class="side-label">Private</label>
+                  <input type="radio" name="profile" value="iFollow" id="iFollow" checked="{{visabilityiFollow}}" on-change="_visability">
+                  <label for="iFollow" class="side-label">People I follow</label>
+                  <input type="radio" name="profile" value="nobody" id="nobody" checked="{{visabilityNobody}}" on-change="_visability">
+                  <label for="nobody" class="side-label">Nobody</label>
                 </div>
 
                 <div class="radio">
-                <label>Messages</label></br>
+                <label>Recieve messages from:</label></br>
                   <input type="radio" name="messages" value="everyone" id="everyone" checked="{{messagesEveryone}}" on-change="_messages">
                   <label for="everyone" class="side-label">Everyone</label>
                   <input type="radio" name="messages" value="ifollow" id="ifollow" checked="{{messagesIfollow}}" on-change="_messages">
                   <label for="ifollow" class="side-label">People I follow</label>
                   <input type="radio" name="messages" value="none" id="none" checked="{{messagesNone}}" on-change="_messages">
-                  <label for="none" class="side-label">No one</label>
+                  <label for="none" class="side-label">Nobody</label>
                 </div>
               </div> 
             </div>
@@ -687,12 +689,9 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
       color: state.color,
     };
   }
-
-
   _visability(e) {
     this.visability = e.target.value;
   }
-
   _messages(e) {
     this.messages = e.target.value;
   }

@@ -28,7 +28,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
           margin: 0px;
           border-bottom: 1px solid var(--black1-white2);
           padding: 15px;
-          font-size: 15px;
+          font-size: 17px;
         }
         .form-section {
           display: flex;
@@ -39,7 +39,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
         .form-title{
           width: 200px;
           text-indent: 24px;
-          font-size: 15px;
+          font-size: 16px;
           display: none;
         }
         .form-inputs{
@@ -54,11 +54,14 @@ class PageProfile extends ReduxMixin(PolymerElement) {
           margin-top: 12px;
           border: 1px solid var(--black1-white2);
         }
-
         .btn-right {
           display: block;
           text-align: right;
         }
+        .clicky {
+          cursor: pointer;
+        }
+
         @media screen and (min-width: 900px){
           article {
             margin: 24px 12px 0 0;
@@ -86,7 +89,12 @@ class PageProfile extends ReduxMixin(PolymerElement) {
               <div class="form-title">Profile</div>
               <div class="form-inputs">
                 <label class="photo-label">Photo</label>
-                <img src$="https://s3-us-west-1.amazonaws.com/ozark/[[userid]]/pfp_200x200.jpg" class="photo">
+
+                <label for="image" class="clicky">
+                  <input type="file" name="image" id="image" style="display:none;" accept="image/gif, image/jpeg, image/png" on-change="_upload" value="{{file::input}}"/>
+                  <img src$="https://s3-us-west-1.amazonaws.com/ozark/[[userid]]/pfp_200x200.jpg" class="photo">
+                </label>
+                
                 <label>Full Name</label>
                 <input type="text" class="text" id="fullname" value="{{fullname::input}}">
                 <small>Your real name, so your friends can find you.</small>
@@ -292,7 +300,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
               </div> 
             </div>
             <div class="btn-right">
-              <button class="flat-btn" on-click="_save">Save Profile</button>
+              <button class="flat-btn" on-click="_save">[[btntext]]</button>
             </div>
           </div>
         </div>
@@ -326,8 +334,9 @@ class PageProfile extends ReduxMixin(PolymerElement) {
       userid: {
         type: String,
       },
-      name: {
+      btntext: {
         type: String,
+        value: 'Save Profile',
       },
     };
   }
@@ -342,10 +351,14 @@ class PageProfile extends ReduxMixin(PolymerElement) {
     };
   }
 
+  _upload() {
+    console.log(this.shadowRoot.querySelector('#image').files[0]);
+  }
   _radio(e) {
     this.gender = e.target.value;
   }
   _save() {
+    this.btntext = 'Saving...';
     const name = this.fullname;
     const username = this.username;
     const website = this.website;
@@ -365,7 +378,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
           return response.json();
         })
         .then((response) => {
-
+          this.btntext = 'Save Profile';
         })
         .catch((error) => console.log('Error:', error));
   }
@@ -419,6 +432,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
       this.updateStyles({'--black1-white3': this.color.white3});
       this.updateStyles({'--white2-black3': this.color.black3});
       this.updateStyles({'--black2-white1': this.color.white1});
+      this.updateStyles({'--black2-white3': this.color.white3});
     } else {
       this.updateStyles({'--black1-white2': this.color.black1});
       this.updateStyles({'--black3-white3': this.color.black3});
@@ -429,6 +443,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
       this.updateStyles({'--black1-white3': this.color.black1});
       this.updateStyles({'--white2-black3': this.color.white2});
       this.updateStyles({'--black2-white1': this.color.black2});
+      this.updateStyles({'--black2-white3': this.color.black2});
     }
   }
 } window.customElements.define('page-profile', PageProfile);

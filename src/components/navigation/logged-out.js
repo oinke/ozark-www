@@ -194,7 +194,7 @@ class LoggedOut extends ReduxMixin(PolymerElement) {
       this.updateStyles({'--header-background-color': this.color.black2});
       this.updateStyles({'--host-color': this.color.white1});
       this.updateStyles({'--search-color': this.color.white1});
-      this.updateStyles({'--hover-background': this.color.black1});
+      this.updateStyles({'--hover-background': this.color.black3});
     }
   }
 } window.customElements.define('logged-out', LoggedOut);

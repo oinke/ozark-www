@@ -61,6 +61,7 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
           box-shadow: inset 0 1px 0 var(--hover-background), 0 1px 0px rgba(0,0,0,0.08), 0 2px 2px rgba(0,0,0,0.05);
           transition: opacity 0.3s ease-in-out;
           box-shadow: 0 4px 8px rgba(0, 0, 0, .2), 0 0 1px rgba(0,0,0,0.3);
+          overflow:hidden;
         }
         .dropdown li a {
           color: var(--placeholder-color);
@@ -209,7 +210,7 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
       this.updateStyles({'--header-background-color': this.color.black2});
       this.updateStyles({'--host-color': this.color.white1});
       this.updateStyles({'--search-color': this.color.white1});
-      this.updateStyles({'--hover-background': this.color.black1});
+      this.updateStyles({'--hover-background': this.color.black3});
       this.updateStyles({'--dropdown-divider': this.color.black3});
     }
   }

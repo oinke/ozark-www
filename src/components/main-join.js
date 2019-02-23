@@ -273,6 +273,21 @@ class MainJoin extends ReduxMixin(PolymerElement) {
           .then((response) => {
             console.log(response.data);
             if (response && response.data === true) {
+              const fullname = response.name;
+              const userid = response.id;
+              localStorage.setItem('id', userid);
+              localStorage.setItem('fullname', fullname);
+              
+              this.dispatchAction({
+                type: 'CHANGE_NAME',
+                fullname: fullname,
+              });
+
+              this.dispatchAction({
+                type: 'CHANGE_USERID',
+                userid: userid,
+              });
+
               this.name = '';
               this.email = '';
               this.password = '';

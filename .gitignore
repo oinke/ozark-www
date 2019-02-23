@@ -68,3 +68,4 @@ build/
 
 # Kubernetes config
 *kubeconfig.yaml
+env.js

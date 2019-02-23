@@ -104,7 +104,7 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
         <div class="container">
             <ul class="navigation">
               <li><a on-click="_inbox"><img src="./images/inbox.png" class="inbox"></a></li>
-              <li><a on-click="_dropdown"><img src$="https://s3-us-west-1.amazonaws.com/ozark/[[userid]]/pfp_200x200.jpg" class="avatar">[[fullname]]</a>
+              <li><a on-click="_dropdown"><img src$="https://s3-us-west-1.amazonaws.com/ozark/[[userid]]/pfp_200x200.jpg?versionId=null" class="avatar">[[fullname]]</a>
                 <ul class="dropdown" on-mouseleave="_closeDropdown">
                   <li><a on-click="_profile">Profile</a></li>
                   <li><a on-click="_switch">Switch account</a></li>

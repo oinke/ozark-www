@@ -96,7 +96,7 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
               <dom-repeat items="{{results.name}}">
                 <template>
                   <li class="container">
-                  <img src="https://s3-us-west-1.amazonaws.com/ozark/[[item._id]]/pfp_200x200.jpg">
+                  <img src="https://s3-us-west-1.amazonaws.com/ozark/[[item._id]]/pfp_200x200.jpg?versionId=null">
                     <div>
                       <div class="title">[[item.name]]</div>
                       <div class="subtitle">[[item.email]]</div> 
@@ -112,7 +112,7 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
               <dom-repeat items="{{results.email}}">
                 <template>
                   <li class="container">
-                    <img src="https://s3-us-west-1.amazonaws.com/ozark/[[item._id]]/pfp_200x200.jpg">
+                    <img src="https://s3-us-west-1.amazonaws.com/ozark/[[item._id]]/pfp_200x200.jpg?versionId=null">
                     <div>
                       <div class="title">[[item.name]]</div>
                       <div class="subtitle">[[item.email]]</div>

@@ -92,7 +92,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
 
                 <label for="image" class="clicky">
                   <input type="file" name="image" id="image" style="display:none;" accept="image/gif, image/jpeg, image/png" on-change="_upload" value="{{file::input}}"/>
-                  <img src$="https://s3-us-west-1.amazonaws.com/ozark/[[userid]]/pfp_200x200.jpg" class="photo">
+                  <img src$="https://s3-us-west-1.amazonaws.com/ozark/[[userid]]/pfp_200x200.jpg?versionId=null" class="photo">
                 </label>
                 
                 <label>Full Name</label>
@@ -354,18 +354,30 @@ class PageProfile extends ReduxMixin(PolymerElement) {
 
   _upload() {
     const file = this.shadowRoot.querySelector('#image').files[0];
+    const formData = new FormData();
+    formData.append('image', file);
     const token = localStorage.getItem('jwt');
     const url = `${this.env.apiUrl}/users/profile/upload-pfp/`;
     fetch(url, {
       method: 'POST',
-      body: file,
-      headers: {'Authorization': `Bearer ${token}`, 'Content-Type': 'multipart/form-data'},
+      body: formData,
+      headers: {'Authorization': `Bearer ${token}`},
     })
         .then((response) => {
           return response.json();
         })
         .then((response) => {
+          const temp = this.userid;
+          console.log(temp);
+          this.dispatchAction({
+            type: 'CHANGE_USERID',
+            userid: '0',
+          });
 
+          this.dispatchAction({
+            type: 'CHANGE_USERID',
+            userid: temp,
+          });
         })
         .catch((error) => console.log('Error:', error));
   }

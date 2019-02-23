@@ -156,6 +156,10 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
       userid: state.userid,
     };
   }
+  _feedback() {
+    this._closeDropdown();
+    this.dispatchEvent(new CustomEvent('modal', {bubbles: true, composed: true, detail: {action: 'feedback', language: this.language}}));
+  }
   _profile() {
 
   }

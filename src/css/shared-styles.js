@@ -55,7 +55,7 @@ $_documentContainer.innerHTML = `
       color: var(--grey-color);
       line-height: 1.5em;
     }
-    input {
+    input, textarea {
       width:100%;
       max-width: 280px;
       padding: 8px;
@@ -83,7 +83,7 @@ $_documentContainer.innerHTML = `
     select:focus {
       border: 1px solid var(--blue-color);
     }
-    input:focus {
+    input:focus, textarea:focus {
       outline: 0;
       border: 1px solid var(--blue-color);
       box-shadow: none;

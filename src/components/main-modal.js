@@ -4,6 +4,7 @@ import store from '../global/store.js';
 import '../css/shared-styles.js';
 import './main-join.js';
 import './main-login.js';
+import './main-feedback.js';
 
 const ReduxMixin = createMixin(store);
 class MainModal extends ReduxMixin(PolymerElement) {
@@ -69,6 +70,12 @@ class MainModal extends ReduxMixin(PolymerElement) {
           </div>
         </template>
 
+        <template is="dom-if" if="{{feedback}}">
+          <div class="modal" on-click="_clickModal">
+            <main-feedback></main-login>   
+          </div>
+        </template>
+
       </div>
     `;
   }
@@ -97,6 +104,10 @@ class MainModal extends ReduxMixin(PolymerElement) {
         value: false,
       },
       login: {
+        type: Boolean,
+        value: false,
+      },
+      feedback: {
         type: Boolean,
         value: false,
       },
@@ -130,9 +141,15 @@ class MainModal extends ReduxMixin(PolymerElement) {
     if (e === 'join') {
       this.join = true;
       this.login = false;
+      this.feedback = false;
     } else if (e === 'login') {
       this.join = false;
       this.login = true;
+      this.feedback = false;
+    } else if (e === 'feedback') {
+      this.join = false;
+      this.login = false;
+      this.feedback = true;
     }
   }
 

@@ -91,7 +91,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
                 <label class="photo-label">Photo</label>
 
                 <label for="image" class="clicky">
-                  <input type="file" name="image" id="image" style="display:none;" accept="image/gif, image/jpeg, image/png" on-change="_upload" value="{{file::input}}"/>
+                  <input type="file" name="image" id="image" style="display:none;" accept="image/gif, image/jpeg, image/png" on-change="_resize" value="{{file::input}}"/>
                   <img src$="https://s3-us-west-1.amazonaws.com/ozark/[[userid]]/pfp_200x200.jpg?versionId=null" class="photo">
                 </label>
                 
@@ -352,8 +352,42 @@ class PageProfile extends ReduxMixin(PolymerElement) {
     };
   }
 
-  _upload() {
+  _resize() {
     const file = this.shadowRoot.querySelector('#image').files[0];
+    if (file.type.match(/image.*/)) {
+      const reader = new FileReader();
+      reader.onload = (readerEvent) => {
+        const image = new Image();
+        image.onload = (imageEvent) => {
+          const canvas = document.createElement('canvas');
+          const maxSize = 200;
+          let width = image.width;
+          let height = image.height;
+          if (width > height) {
+            if (width > maxSize) {
+              height *= maxSize / width;
+              width = maxSize;
+            }
+          } else {
+            if (height > maxSize) {
+              width *= maxSize / height;
+              height = maxSize;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
+          canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL('image/jpeg');
+          const resizedImage = this._dataURLToBlob(dataUrl);
+          this._upload(resizedImage);
+        };
+        image.src = readerEvent.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  _upload(file) {
     const formData = new FormData();
     formData.append('image', file);
     const token = localStorage.getItem('jwt');
@@ -369,17 +403,36 @@ class PageProfile extends ReduxMixin(PolymerElement) {
         .then((response) => {
           const temp = this.userid;
           console.log(temp);
-          this.dispatchAction({
-            type: 'CHANGE_USERID',
-            userid: '0',
-          });
+          // this.dispatchAction({
+          //   type: 'CHANGE_USERID',
+          //   userid: '0',
+          // });
 
-          this.dispatchAction({
-            type: 'CHANGE_USERID',
-            userid: temp,
-          });
+          // this.dispatchAction({
+          //   type: 'CHANGE_USERID',
+          //   userid: temp,
+          // });
         })
         .catch((error) => console.log('Error:', error));
+  }
+
+  _dataURLToBlob(dataURL) {
+    const BASE64_MARKER = ';base64,';
+    if (dataURL.indexOf(BASE64_MARKER) == -1) {
+      const parts = dataURL.split(',');
+      const contentType = parts[0].split(':')[1];
+      const raw = parts[1];
+      return new Blob([raw], {type: contentType});
+    }
+    const parts = dataURL.split(BASE64_MARKER);
+    const contentType = parts[0].split(':')[1];
+    const raw = window.atob(parts[1]);
+    const rawLength = raw.length;
+    const uInt8Array = new Uint8Array(rawLength);
+    for (let i = 0; i < rawLength; ++i) {
+      uInt8Array[i] = raw.charCodeAt(i);
+    }
+    return new Blob([uInt8Array], {type: contentType});
   }
 
   _radio(e) {

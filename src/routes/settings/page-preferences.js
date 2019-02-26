@@ -618,11 +618,11 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
 
                 <div class="radio">
                 <label>Profile visable to:</label></br>
-                  <input type="radio" name="profile" value="everyone" id="visabilityEveryone" on-change="_visability" checked>
+                  <input type="radio" name="profile" value="everyone" id="visibilityEveryone" on-change="_visibility" checked>
                   <label for="everyone" class="side-label">Everyone</label>
-                  <input type="radio" name="profile" value="iFollow" id="visabilityiFollow" on-change="_visability">
+                  <input type="radio" name="profile" value="iFollow" id="visibilityiFollow" on-change="_visibility">
                   <label for="iFollow" class="side-label">People I follow</label>
-                  <input type="radio" name="profile" value="nobody" id="visabilityNobody" on-change="_visability">
+                  <input type="radio" name="profile" value="nobody" id="visibilityNobody" on-change="_visibility">
                   <label for="nobody" class="side-label">Nobody</label>
                 </div>
 
@@ -689,10 +689,10 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
       color: state.color,
     };
   }
-  _visability() {
-    if (this.shadowRoot.querySelector('#visabilityEveryone').checked) this.visability = 'Everyone';
-    if (this.shadowRoot.querySelector('#visabilityiFollow').checked) this.visability = 'Follow';
-    if (this.shadowRoot.querySelector('#visabilityNobody').checked) this.visability = 'Nobody';
+  _visibility() {
+    if (this.shadowRoot.querySelector('#visibilityEveryone').checked) this.visibility = 'Everyone';
+    if (this.shadowRoot.querySelector('#visibilityiFollow').checked) this.visibility = 'Follow';
+    if (this.shadowRoot.querySelector('#visibilityNobody').checked) this.visibility = 'Nobody';
   }
   _messages() {
     if (this.shadowRoot.querySelector('#messagesEveryone').checked) this.messages = 'Everyone';
@@ -706,13 +706,13 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
     const timeZone = this.timeZone || 'UTC';
     const currency = this.currency || 'BTC';
 
-    const visability = this.visability || 'everyone';
+    const visibility = this.visibility || 'everyone';
     const messages = this.messages || 'everyone';
 
     console.log(language);
     console.log(timeZone);
     console.log(currency);
-    console.log(visability);
+    console.log(visibility);
     console.log(messages);
 
     this.dispatchAction({
@@ -720,7 +720,7 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
       language: language,
     });
 
-    const data = {language, timeZone, currency, visability, messages};
+    const data = {language, timeZone, currency, visibility, messages};
     const token = localStorage.getItem('jwt');
     const url = `${this.env.apiUrl}/users/preferences/`;
     fetch(url, {
@@ -752,7 +752,7 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
             this.language = response.language;
             this.timeZone = response.timeZone;
             this.currency = response.currency;
-            console.log(response.visability);
+            console.log(response.visibility);
             console.log(response.messages);
             // TODO: Set the radio Checked state based on these
           })

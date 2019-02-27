@@ -709,12 +709,6 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
     const visibility = this.visibility || 'everyone';
     const messages = this.messages || 'everyone';
 
-    console.log(language);
-    console.log(timeZone);
-    console.log(currency);
-    console.log(visibility);
-    console.log(messages);
-
     this.dispatchAction({
       type: 'CHANGE_LANGUAGE',
       language: language,
@@ -750,11 +744,23 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
           })
           .then((response) => {
             this.language = response.language;
+            this.newLanguage = response.language;
             this.timeZone = response.timeZone;
             this.currency = response.currency;
-            console.log(response.visibility);
-            console.log(response.messages);
-            // TODO: Set the radio Checked state based on these
+            if (response.visibility === 'Everyone') {
+              this.shadowRoot.querySelector('#visibilityEveryone').checked = true;
+            } else if (response.visibility === 'Follow') {
+              this.shadowRoot.querySelector('#visibilityiFollow').checked = true;
+            } else if (response.visibility === 'Nobody') {
+              this.shadowRoot.querySelector('#visibilityNobody').checked = true;
+            }
+            if (response.messages === 'Everyone') {
+              this.shadowRoot.querySelector('#messagesEveryone').checked = true;
+            } else if (response.messages === 'Follow') {
+              this.shadowRoot.querySelector('#messagesIfollow').checked = true;
+            } else if (response.messages === 'Nobody') {
+              this.shadowRoot.querySelector('#messagesNobody').checked = true;
+            }
           })
           .catch((error) => console.log('Error:', error));
     }

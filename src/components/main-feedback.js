@@ -65,6 +65,7 @@ class MainFeedback extends ReduxMixin(PolymerElement) {
         } 
       </style>
 
+      <template is="dom-if" if="{{!thanks}}">
         <h1>Send Feeback</h1>
         <p class="value">Share your ideas or describe your issue</p>
         <div class="area">
@@ -75,8 +76,17 @@ class MainFeedback extends ReduxMixin(PolymerElement) {
           <small class="issue">[[issueMessage]]</small>
         </p>
         <button class="modal-btn" on-click="_send">Send</button>
-        <center><p class="inline-flex">Thank you, your feedback is important to us.</p></center>
+        <center><p class="inline-flex">Your feedback is important to us.</p></center>
         </div>
+      </template>
+
+      <template is="dom-if" if="{{thanks}}">
+        <h1>Thank you for your valuable feedback!</h1>
+        <p class="value">We read every single comment and we are constantly improving.</p>
+        <div class="area">
+        <button class="modal-btn" on-click="_close">Close</button>
+        </div>
+      </template>
     `;
   }
 
@@ -108,6 +118,10 @@ class MainFeedback extends ReduxMixin(PolymerElement) {
         value: true,
         observer: '_focusEmail',
       },
+      thanks: {
+        type: Boolean,
+        value: false,
+      },
     };
   }
 
@@ -120,6 +134,10 @@ class MainFeedback extends ReduxMixin(PolymerElement) {
     };
   }
 
+  _close() {
+    this.thanks = false;
+    this.dispatchEvent(new CustomEvent('hideModal', {bubbles: true, composed: true, detail: {action: 'hideModal'}}));
+  }
   _send() {
     const message = this.message;
     this.shadowRoot.querySelector('#message').classList.remove('error');
@@ -131,8 +149,8 @@ class MainFeedback extends ReduxMixin(PolymerElement) {
     }
 
 
-    if (password && password.length >= 6 && email) {
-      const url = `${this.env.apiUrl}/user/feedback/`;
+    if (message && message.length >= 6) {
+      const url = `${this.env.apiUrl}/users/feedback/`;
       const token = localStorage.getItem('jwt');
       const data = {message};
       fetch(url, {
@@ -144,7 +162,7 @@ class MainFeedback extends ReduxMixin(PolymerElement) {
             return response.json();
           })
           .then((response) => {
-            this.dispatchEvent(new CustomEvent('hideModal', {bubbles: true, composed: true, detail: {action: 'hideModal'}}));
+            this.thanks = true;
           })
           .catch((error) => console.log('Error:', error));
     }

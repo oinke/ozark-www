@@ -194,6 +194,14 @@ class PageAccounts extends ReduxMixin(PolymerElement) {
         })
         .then((response) => {
           console.log(response);
+          const oauthToken = response.oauth_token;
+          const oauthConsumerKey = 'QIGjvKMRdluA9LhAJGtnLR8oq'
+          const oauthSignature = 'z0Oqg070adX3ct1oPuDoy2nqgA6g432F'
+          const url = `https://api.twitter.com/oauth/authenticate?oauth_nonce=31567364&oauth_timestamp=1551329429&oauth_consumer_key=${oauthConsumerKey}&oauth_signature_method=HMAC-SHA1&oauth_version=1.0&oauth_token=${oauthToken}&oauth_signature=${oauthSignature}`;
+          const newwindow = window.open(url, 'name', 'height=200,width=150');
+          if (window.focus) {
+            newwindow.focus();
+          }
         })
         .catch((error) => console.log('Error:', error));
   }

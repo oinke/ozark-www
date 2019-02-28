@@ -307,12 +307,12 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
             return response.json();
           })
           .then((response) => {
-            this.shadowRoot.querySelector('#emailMessage').checked = response.emailMessage || true;
-            this.shadowRoot.querySelector('#emailFollow').checked = response.emailFollow || true;
-            this.shadowRoot.querySelector('#emailNewsletter').checked = response.emailNewsletter || true;
-            this.shadowRoot.querySelector('#notifyMessage').checked = response.notifyMessage || true;
-            this.shadowRoot.querySelector('#notifyFollow').checked = response.notifyFollow || true;
-            this.shadowRoot.querySelector('#notifyNewsletter').checked = response.notifyNewsletter || true;
+            this.shadowRoot.querySelector('#emailMessage').checked = response.emailMessage;
+            this.shadowRoot.querySelector('#emailFollow').checked = response.emailFollow;
+            this.shadowRoot.querySelector('#emailNewsletter').checked = response.emailNewsletter;
+            this.shadowRoot.querySelector('#notifyMessage').checked = response.notifyMessage;
+            this.shadowRoot.querySelector('#notifyFollow').checked = response.notifyFollow;
+            this.shadowRoot.querySelector('#notifyNewsletter').checked = response.notifyNewsletter;
           })
           .catch((error) => console.log('Error:', error));
     }

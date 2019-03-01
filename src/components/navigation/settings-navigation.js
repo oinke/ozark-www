@@ -61,7 +61,7 @@ class SettingsNavigation extends ReduxMixin(PolymerElement) {
             <a name="preferences" href="[[rootPath]]settings/preferences/">Preferences</a>
             <a name="password" href="[[rootPath]]settings/password/">Password</a>
             <a name="notifications" href="[[rootPath]]settings/notifications/">Notifications</a>
-            <a name="accounts" href="[[rootPath]]settings/accounts/">Accounts</a>
+            <a name="accounts" href="[[rootPath]]settings/accounts/">Connected Accounts</a>
         </iron-selector>
     `;
   }

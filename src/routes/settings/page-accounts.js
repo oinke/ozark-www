@@ -40,6 +40,15 @@ class PageAccounts extends ReduxMixin(PolymerElement) {
           font-size: 16px;
           display: none;
         }
+        .form-inputs{
+          flex: 1;
+          padding: 12px;
+        }
+        .notification-container{
+          display: flex;
+          line-height: 80px;
+          border-top: 1px solid var(--black1-white2);
+        }
         .switch {
           position: relative;
           display: inline-block;
@@ -47,10 +56,25 @@ class PageAccounts extends ReduxMixin(PolymerElement) {
           height: 34px;
           transform: scale(0.7);
         }
+        .right-switch{
+          width: 100px;
+          position: relative;
+          top: -13px;
+        }
+        .switch-text{
+          flex: 1;
+        }
         .switch input { 
           opacity: 0;
           width: 0;
           height: 0;
+        }
+        .intro {
+          padding: 12px;
+        }
+        .outro {
+          padding: 0 12px 12px 12px;
+          color: var(--grey-color);
         }
         .slider {
           position: absolute;
@@ -96,6 +120,20 @@ class PageAccounts extends ReduxMixin(PolymerElement) {
           position: relative;
           top: -13px;
         }
+        @media screen and (min-width: 900px){
+          article {
+            margin: 24px 12px 0 0;
+          }
+          .form-title {
+            display: block;
+          }
+          input[type=text]  {
+            max-width: 300px;
+          }
+          .form-inputs {
+            padding: 0;
+          }
+        } 
       </style>
   
       <main-layout narrow> 
@@ -104,44 +142,43 @@ class PageAccounts extends ReduxMixin(PolymerElement) {
           </div>
           <div slot="body">
             <div class='form'>
-              <h1>Connect Accounts</h1>
-              <p>Link your accounts to easily share your activities.
+              <h1>Connected Accounts</h1>
+              <p class="intro">Link your accounts to easily share your activities.</p>
               <div class="form-section">
 
-                <div class="form-title">Email</div>
+                <div class="form-title">Accounts</div>
                 <div class="form-inputs">
                 <div class="notification-container notme">
-                  <div class="switch-text">Twiiter</div>
                   <div class="right-switch">
                     <label class="switch">
                       <input type="checkbox" id="emailMessage" on-change="_twitterLogin"> 
                       <span class="slider round"></span>
                     </label>
                   </div>
+                  <div class="switch-text">Twiiter</div>
                 </div>
                 <div class="notification-container">
-                <div class="switch-text">Facebook</div>
                   <div class="right-switch">
                     <label class="switch">
                       <input type="checkbox" id="emailFollow" on-change="_facebookLogin">
                       <span class="slider round"></span>
                     </label>
                   </div>
+                  <div class="switch-text">Facebook</div>
                 </div>
                 <div class="notification-container">
-                <div class="switch-text">Google</div>
                   <div class="right-switch">
                     <label class="switch">
                       <input type="checkbox" id="emailNewsletter" on-change="_googleLogin">
                       <span class="slider round"></span>
                     </label>
                   </div>
+                  <div class="switch-text">Google</div>
                 </div>
                 </div>
-              </div>              
-              <div class="btn-right">
-              <p>We will never post or perform any action with your accounts without your consent.</p>
-              </div>
+              </div>   
+                <p class="outro"> Don't worry, we only update a linked account when you tell us to.</p>   
+    
             </div>
           </div>
           </div>
@@ -194,14 +231,14 @@ class PageAccounts extends ReduxMixin(PolymerElement) {
         })
         .then((response) => {
           const oauthToken = response.oauth_token;
-          const oauthConsumerKey = 'QIGjvKMRdluA9LhAJGtnLR8oq';
           const oauthSignature = response.oauth_token_secret;
+          const oauthConsumerKey = 'QIGjvKMRdluA9LhAJGtnLR8oq';
           const oauthNonce = '31567364';
           const oauthTimestamp = '1551329429';
           const oauthSignatureMethod = 'HMAC-SHA1';
           const oauthVersion = '1.0';
           const url = `https://api.twitter.com/oauth/authenticate?oauth_nonce=${oauthNonce}&oauth_timestamp=${oauthTimestamp}&oauth_consumer_key=${oauthConsumerKey}&oauth_signature_method=${oauthSignatureMethod}&oauth_version=${oauthVersion}&oauth_token=${oauthToken}&oauth_signature=${oauthSignature}`;
-          const newwindow = window.open(url, 'name', 'height=800,width=600');
+          const newwindow = window.open(url, '');
           if (window.focus) {
             newwindow.focus();
           }

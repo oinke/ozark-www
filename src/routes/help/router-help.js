@@ -27,7 +27,6 @@ class RouterHelp extends PolymerElement {
           <page-privacy name="privacy"></page-privacy>
           <page-contact name="contact"></page-contact>
           <page-use name="use"></page-use>
-          <page-error name="error"></page-error>
         </iron-pages>
       </main>
     `;
@@ -56,8 +55,6 @@ class RouterHelp extends PolymerElement {
       this.page = 'terms';
     } else if (['terms', 'copyright', 'privacy', 'contact', 'use'].indexOf(page) !== -1) {
       this.page = page;
-    } else {
-      this.page = 'error';
     }
   }
 
@@ -79,9 +76,6 @@ class RouterHelp extends PolymerElement {
         break;
       case 'use':
         import('./page-use.js');
-        break;
-      case 'error':
-        import('../page-error.js');
         break;
     }
   }

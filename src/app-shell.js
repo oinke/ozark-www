@@ -34,7 +34,7 @@ class AppShell extends ReduxMixin(PolymerElement) {
           <page-login name="login"></page-login>
           <page-search name="search"></page-search>
           <page-language name="language"></page-language>
-          <page-error name="error"></page-error>
+          <page-profile name="profile"></page-profile>
         </iron-pages>
       </main>
 
@@ -75,7 +75,7 @@ class AppShell extends ReduxMixin(PolymerElement) {
     } else if (['home', 'help', 'settings', 'join', 'login', 'search', 'language'].indexOf(page) !== -1) {
       this.page = page;
     } else {
-      this.page = 'error';
+      this.page = 'profile';
     }
   }
 
@@ -106,8 +106,8 @@ class AppShell extends ReduxMixin(PolymerElement) {
       case 'language':
         import('./routes/mobile/page-language.js');
         break;
-      case 'error':
-        import('./routes/page-error.js');
+      case 'profile':
+        import('./routes/page-profile.js');
         break;
     }
   }

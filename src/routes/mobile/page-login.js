@@ -1,7 +1,7 @@
 import {createMixin} from '../../../node_modules/polymer-redux';
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import '../../css/shared-styles.js';
-import '../../components/main-layout.js';
+import '../../components/layouts/main-layout.js';
 import '../../components/main-login.js';
 import store from '../../global/store.js';
 const ReduxMixin = createMixin(store);

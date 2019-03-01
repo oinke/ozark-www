@@ -1,13 +1,13 @@
-import {createMixin} from '../../node_modules/polymer-redux';
+import {createMixin} from 'polymer-redux';
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
-import {translations} from '../translations/languages.js';
-import store from '../global/store.js';
-import '../css/shared-styles.js';
-import './main-header.js';
-import './social/social-icons.js';
+import {translations} from '../../translations/languages.js';
+import store from '../../global/store.js';
+import '../../css/shared-styles.js';
+import '../main-header.js';
+import '../social/social-icons.js';
 
 const ReduxMixin = createMixin(store);
-class MainLayout extends ReduxMixin(PolymerElement) {
+class CenterLayout extends ReduxMixin(PolymerElement) {
   static get template() {
     return html`
       <style include="shared-styles">
@@ -26,9 +26,6 @@ class MainLayout extends ReduxMixin(PolymerElement) {
             padding-top:56px;
           }
         } 
-        .aside {
-          flex: 0 1 280px;
-        }
         .body {
           flex: 1;
         }
@@ -84,9 +81,6 @@ class MainLayout extends ReduxMixin(PolymerElement) {
 
       <div class="vertical-container">
         <div class="horizontal-container">
-          <div class="aside">
-            <slot name="aside" class="no-print"></slot>
-          </div>
           <div class="body">
             <slot name="body"></slot>
           </div>
@@ -187,4 +181,4 @@ class MainLayout extends ReduxMixin(PolymerElement) {
       this.updateStyles({'--hover-background': this.color.black1});
     }
   }
-} window.customElements.define('main-layout', MainLayout);
+} window.customElements.define('center-layout', CenterLayout);

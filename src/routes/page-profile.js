@@ -1,11 +1,12 @@
 import {createMixin} from '../../node_modules/polymer-redux';
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import '../css/shared-styles.js';
-import '../components/layouts/main-layout.js';
+import '../components/layouts/center-layout.js';
+import '../components/main-profile.js';
 import store from '../global/store.js';
 const ReduxMixin = createMixin(store);
 
-class PageHome extends ReduxMixin(PolymerElement) {
+class PageProfile extends ReduxMixin(PolymerElement) {
   static get template() {
     return html`
       <style include="shared-styles">
@@ -16,10 +17,11 @@ class PageHome extends ReduxMixin(PolymerElement) {
         }
       </style>
   
-      <main-layout> 
-        <div slot="aside">Aside</div>
-        <div slot="body">Body</div>
-      </main-layout>
+      <center-layout> 
+        <div slot="body">
+          <main-profile></main-profile>
+        </div>
+      </center-layout>
     `;
   }
 
@@ -58,4 +60,4 @@ class PageHome extends ReduxMixin(PolymerElement) {
       this.updateStyles({'--host-color': this.color.white1});
     }
   }
-} window.customElements.define('page-home', PageHome);
+} window.customElements.define('page-profile', PageProfile);

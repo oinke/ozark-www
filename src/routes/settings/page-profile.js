@@ -1,7 +1,7 @@
 import {createMixin} from 'polymer-redux';
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import '../../css/shared-styles.js';
-import '../../components/main-layout.js';
+import '../../components/layouts/main-layout.js';
 import '../../components/navigation/settings-navigation.js';
 import '@polymer/app-route/app-location.js';
 import store from '../../global/store.js';

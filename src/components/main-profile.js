@@ -37,7 +37,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           display: block;
           height: 150px;
           background-color: var(--black1-white2) !important;
-          background-image: url('https://s3-us-west-1.amazonaws.com/ozark/5c6bb18d0198f0cc1cc25627/cover_300x1160.png');
+          background-image: url('https://s3-us-west-1.amazonaws.com/ozark/5c6bb18d0198f0cc1cc25627/cover_1160x150.png');
           background-size: 1160px 150px;
         }
         .cover-header{

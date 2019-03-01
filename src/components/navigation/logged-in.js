@@ -161,10 +161,10 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
     this.dispatchEvent(new CustomEvent('modal', {bubbles: true, composed: true, detail: {action: 'feedback', language: this.language}}));
   }
   _profile() {
-
+    this.set('route.path', './eggs/');
   }
   _settings() {
-    this.set('route.path', '/settings/profile/');
+    this.set('route.path', '/settings/');
     this._closeDropdown();
   }
   _signOut() {

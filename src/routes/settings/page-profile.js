@@ -1,5 +1,6 @@
 import {createMixin} from 'polymer-redux';
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
+import {translations} from '../../translations/languages.js';
 import '../../css/shared-styles.js';
 import '../../components/layouts/main-layout.js';
 import '../../components/navigation/settings-navigation.js';
@@ -16,7 +17,6 @@ class PageProfile extends ReduxMixin(PolymerElement) {
           background-color: var(--black2-white1);
           color: var(--white2-black2);
         }
- 
         .form {
           display: block;
           margin-top: 20px;
@@ -84,40 +84,40 @@ class PageProfile extends ReduxMixin(PolymerElement) {
         </div>
         <div slot="body">
           <div class='form'>
-            <h1>Edit Profile</h1>
+            <h1>[[txt.editProfile]]</h1>
             <div class="form-section">
-              <div class="form-title">Profile</div>
+              <div class="form-title">[[txt.profile]]</div>
               <div class="form-inputs">
-                <label class="photo-label">Photo</label>
+                <label class="photo-label">[[txt.photo]]</label>
 
                 <label for="image" class="clicky">
                   <input type="file" name="image" id="image" style="display:none;" accept="image/gif, image/jpeg, image/png" on-change="_resize" value="{{file::input}}"/>
                   <img src$="https://s3-us-west-1.amazonaws.com/ozark/[[userid]]/pfp_200x200.jpg?versionId=null" class="photo">
                 </label>
                 
-                <label>Full Name</label>
+                <label>[[txt.fullName]]</label>
                 <input type="text" class="text" id="newfullname" value="{{newfullname::input}}">
-                <small>Your real name, so your friends can find you.</small>
-                <label>Username</label>
+                <small>[[txt.yourRealName]]</small>
+                <label>[[txt.username]]</label>
                 <input type="text" class="text" value="{{username::input}}">
                 <small>http://www.ozark.com/[[username]]</small>
-                <label>Website</label>
+                <label>[[txt.website]]</label>
                 <input type="text" class="text" value="{{website::input}}">
-                <label>Location</label>
+                <label>[[txt.location]]</label>
                 <input type="text" class="text" value="{{location::input}}">
-                <label>Bio</label>
+                <label>[[txt.bio]]</label>
                 <input id="bio" type="text" class="text" value="{{bio::input}}">
               </div>
             </div>              
             <div class="form-section">
-              <div class="form-title">Account</div>
+              <div class="form-title">[[txt.account]]</div>
               <div class="form-inputs">
-                <label>Email Address</label>
+                <label>[[txt.email]]</label>
                 <input type="text" class="text" value="{{email::input}}">
-                <small>Email will not be publicly displayed.</small>
-                <label>Birthday</label>
+                <small>[[txt.emailWillNotBeDisplayed]]</small>
+                <label>[[txt.birthday]]</label>
                 <select value="{{year::input}}">
-                  <option value="0">Year</option>
+                  <option value="0">[[txt.year]]</option>
                   <option value="2019">2019</option>
                   <option value="2018">2018</option>
                   <option value="2017">2017</option>
@@ -240,22 +240,22 @@ class PageProfile extends ReduxMixin(PolymerElement) {
                   <option value="1900">1900</option>
                 </select>
                 <select value="{{month::input}}">
-                  <option value="0">Month</option>
-                  <option value="1">January</option>
-                  <option value="2">February</option>
-                  <option value="3">March</option>
-                  <option value="4">April</option>
-                  <option value="5">May</option>
-                  <option value="6">June</option>
-                  <option value="7">July</option>
-                  <option value="8">August</option>
-                  <option value="9">September</option>
-                  <option value="10">October</option>
-                  <option value="11">November</option>
-                  <option value="12">December</option>
+                  <option value="0">[[txt.month]]</option>
+                  <option value="1">[[txt.january]]</option>
+                  <option value="2">[[txt.february]]</option>
+                  <option value="3">[[txt.march]]</option>
+                  <option value="4">[[txt.april]]</option>
+                  <option value="5">[[txt.may]]</option>
+                  <option value="6">[[txt.june]]</option>
+                  <option value="7">[[txt.july]]</option>
+                  <option value="8">[[txt.august]]</option>
+                  <option value="9">[[txt.september]]</option>
+                  <option value="10">[[txt.october]]</option>
+                  <option value="11">[[txt.november]]</option>
+                  <option value="12">[[txt.december]]</option>
                 </select>
                 <select value="{{day::input}}">
-                  <option value="0">Day</option>
+                  <option value="0">[[txt.day]]</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -289,13 +289,13 @@ class PageProfile extends ReduxMixin(PolymerElement) {
                   <option value="31">31</option>
                 </select>
                 <div class="radio">
-                <label>Gender</label></br>
+                <label>[[txt.gender]]</label></br>
                   <input type="radio" name="gender" value="male" id="male" checked="{{male}}" on-change="_radio">
-                  <label for="male" class="side-label">Male</label>
+                  <label for="male" class="side-label">[[txt.male]]</label>
                   <input type="radio" name="gender" value="female" id="female" checked="{{female}}" on-change="_radio">
-                  <label for="female" class="side-label">Female</label>
+                  <label for="female" class="side-label">[[txt.female]]</label>
                   <input type="radio" name="gender" value="nonbinary" id="nonbinary" checked="{{nonbinary}}" on-change="_radio">
-                  <label for="nonbinary" class="side-label">Non-binary</label>
+                  <label for="nonbinary" class="side-label">[[txt.nonBinary]]</label>
                 </div>
               </div> 
             </div>
@@ -313,6 +313,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
       language: {
         type: String,
         readOnly: true,
+        observer: '_language',
       },
       mode: {
         type: String,
@@ -352,6 +353,9 @@ class PageProfile extends ReduxMixin(PolymerElement) {
     };
   }
 
+  _language() {
+    this.txt = translations[this.language];
+  }
   _resize() {
     const file = this.shadowRoot.querySelector('#image').files[0];
     if (file.type.match(/image.*/)) {
@@ -439,7 +443,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
     this.gender = e.target.value;
   }
   _save() {
-    this.btntext = 'Saving...';
+    this.btntext = this.txt.saving;
     const name = this.newfullname;
     const fullname = name.split(' ')[0];
     localStorage.setItem('fullname', fullname);
@@ -467,7 +471,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
           return response.json();
         })
         .then((response) => {
-          this.btntext = 'Save Profile';
+          this.btntext = this.txt.saveProfile;
         })
         .catch((error) => console.log('Error:', error));
   }

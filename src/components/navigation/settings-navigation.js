@@ -1,5 +1,6 @@
 import {createMixin} from 'polymer-redux';
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
+import {translations} from '../../translations/languages.js';
 import store from '../../global/store.js';
 import '@polymer/app-route/app-location.js';
 import '@polymer/iron-selector/iron-selector.js';
@@ -57,11 +58,11 @@ class SettingsNavigation extends ReduxMixin(PolymerElement) {
 
       <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="side-nav" role="navigation">
-            <a name="profile" href="[[rootPath]]settings/profile/">Edit Profile</a>
-            <a name="preferences" href="[[rootPath]]settings/preferences/">Preferences</a>
-            <a name="password" href="[[rootPath]]settings/password/">Password</a>
-            <a name="notifications" href="[[rootPath]]settings/notifications/">Notifications</a>
-            <a name="accounts" href="[[rootPath]]settings/accounts/">Connected Accounts</a>
+          <a name="profile" href="[[rootPath]]settings/profile/">[[txt.editProfile]]</a>
+          <a name="preferences" href="[[rootPath]]settings/preferences/">[[txt.preferences]]</a>
+          <a name="password" href="[[rootPath]]settings/password/">[[txt.password]]</a>
+          <a name="notifications" href="[[rootPath]]settings/notifications/">[[txt.notifications]]</a>
+          <a name="accounts" href="[[rootPath]]settings/accounts/">[[txt.connectedAccounts]]</a>
         </iron-selector>
     `;
   }
@@ -71,6 +72,7 @@ class SettingsNavigation extends ReduxMixin(PolymerElement) {
       language: {
         type: Text,
         readOnly: true,
+        observer: '_language',
       },
       mode: {
         type: Text,
@@ -99,7 +101,9 @@ class SettingsNavigation extends ReduxMixin(PolymerElement) {
       color: state.color,
     };
   }
-
+  _language() {
+    this.txt = translations[this.language];
+  }
   _pageChanged() {
     this.page = this.route.path.split('/')[2];
   }

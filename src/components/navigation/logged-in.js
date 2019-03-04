@@ -1,6 +1,6 @@
 import {createMixin} from 'polymer-redux';
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
-// import {translations} from '../../translations/languages.js';
+import {translations} from '../../translations/languages.js';
 import '@polymer/app-route/app-location.js';
 import '@polymer/app-route/app-route.js';
 import store from '../../global/store.js';
@@ -106,14 +106,14 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
               <li><a on-click="_inbox"><img src="./images/inbox.png" class="inbox"></a></li>
               <li><a on-click="_dropdown"><img src$="https://s3-us-west-1.amazonaws.com/ozark/[[userid]]/pfp_200x200.jpg?versionId=null" class="avatar">[[fullname]]</a>
                 <ul class="dropdown" on-mouseleave="_closeDropdown">
-                  <li><a on-click="_profile">Profile</a></li>
-                  <li><a on-click="_switch">Switch account</a></li>
-                  <li><a on-click="_changeMode">Enable [[switchName]] mode</a></li>
-                  <li><a on-click="_signOut">Sign Out</a></li>
+                  <li><a on-click="_profile">[[txt.profile]]</a></li>
+                  <li><a on-click="_switch">[[txt.switchAccount]]</a></li>
+                  <li><a on-click="_changeMode">[[switchName]]</a></li>
+                  <li><a on-click="_signOut">[[txt.signOut]]</a></li>
                   <hr/>
-                  <li><a on-click="_settings">Settings</a></li>
-                  <li><a on-click="_help">Help</a></li>
-                  <li><a on-click="_feedback">Feedback</a></li>
+                  <li><a on-click="_settings">[[txt.settings]]</a></li>
+                  <li><a on-click="_help">[[txt.help]]</a></li>
+                  <li><a on-click="_feedback">[[txt.feedback]]</a></li>
                 </ul>
               </li>
             </ul>
@@ -126,7 +126,7 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
       language: {
         type: String,
         readOnly: true,
-        // observer: '_language',
+        observer: '_language',
       },
       mode: {
         type: String,
@@ -155,6 +155,9 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
       color: state.color,
       userid: state.userid,
     };
+  }
+  _language() {
+    this.txt = translations[this.language];
   }
   _feedback() {
     this._closeDropdown();
@@ -206,9 +209,9 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
 
   _mode() {
     if (this.mode == 'dark') {
-      this.switchName = 'light';
+      this.switchName = this.txt.enableLightMode;
     } else {
-      this.switchName = 'dark';
+      this.switchName = this.txt.enableDarkMode;
     }
     this.updateStyles({'--placeholder-color': this.color.grey});
     this.updateStyles({'--active-color': this.color.blue});

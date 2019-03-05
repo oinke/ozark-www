@@ -168,7 +168,16 @@ class MainLogin extends ReduxMixin(PolymerElement) {
             return response.json();
           })
           .then((response) => {
-            const fullname = response.name.split(' ')[0];
+            const tempFullname = response.name.split(' ');
+            console.log('tempFullname');
+            console.log(tempFullname);
+            let fullname = '';
+            if (tempFullname) {
+              fullname = tempFullname[0];
+            } else {
+              fullname = response.name;
+            }
+            console.log(fullname);
             localStorage.setItem('fullname', fullname);
             localStorage.setItem('jwt', response.jwt);
             localStorage.setItem('id', response.id);
@@ -192,6 +201,7 @@ class MainLogin extends ReduxMixin(PolymerElement) {
   }
 
   _focusEmail() {
+    this._requestCredential();
     setTimeout(() => {
       this.shadowRoot.querySelector('#email').focus();
     }, 10);
@@ -210,6 +220,22 @@ class MainLogin extends ReduxMixin(PolymerElement) {
 
   _language(e) {
     this.txt = translations[this.language];
+  }
+
+  _requestCredential() {
+    console.log('fire');
+    const mediationValue = 'required';
+    navigator.credentials.get({password: true, mediation: mediationValue})
+        .then((credential) => {
+          console.log('fire2');
+          if (credential) {
+            console.log(credential);
+            this.email = credential.id;
+            this.password = credential.password;
+            this._login();
+          }
+        })
+        .catch((err) => log('Error reading credentials: ' + err));
   }
 
   _mode() {

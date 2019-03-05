@@ -49,7 +49,7 @@ class MainLayout extends ReduxMixin(PolymerElement) {
         }
         footer ul li{
           display:inline-block;
-          color: var(--placeholder-color);
+          color: var(--links-color);
         }
         footer .inner {
           max-width: var(--width-narrow, 75rem); 
@@ -60,7 +60,7 @@ class MainLayout extends ReduxMixin(PolymerElement) {
           font-size: 12px;
           font-weight:400;
           text-decoration: none;
-          color: var(--placeholder-color);
+          color: var(--links-color);
         }
         footer .inner ul li a:active{
           color: var(--link-active);
@@ -182,9 +182,11 @@ class MainLayout extends ReduxMixin(PolymerElement) {
     if (this.mode === 'light') {
       this.updateStyles({'--placeholder-color': this.color.grey});
       this.updateStyles({'--hover-background': this.color.white2});
+      this.updateStyles({'--links-color': this.color.black1});
     } else {
       this.updateStyles({'--placeholder-color': this.color.grey});
       this.updateStyles({'--hover-background': this.color.black1});
+      this.updateStyles({'--links-color': this.color.white3});
     }
   }
 } window.customElements.define('main-layout', MainLayout);

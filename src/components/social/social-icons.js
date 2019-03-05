@@ -35,42 +35,47 @@ class SocialIcons extends ReduxMixin(PolymerElement) {
           padding: 0;
           margin-right: 12px;
         }
+        .hide {
+          line-height: 0; 
+          font-size: 0;
+          color: transparent; 
+        }
       </style>
  
         <div>
           <ul>
             <template is="dom-if" if="[[env.social.facebook]]">
-              <li><a href="[[env.social.facebook]]" target="_blank" id="Facebook"><icon-facebook size="15px"></icon-facebook></a></li>
+              <li><a class="hide" rel="noreferrer" href="[[env.social.facebook]]" target="_blank" id="Facebook"><icon-facebook size="15px" alt="facebook"></icon-facebook>Facebook</a></li>
             </template>
             <template is="dom-if" if="[[env.social.instagram]]">
-              <li><a href="[[env.social.instagram]]" target="_blank" id="Instagram"><icon-instagram size="15px"></icon-instagram></a></li>
+              <li><a class="hide" rel="noreferrer" href="[[env.social.instagram]]" target="_blank" id="Instagram"><icon-instagram size="15px" alt="instagram"></icon-instagram>Instagram</a></li>
             </template>
             <template is="dom-if" if="[[env.social.linkedin]]">
-              <li><a href="[[env.social.linkedin]]" target="_blank" id="Linkedin"><icon-linkedin size="15px"></icon-linkedin></a></li>
+              <li><a class="hide" rel="noreferrer" href="[[env.social.linkedin]]" target="_blank" id="Linkedin"><icon-linkedin size="15px" alt="linkedin"></icon-linkedin>Linkedin</a></li>
             </template>
             <template is="dom-if" if="[[env.social.medium]]">
-              <li><a href="[[env.social.medium]]" target="_blank" id="Medium"><icon-medium size="15px"></icon-medium></a></li>
+              <li><a class="hide" rel="noreferrer" href="[[env.social.medium]]" target="_blank" id="Medium"><icon-medium size="15px" alt="medium"></icon-medium>Medium</a></li>
             </template>
             <template is="dom-if" if="[[env.social.pinterest]]">
-              <li><a href="[[env.social.pinterest]]" target="_blank" id="Pinterest"><icon-pinterest size="15px"></icon-pinterest></a></li>
+              <li><a class="hide" rel="noreferrer" href="[[env.social.pinterest]]" target="_blank" id="Pinterest"><icon-pinterest size="15px" alt="pinterest"></icon-pinterest>Pinterest</a></li>
             </template>
             <template is="dom-if" if="[[env.social.steemit]]">
-              <li><a href="[[env.social.steemit]]" target="_blank" id="Steemit"><icon-steemit size="15px"></icon-steemit></a></li>
+              <li><a class="hide" rel="noreferrer" href="[[env.social.steemit]]" target="_blank" id="Steemit"><icon-steemit size="15px" alt="steemit"></icon-steemit>Steemit</a></li>
             </template>
             <template is="dom-if" if="[[env.social.telegram]]">
-              <li><a href="[[env.social.telegram]]" target="_blank" id="Telegram"><icon-telegram size="15px"></icon-telegram></a></li>
+              <li><a class="hide" rel="noreferrer" href="[[env.social.telegram]]" target="_blank" id="Telegram"><icon-telegram size="15px" alt="telegram"></icon-telegram>Telegram</a></li>
             </template>
             <template is="dom-if" if="[[env.social.tumblr]]">
-              <li><a href="[[env.social.tumblr]]" target="_blank" id="Tumblr"><icon-tumblr size="15px"></icon-tumblr></a></li>
+              <li><a class="hide" rel="noreferrer" href="[[env.social.tumblr]]" target="_blank" id="Tumblr"><icon-tumblr size="15px" alt="tumblr"></icon-tumblr>Tumblr</a></li>
             </template>
             <template is="dom-if" if="[[env.social.twitch]]">
-              <li><a href="[[env.social.twitch]]" target="_blank" id="Twitch"><icon-twitch size="15px"></icon-twitch></a></li>
+              <li><a class="hide" rel="noreferrer" href="[[env.social.twitch]]" target="_blank" id="Twitch"><icon-twitch size="15px" alt="twitch"></icon-twitch>Twitch</a></li>
             </template>
             <template is="dom-if" if="[[env.social.twitter]]">
-              <li><a href="[[env.social.twitter]]" target="_blank" id="Twitter"><icon-twitter size="15px"></icon-twitter></a></li>
+              <li><a class="hide" rel="noreferrer" href="[[env.social.twitter]]" target="_blank" id="Twitter"><icon-twitter size="15px" alt="twitter"></icon-twitter>Twitter</a></li>
             </template>
             <template is="dom-if" if="[[env.social.youtube]]">
-              <li><a href="[[env.social.youtube]]" target="_blank" id="YouTube"><icon-youtube size="15px"></icon-youtube></a></li>
+              <li><a class="hide" rel="noreferrer" href="[[env.social.youtube]]" target="_blank" id="YouTube"><icon-youtube size="15px" alt="youtube"></icon-youtube>YouTube</a></li>
             </template>
           </ul>
         </div>

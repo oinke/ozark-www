@@ -1,7 +1,6 @@
 {
   "entrypoint": "index.html",
   "shell": "src/app-shell.js",
-  "autoBasePath": true,
   "sources": [
     "images/**/*"
   ],

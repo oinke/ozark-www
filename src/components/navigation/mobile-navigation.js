@@ -38,12 +38,17 @@ class MobileNavigation extends ReduxMixin(PolymerElement) {
         .language{
           background-image: url('./images/mobile-language.png');
         }
+        .hide {
+          line-height: 0; 
+          font-size: 0;
+          color: transparent; 
+        }
       </style>
         <div class="mobile-inner">
-          <a href="/" class="home"></a>
-          <a href="/search/" class="search"></a>
-          <a href="/join/" class="join"></a>
-          <a href="/language/" class="language"></a>
+          <a href="/" class="home hide">Home</a>
+          <a href="/search/" class="search hide">Search</a>
+          <a href="/join/" class="join hide">Join</a>
+          <a href="/language/" class="language hide">language</a>
         </div>
 
     `;

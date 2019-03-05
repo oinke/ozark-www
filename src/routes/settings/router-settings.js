@@ -60,7 +60,7 @@ class RouterSettings extends PolymerElement {
 
   _pageChanged(page) {
     window.scrollTo(0, 0);
-    window.dataLayer.push({'event': 'Pageview', 'url': `/help/${page}`});
+    // window.dataLayer.push({'event': 'Pageview', 'url': `/help/${page}`});
     switch (page) {
       case 'profile':
         import('./page-profile.js');

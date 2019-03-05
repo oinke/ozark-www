@@ -64,30 +64,32 @@ class MainJoin extends ReduxMixin(PolymerElement) {
         <h1>[[txt.join]] [[env.siteName]]</h1>
         <p class="value">[[txt.value]]</p>
         <div class="area">
-        <p>
-          <label for="name">[[txt.yourName]]</label>
-          <input type="text" name="name" id="name" on-keydown="_yourName" value="{{name::input}}" required>
-          <small class="issue">[[issueName]]</small>
-        </p>
-        <p>
-          <label for="email">[[txt.email]]</label>
-          <input type="email" name="email" id="email" on-keydown="_email" value="{{email::input}}" required>
-          <small class="issue">[[issueEmail]]</small>
-        </p>
-        <p>
-          <label for="password">[[txt.password]]</label>
-          <input type="password" name="password" id="password" on-keydown="_password" value="{{password::input}}" required>
-          <template is="dom-if" if="{{issuePassword}}"><small>[[txt.passwordLength]]</small></template>
-          <small class="issue">[[issuePassword]]</small>
-        </p>
-        <p>
-          <label for="repassword">[[txt.reEnterPassword]]</label>
-          <input type="password" name="repassword" id="repassword" on-keydown="_reEnter" value="{{confirmPassword::input}}" required>
-          <small class="issue">[[issueConfirmPassword]]</small>
-        </p>
-        <button class="modal-btn" on-click="_join">[[txt.join]]</button>
-        <small>[[txt.byJoining]] [[env.siteName]] <a href="/help/terms/">[[txt.termsOfService]]</a> & <a href="/help/privacy/">[[txt.privacyNotice]]</a></small>
-        <center><p class="inline-flex">[[txt.alreadyOn]] [[env.siteName]]? &nbsp; <a href="/login/" class="mobile-link-login">[[txt.login]]</a> <a on-click="_login" class="desktop-link-login">[[txt.login]]</a></p></center>
+          <form id="form"> 
+            <p>
+              <label for="name">[[txt.yourName]]</label>
+              <input type="text" name="name" id="name" on-keydown="_yourName" value="{{name::input}}" required>
+              <small class="issue">[[issueName]]</small>
+            </p>
+            <p>
+              <label for="email">[[txt.email]]</label>
+              <input type="email" name="email" id="email" on-keydown="_email" value="{{email::input}}" required autocomplete="username">
+              <small class="issue">[[issueEmail]]</small>
+            </p>
+            <p>
+              <label for="password">[[txt.password]]</label>
+              <input type="password" name="password" id="password" on-keydown="_password" value="{{password::input}}" required autocomplete="current-password">
+              <template is="dom-if" if="{{issuePassword}}"><small>[[txt.passwordLength]]</small></template>
+              <small class="issue">[[issuePassword]]</small>
+            </p>
+            <p>
+              <label for="repassword">[[txt.reEnterPassword]]</label>
+              <input type="password" name="repassword" id="repassword" on-keydown="_reEnter" value="{{confirmPassword::input}}" required>
+              <small class="issue">[[issueConfirmPassword]]</small>
+            </p>
+            <button class="modal-btn" on-click="_join">[[txt.join]]</button>
+            <small>[[txt.byJoining]] [[env.siteName]] <a href="/help/terms/">[[txt.termsOfService]]</a> & <a href="/help/privacy/">[[txt.privacyNotice]]</a></small>
+            <center><p class="inline-flex">[[txt.alreadyOn]] [[env.siteName]]? &nbsp; <a href="/login/" class="mobile-link-login">[[txt.login]]</a> <a on-click="_login" class="desktop-link-login">[[txt.login]]</a></p></center>
+          </form>
         </div>
       </template>
 
@@ -168,7 +170,9 @@ class MainJoin extends ReduxMixin(PolymerElement) {
     this.sent = false;
   }
 
-  _join() {
+
+  _join(e) {
+    e.preventDefault();
     const name = this.name;
     const email = this.email;
     const password = this.password;
@@ -238,7 +242,6 @@ class MainJoin extends ReduxMixin(PolymerElement) {
     }
   }
 
-
   _resend() {
     this.resent = true;
     const url = `${this.env.apiUrl}/guest/resend/`;
@@ -271,12 +274,17 @@ class MainJoin extends ReduxMixin(PolymerElement) {
             return response.json();
           })
           .then((response) => {
-            console.log(response.data);
+            console.log(response);
             if (response && response.data === true) {
               const fullname = response.name;
               const userid = response.id;
+              const iconURL = `https://s3-us-west-1.amazonaws.com/ozark/${response.id}/pfp_200x200.jpg?versionId=null`;
               localStorage.setItem('id', userid);
               localStorage.setItem('fullname', fullname);
+
+              if (iconURL, this.email, this.name, this.password) {
+                this._storeCredential(iconURL, this.email, this.name, this.password);
+              }
               
               this.dispatchAction({
                 type: 'CHANGE_NAME',
@@ -302,6 +310,13 @@ class MainJoin extends ReduxMixin(PolymerElement) {
       this.shadowRoot.querySelector('#code').classList.add('error');
       this.issueCode = this.txt.incorrectCode;
     }
+  }
+
+  _storeCredential(iconURL, id, name, password) {
+    const credential = new PasswordCredential({iconURL, id, name, password});
+    navigator.credentials.store(credential)
+        .then(() => console.log('Storing credential for <b>' + credential.id + '</b> (result cannot be checked by the website)'))
+        .catch((err) => console.log('Error storing credentials: ' + err));
   }
 
   _focusName() {

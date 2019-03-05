@@ -1,5 +1,6 @@
 import {createMixin} from 'polymer-redux';
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
+import {translations} from '../../translations/languages.js';
 import '../../css/shared-styles.js';
 import '../../components/layouts/main-layout.js';
 import '../../components/navigation/settings-navigation.js';
@@ -82,11 +83,11 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
         </div>
         <div slot="body">
           <div class='form'>
-            <h1>Edit Preferences</h1>
+            <h1>[[txt.editPreferences]]</h1>
             <div class="form-section">
-              <div class="form-title">Localization</div>
+              <div class="form-title">[[txt.localization]]</div>
               <div class="form-inputs">
-                <label>Language</label>
+                <label>[[txt.language]]</label>
                 <select value="{{newLanguage::input}}">                        
                   <option value="Català">Català</option>
                   <option value="Česky">Česky</option>
@@ -120,7 +121,7 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
                   <option value="한국어">한국어</option>
                 </select>
                 <!-- <small>Help us translate the site.</small> -->
-                <label>Time zone</label>
+                <label>[[txt.timeZone]]</label>
                 <select value="{{timeZone::input}}">
                   <option value="Pacific/Midway">(UTC-11:00) Pacific/Midway</option>
                   <option value="Pacific/Niue">(UTC-11:00) Pacific/Niue</option>
@@ -562,7 +563,7 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
                   <option value="Pacific/Apia">(UTC+14:00) Pacific/Apia</option>
                   <option value="Pacific/Kiritimati">(UTC+14:00) Pacific/Kiritimati</option>     
                 </select>
-                <label>Currency</label>
+                <label>[[txt.currency]]</label>
                 <select value="{{currency::input}}">
                   <option value="AUD">Australian dollars ($)</option>
                   <option value="BHD">Bahrain dinars (BD)</option>
@@ -613,27 +614,27 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
               </div>
             </div>              
             <div class="form-section">
-              <div class="form-title">Privacy</div>
+              <div class="form-title">[[txt.privacy]]</div>
               <div class="form-inputs">
 
                 <div class="radio">
-                <label>Profile visable to:</label></br>
+                <label>[[txt.profileVisableTo]]</label></br>
                   <input type="radio" name="profile" value="everyone" id="visibilityEveryone" on-change="_visibility" checked>
-                  <label for="everyone" class="side-label">Everyone</label>
+                  <label for="everyone" class="side-label">[[txt.everyone]]</label>
                   <input type="radio" name="profile" value="iFollow" id="visibilityiFollow" on-change="_visibility">
-                  <label for="iFollow" class="side-label">People I follow</label>
+                  <label for="iFollow" class="side-label">[[txt.peopleIFollow]]</label>
                   <input type="radio" name="profile" value="nobody" id="visibilityNobody" on-change="_visibility">
-                  <label for="nobody" class="side-label">Nobody</label>
+                  <label for="nobody" class="side-label">[[txt.nobody]]</label>
                 </div>
 
                 <div class="radio">
                 <label>Recieve messages from:</label></br>
                   <input type="radio" name="messages" value="everyone" id="messagesEveryone" on-change="_messages" checked>
-                  <label for="everyone" class="side-label">Everyone</label>
+                  <label for="everyone" class="side-label">[[txt.everyone]]</label>
                   <input type="radio" name="messages" value="ifollow" id="messagesIfollow" on-change="_messages">
-                  <label for="ifollow" class="side-label">People I follow</label>
+                  <label for="ifollow" class="side-label">[[txt.peopleIFollow]]</label>
                   <input type="radio" name="messages" value="none" id="messagesNobody" on-change="_messages">
-                  <label for="none" class="side-label">Nobody</label>
+                  <label for="none" class="side-label">[[txt.nobody]]</label>
                 </div>
               </div> 
             </div>
@@ -651,6 +652,7 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
       language: {
         type: String,
         readOnly: true,
+        observer: '_language',
       },
       mode: {
         type: String,
@@ -689,6 +691,9 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
       color: state.color,
     };
   }
+  _language(e) {
+    this.txt = translations[this.language];
+  }
   _visibility() {
     if (this.shadowRoot.querySelector('#visibilityEveryone').checked) this.visibility = 'Everyone';
     if (this.shadowRoot.querySelector('#visibilityiFollow').checked) this.visibility = 'Follow';
@@ -700,7 +705,7 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
     if (this.shadowRoot.querySelector('#messagesNobody').checked) this.messages = 'Nobody';
   }
   _save() {
-    this.btntext = 'Saving...';
+    this.btntext = this.txt.saving;
     const language = this.newLanguage || 'English';
     localStorage.setItem('language', this.newLanguage);
     const timeZone = this.timeZone || 'UTC';
@@ -726,7 +731,7 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
           return response.json();
         })
         .then((response) => {
-          this.btntext = 'Save Profile';
+          this.btntext = this.txt.savePreferences;
         })
         .catch((error) => console.log('Error:', error));
   }

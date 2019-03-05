@@ -1,5 +1,6 @@
 import {createMixin} from 'polymer-redux';
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
+import {translations} from '../../translations/languages.js';
 import '../../css/shared-styles.js';
 import '../../components/layouts/main-layout.js';
 import '../../components/navigation/settings-navigation.js';
@@ -142,11 +143,11 @@ class PageAccounts extends ReduxMixin(PolymerElement) {
           </div>
           <div slot="body">
             <div class='form'>
-              <h1>Connected Accounts</h1>
-              <p class="intro">Link your accounts to easily share your activities.</p>
+              <h1>[[txt.connectedAccounts]]</h1>
+              <p class="intro">[[txt.linkYourAccountsTo]]</p>
               <div class="form-section">
 
-                <div class="form-title">Accounts</div>
+                <div class="form-title">[[txt.accounts]]</div>
                 <div class="form-inputs">
                 <div class="notification-container notme">
                   <div class="right-switch">
@@ -155,7 +156,7 @@ class PageAccounts extends ReduxMixin(PolymerElement) {
                       <span class="slider round"></span>
                     </label>
                   </div>
-                  <div class="switch-text">Twiiter</div>
+                  <div class="switch-text">[[txt.twiiter]]</div>
                 </div>
                 <div class="notification-container">
                   <div class="right-switch">
@@ -164,7 +165,7 @@ class PageAccounts extends ReduxMixin(PolymerElement) {
                       <span class="slider round"></span>
                     </label>
                   </div>
-                  <div class="switch-text">Facebook</div>
+                  <div class="switch-text">[[txt.facebook]]</div>
                 </div>
                 <div class="notification-container">
                   <div class="right-switch">
@@ -173,11 +174,11 @@ class PageAccounts extends ReduxMixin(PolymerElement) {
                       <span class="slider round"></span>
                     </label>
                   </div>
-                  <div class="switch-text">Google</div>
+                  <div class="switch-text">[[txt.google]]</div>
                 </div>
                 </div>
               </div>   
-                <p class="outro"> Don't worry, we only update a linked account when you tell us to.</p>   
+                <p class="outro">[[txt.dontWorryLinkedAccount]]</p>   
     
             </div>
           </div>
@@ -191,6 +192,7 @@ class PageAccounts extends ReduxMixin(PolymerElement) {
       language: {
         type: String,
         readOnly: true,
+        observer: '_language',
       },
       mode: {
         type: String,
@@ -215,6 +217,10 @@ class PageAccounts extends ReduxMixin(PolymerElement) {
       env: state.env,
       color: state.color,
     };
+  }
+
+  _language(e) {
+    this.txt = translations[this.language];
   }
 
   _twitterLogin() {

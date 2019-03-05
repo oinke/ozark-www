@@ -66,25 +66,25 @@ class MainFeedback extends ReduxMixin(PolymerElement) {
       </style>
 
       <template is="dom-if" if="{{!thanks}}">
-        <h1>Send Feeback</h1>
-        <p class="value">Share your ideas or describe your issue</p>
+        <h1>[[txt.sendFeeback]] </h1>
+        <p class="value">[[txt.shareYourIdeas]]</p>
         <div class="area">
 
         <p>
-          <label for="email">Message</label>
+          <label for="email">[[txt.message]]</label>
           <textarea rows="8" name="email" id="message" on-keydown="_sendMessage" value="{{message::input}}" required></textarea>
           <small class="issue">[[issueMessage]]</small>
         </p>
-        <button class="modal-btn" on-click="_send">Send</button>
-        <center><p class="inline-flex">Your feedback is important to us.</p></center>
+        <button class="modal-btn" on-click="_send">[[txt.send]]</button>
+        <center><p class="inline-flex">[[txt.yourFeedbackIsImportant]]</p></center>
         </div>
       </template>
 
       <template is="dom-if" if="{{thanks}}">
-        <h1>Thank you for your valuable feedback!</h1>
-        <p class="value">We read every single comment and we are constantly improving.</p>
+        <h1>[[txt.thankYouForYourFeedback]]</h1>
+        <p class="value">[[txt.weReadEverySingleComment]]</p>
         <div class="area">
-        <button class="modal-btn" on-click="_close">Close</button>
+        <button class="modal-btn" on-click="_close">[[txt.close]]</button>
         </div>
       </template>
     `;

@@ -1,5 +1,6 @@
 import {createMixin} from 'polymer-redux';
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
+import {translations} from '../../translations/languages.js';
 import '../../css/shared-styles.js';
 import '../../components/layouts/main-layout.js';
 import '../../components/navigation/settings-navigation.js';
@@ -16,7 +17,6 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
           background-color: var(--black2-white1);
           color: var(--white2-black2);
         }
- 
         .form {
           display: block;
           margin-top: 20px;
@@ -144,12 +144,12 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
         </div>
         <div slot="body">
           <div class='form'>
-            <h1>Notifications</h1>
+            <h1>[[txt.notifications]]</h1>
             <div class="form-section">
-              <div class="form-title">Email</div>
+              <div class="form-title">[[txt.email]]</div>
               <div class="form-inputs">
               <div class="notification-container notme">
-                <div class="switch-text">When I recieve a message</div>
+                <div class="switch-text">[[txt.whenIRecieveAMessage]]</div>
                 <div class="right-switch">
                   <label class="switch">
                     <input type="checkbox" checked id="emailMessage" on-change="_tickBox"> 
@@ -158,7 +158,7 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
                 </div>
               </div>
               <div class="notification-container">
-              <div class="switch-text">When someone follows me</div>
+              <div class="switch-text">[[txt.whenSomeoneFollowsMe]]</div>
                 <div class="right-switch">
                   <label class="switch">
                     <input type="checkbox" checked id="emailFollow" on-change="_tickBox">
@@ -167,7 +167,7 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
                 </div>
               </div>
               <div class="notification-container">
-              <div class="switch-text">Newsletter is published</div>
+              <div class="switch-text">[[txt.newsletterIsPublished]]</div>
                 <div class="right-switch">
                   <label class="switch">
                     <input type="checkbox" checked id="emailNewsletter" on-change="_tickBox">
@@ -181,7 +181,7 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
               <div class="form-title">Alerts</div>
               <div class="form-inputs">
               <div class="notification-container notme">
-                <div class="switch-text">When I recieve a message</div>
+                <div class="switch-text">[[txt.whenIRecieveAMessage]]</div>
                 <div class="right-switch">
                   <label class="switch">
                     <input type="checkbox" checked id="notifyMessage" on-change="_tickBox">
@@ -190,7 +190,7 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
                 </div>
               </div>
               <div class="notification-container">
-              <div class="switch-text">When someone follows me</div>
+              <div class="switch-text">[[txt.whenSomeoneFollowsMe]]</div>
                 <div class="right-switch">
                   <label class="switch">
                     <input type="checkbox" checked id="notifyFollow" on-change="_tickBox">
@@ -199,7 +199,7 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
                 </div>
               </div>
               <div class="notification-container">
-              <div class="switch-text">Newsletter is published</div>
+              <div class="switch-text">[[txt.newsletterIsPublished]]</div>
                 <div class="right-switch">
                   <label class="switch">
                     <input type="checkbox" checked id="notifyNewsletter" on-change="_tickBox">
@@ -223,6 +223,7 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
       language: {
         type: String,
         readOnly: true,
+        observer: '_language',
       },
       mode: {
         type: String,
@@ -262,6 +263,10 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
     };
   }
 
+  _language(e) {
+    this.txt = translations[this.language];
+  }
+
   _tickBox(e) {
     this.emailMessage = this.shadowRoot.querySelector('#emailMessage').checked;
     this.emailFollow = this.shadowRoot.querySelector('#emailFollow').checked;
@@ -271,7 +276,7 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
     this.notifyNewsletter = this.shadowRoot.querySelector('#notifyNewsletter').checked;
   }
   _save() {
-    this.btntext = 'Saving...';
+    this.btntext = this.txt.saving;
     const emailMessage = this.emailMessage;
     const emailFollow = this.emailFollow;
     const emailNewsletter = this.emailNewsletter;
@@ -290,7 +295,7 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
           return response.json();
         })
         .then((response) => {
-          this.btntext = 'Save Changes';
+          this.btntext = this.txt.saveChanges;
         })
         .catch((error) => console.log('Error:', error));
   }

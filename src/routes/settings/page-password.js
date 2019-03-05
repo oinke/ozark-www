@@ -1,5 +1,6 @@
 import {createMixin} from 'polymer-redux';
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
+import {translations} from '../../translations/languages.js';
 import '../../css/shared-styles.js';
 import '../../components/layouts/main-layout.js';
 import '../../components/navigation/settings-navigation.js';
@@ -84,14 +85,14 @@ class PagePassword extends ReduxMixin(PolymerElement) {
         </div>
         <div slot="body">
           <div class='form'>
-            <h1>Change Password</h1>
+            <h1>[[txt.changePassword]]</h1>
             <div class="form-section">
               <div class="form-title"></div>
               <div class="form-inputs">
-                <label>New Password</label>
+                <label>[[txt.newPassword]]</label>
                 <input type="password" class="text" id="password" value="{{password::input}}">
-                <small>New password, at least 6 characters.</small>
-                <label>Confirm Password</label>
+                <small>[[txt.password6Characters]]</small>
+                <label>[[txt.confirmPassword]]</label>
                 <input type="password" class="text" value="{{confirmPassword::input}}">
               </div>
             </div>              
@@ -110,6 +111,7 @@ class PagePassword extends ReduxMixin(PolymerElement) {
       language: {
         type: String,
         readOnly: true,
+        observer: '_language',
       },
       mode: {
         type: String,
@@ -149,9 +151,13 @@ class PagePassword extends ReduxMixin(PolymerElement) {
     };
   }
 
+  _language(e) {
+    this.txt = translations[this.language];
+  }
+
   _save() {
     if (this.password && this.confirmPassword && this.password === this.confirmPassword && this.password.length > 6) {
-      this.btntext = 'Saving...';
+      this.btntext = this.txt.saving;
       const password = this.password;
       const data = {password};
       const token = localStorage.getItem('jwt');
@@ -167,7 +173,7 @@ class PagePassword extends ReduxMixin(PolymerElement) {
           .then((response) => {
             console.log(response);
             localStorage.setItem('jwt', response.jwt);
-            this.btntext = 'Save Password';
+            this.btntext = this.txt.savePassword;
             this.password = '';
             this.confirmPassword = '';
           })

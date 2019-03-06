@@ -17,12 +17,15 @@ script:
   - xvfb-run npm run test
   - xvfb-run npm run test:integration
 deploy:
+    # Live Deploy
+    on:
+      branch: master
   - provider: s3
     access_key_id: $AWS_ACCESS_KEY_ID
     secret_access_key: $AWS_SECRET_ACCESS_KEY
     bucket: $S3_BUCKET_NAME
     skip_cleanup: true
     local_dir: build/es6-bundled
-    on:
-      branch: master
+
+after_deploy:
   - test $TRAVIS_BRANCH = "master" && travis-ci-cloudfront-invalidation -a $AWS_ACCESS_KEY_ID -s $AWS_SECRET_ACCESS_KEY -c $CLOUDFRONT_DISTRIBUTION_ID -i '/*' -b $TRAVIS_BRANCH -p $TRAVIS_PULL_REQUEST -o 'master'

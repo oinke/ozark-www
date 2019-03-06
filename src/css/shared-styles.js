@@ -13,7 +13,7 @@ $_documentContainer.innerHTML = `
       user-select: none;
     }
     .flat-btn{
-      width:120px;
+      width: auto;
       height: 40px;
       margin: 16px 24px;
       border-radius: 3px;

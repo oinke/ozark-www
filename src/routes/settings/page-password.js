@@ -153,6 +153,7 @@ class PagePassword extends ReduxMixin(PolymerElement) {
 
   _language(e) {
     this.txt = translations[this.language];
+    this.btntext = this.txt.savePassword;
   }
 
   _save() {

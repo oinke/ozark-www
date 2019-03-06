@@ -719,6 +719,8 @@ export const translations = {
     facebook: 'Facebook',
     google: 'Google',
     dontWorryLinkedAccount: 'Don\'t worry, we only update a linked account when you tell us to.',
+    recieveMessagesFrom: 'Recieve Messages From',
+    alerts: 'Alerts',
   },
   Español: {
     languageName: 'spanish',

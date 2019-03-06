@@ -628,7 +628,7 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
                 </div>
 
                 <div class="radio">
-                <label>Recieve messages from:</label></br>
+                <label>[[txt.recieveMessagesFrom]]</label></br>
                   <input type="radio" name="messages" value="everyone" id="messagesEveryone" on-change="_messages" checked>
                   <label for="everyone" class="side-label">[[txt.everyone]]</label>
                   <input type="radio" name="messages" value="ifollow" id="messagesIfollow" on-change="_messages">
@@ -693,6 +693,7 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
   }
   _language(e) {
     this.txt = translations[this.language];
+    this.btntext = this.txt.savePreferences;
   }
   _visibility() {
     if (this.shadowRoot.querySelector('#visibilityEveryone').checked) this.visibility = 'Everyone';

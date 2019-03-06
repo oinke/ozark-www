@@ -178,7 +178,7 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
               </div>
             </div>              
             <div class="form-section">
-              <div class="form-title">Alerts</div>
+              <div class="form-title">[[txt.alerts]]</div>
               <div class="form-inputs">
               <div class="notification-container notme">
                 <div class="switch-text">[[txt.whenIRecieveAMessage]]</div>
@@ -265,6 +265,7 @@ class PageNotifications extends ReduxMixin(PolymerElement) {
 
   _language(e) {
     this.txt = translations[this.language];
+    this.btntext = this.txt.saveChanges;
   }
 
   _tickBox(e) {

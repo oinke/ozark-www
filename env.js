@@ -5,7 +5,7 @@ export const env = {
   mailingAddress: '102 Some Rd, Some St, Some Town, Some Country',
   deleteEmail: 'deleteme@ozark.com',
   exportEmail: 'exportme@ozark.com',
-  contactReasons: ['Business Enquiry', 'I have a great idea', 'I found a bug', 'Affiliate Support', 'Other'],
+  contactReasons: ['Business Enquiry', 'Press Enquiry', 'I have a great idea', 'I found a bug', 'Affiliate Support', 'Other'],
   apiUrl: 'https://api.websmite.net/api/v1',
   googleTagManager: 'GTM-W9T3C9F',
   social: {

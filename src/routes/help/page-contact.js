@@ -31,6 +31,7 @@ class PageContact extends ReduxMixin(PolymerElement) {
         }
         .button {
           margin-left: 0px;
+          background-color: var(--black1-white2);
         }
         input, select {
           background-color: var(--black1-white2);
@@ -53,21 +54,22 @@ class PageContact extends ReduxMixin(PolymerElement) {
                   <h1>Contact Us</h1>
                   <p>Check out our Help Section. If you're still stumped, drop us a line.</p></br>
                   <label for="name">Enquiry type</label>
-                  <select>
+                  <select value="{{enquiry::input}}">
+                  <option value="">Select...</option>
                     <template is="dom-repeat" items="[[reasons]]">
                       <option value="[[item]]">[[item]]</option>
                     </template>
                   </select>
                   <label for="name">Name</label>
-                  <input name="name" id="name">
+                  <input name="name" id="name" value="{{name::input}}">
 
                   <label for="Email">Email</label>
-                  <input name="Email" id="Email">
+                  <input name="Email" id="Email" value="{{email::input}}">
 
                   <label for="Message">Message</label>
-                  <textarea rows="8" cols="50"></textarea>
+                  <textarea rows="8" cols="50" value="{{message::input}}"></textarea>
 
-                  <button class="flat-btn button">Send Enquiry</button>
+                  <button class="flat-btn button" on-click="_send">Send Enquiry</button>
                 </header>
               </section>
             </article>
@@ -108,6 +110,26 @@ class PageContact extends ReduxMixin(PolymerElement) {
     };
   }
 
+  _send() {
+    const enquiry = this.enquiry;
+    const name = this.name;
+    const email = this.email;
+    const message = this.message;
+    const data = {enquiry, name, email, message};
+    const url = `${this.env.apiUrl}/help/contact/`;
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {'Content-Type': 'application/json'},
+    })
+        .then((response) => {
+          return response.json();
+        })
+        .then((response) => {
+          this.btntext = 'sent';
+        })
+        .catch((error) => console.log('Error:', error));
+  }
   _env() {
     this.reasons = this.env.contactReasons;
   }

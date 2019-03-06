@@ -75,7 +75,7 @@ class PageCopyright extends ReduxMixin(PolymerElement) {
                   <li>
                       <p>Provide your electronic or physical signature. Deliver this Notice, with all items completed, to [[env.siteName]]’s Designated Copyright Agent:</p>
                       <p>[[env.siteName]] Copyright Agent: <a href="mailto:[[env.supportEmail]]">[[env.supportEmail]]</a></p>
-                      <p><a target="_blank" rel="noopener noreferrer" href="/files/DMCAForm.pdf">Copyright Infringement Notice Form</a></p>
+                      <p><a target="_blank" rel="noopener noreferrer" href="/images/DMCAForm.pdf">Copyright Infringement Notice Form</a></p>
                   </li>
               </ul>
               <h3>If You Believe Your Transmission was Removed Pursuant to a Copyright Complaint (DMCA) Notification.</h3>

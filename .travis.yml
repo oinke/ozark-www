@@ -33,7 +33,7 @@ deploy:
     secret_access_key: $AWS_SECRET_ACCESS_KEY
     bucket: $S3_DEVELOPMENT_BUCKET_NAME
     skip_cleanup: true
-    local_dir: build/es6-bundle
+    local_dir: build/es6-bundled
     on:
       branch: development
 after_deploy:

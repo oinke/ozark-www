@@ -683,6 +683,7 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
 
   static mapStateToProps(state, element) {
     return {
+      newLanguage: state.language,
       fullname: state.fullname,
       userid: state.userid,
       language: state.language,
@@ -749,7 +750,6 @@ class PagePreferences extends ReduxMixin(PolymerElement) {
             return response.json();
           })
           .then((response) => {
-            this.language = response.language;
             this.newLanguage = response.language;
             this.timeZone = response.timeZone;
             this.currency = response.currency;

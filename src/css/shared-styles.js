@@ -23,6 +23,7 @@ $_documentContainer.innerHTML = `
       cursor: pointer;
       font-weight: 900;
       font-size: 12px;
+      padding: 0 24px;
     }
     .flat-btn:hover{
       border: 1px solid var(--blue-color);
@@ -75,7 +76,8 @@ $_documentContainer.innerHTML = `
       color: var(--white1-black1);
       border: 1px solid var(--black3-white3);
       outline:0;
-      width: 100px;
+      width: 90px;
+      margin-right: 6px;
       line-height: 1;
       font-size: 12px;
       text-indent: 2px;

@@ -124,6 +124,12 @@ class MainModal extends ReduxMixin(PolymerElement) {
 
   ready() {
     super.ready();
+    document.onkeydown = (evt) => {
+      evt = evt || window.event;
+      if (evt.keyCode == 27) {
+        this._hide();
+      }
+    };
     window.addEventListener('modal', (e) => {
       this.language = e.detail.language;
       this._show(e.detail.action);

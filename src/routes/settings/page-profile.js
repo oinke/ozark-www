@@ -290,6 +290,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
                 </select>
                 <div class="radio">
                 <label>[[txt.gender]]</label></br>
+                  <div id="error">Head back to home.</div>
                   <input type="radio" name="gender" value="male" id="male" checked="{{male}}" on-change="_radio">
                   <label for="male" class="side-label">[[txt.male]]</label>
                   <input type="radio" name="gender" value="female" id="female" checked="{{female}}" on-change="_radio">

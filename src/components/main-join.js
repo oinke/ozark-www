@@ -285,7 +285,6 @@ class MainJoin extends ReduxMixin(PolymerElement) {
               if (iconURL, this.email, this.name, this.password) {
                 this._storeCredential(iconURL, this.email, this.name, this.password);
               }
-              
               this.dispatchAction({
                 type: 'CHANGE_NAME',
                 fullname: fullname,

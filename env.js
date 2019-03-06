@@ -5,7 +5,7 @@ export const env = {
   mailingAddress: '102 Some Rd, Some St, Some Town, Some Country',
   deleteEmail: 'deleteme@ozark.com',
   exportEmail: 'exportme@ozark.com',
-  apiUrl: 'http://localhost:9010/api/v1',
+  apiUrl: 'https://api.websmite.net/api/v1',
   googleTagManager: 'GTM-W9T3C9F',
   social: {
     facebook: 'https://www.facebook.com/@bkawk',

@@ -223,13 +223,10 @@ class MainLogin extends ReduxMixin(PolymerElement) {
   }
 
   _requestCredential() {
-    console.log('fire');
     const mediationValue = 'required';
     navigator.credentials.get({password: true, mediation: mediationValue})
         .then((credential) => {
-          console.log('fire2');
           if (credential) {
-            console.log(credential);
             this.email = credential.id;
             this.password = credential.password;
             this._login();

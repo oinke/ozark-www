@@ -6,7 +6,7 @@ export const env = {
   deleteEmail: 'deleteme@ozark.com',
   exportEmail: 'exportme@ozark.com',
   contactReasons: ['Business Enquiry', 'Press Enquiry', 'I have a great idea', 'I found a bug', 'Affiliate Support', 'Other'],
-  apiUrl: 'https://api.websmite.net/api/v1',
+  apiUrl: 'https://ozark-prod.herokuapp.com/api/v1',
   googleTagManager: 'GTM-W9T3C9F',
   social: {
     facebook: 'https://www.facebook.com/@bkawk',

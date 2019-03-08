@@ -168,33 +168,34 @@ class MainLogin extends ReduxMixin(PolymerElement) {
             return response.json();
           })
           .then((response) => {
-            const tempFullname = response.name.split(' ');
-            console.log('tempFullname');
-            console.log(tempFullname);
-            let fullname = '';
-            if (tempFullname) {
-              fullname = tempFullname[0];
+            if (!response.error) {
+              const tempFullname = response.name.split(' ');
+              let fullname = '';
+              if (tempFullname) {
+                fullname = tempFullname[0];
+              } else {
+                fullname = response.name;
+              }
+              localStorage.setItem('fullname', fullname);
+              localStorage.setItem('jwt', response.jwt);
+              localStorage.setItem('id', response.id);
+              localStorage.setItem('loggedin', true);
+              this.dispatchEvent(new CustomEvent('hideModal', {bubbles: true, composed: true, detail: {action: 'hideModal'}}));
+              this.dispatchAction({
+                type: 'CHANGE_NAME',
+                fullname: fullname,
+              });
+              this.dispatchAction({
+                type: 'CHANGE_STATUS',
+                loggedin: true,
+              });
+              this.dispatchAction({
+                type: 'CHANGE_USERID',
+                userid: response.id,
+              });
             } else {
-              fullname = response.name;
+              console.log(response);
             }
-            console.log(fullname);
-            localStorage.setItem('fullname', fullname);
-            localStorage.setItem('jwt', response.jwt);
-            localStorage.setItem('id', response.id);
-            localStorage.setItem('loggedin', true);
-            this.dispatchEvent(new CustomEvent('hideModal', {bubbles: true, composed: true, detail: {action: 'hideModal'}}));
-            this.dispatchAction({
-              type: 'CHANGE_NAME',
-              fullname: fullname,
-            });
-            this.dispatchAction({
-              type: 'CHANGE_STATUS',
-              loggedin: true,
-            });
-            this.dispatchAction({
-              type: 'CHANGE_USERID',
-              userid: response.id,
-            });
           })
           .catch((error) => console.log('Error:', error));
     }

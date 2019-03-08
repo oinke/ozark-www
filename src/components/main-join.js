@@ -229,6 +229,7 @@ class MainJoin extends ReduxMixin(PolymerElement) {
             return response.json();
           })
           .then((response) => {
+            console.log(response);
             if (!response.error) {
               this.sent = true;
               this._focusCode();
@@ -274,7 +275,6 @@ class MainJoin extends ReduxMixin(PolymerElement) {
             return response.json();
           })
           .then((response) => {
-            console.log(response);
             if (response && response.data === true) {
               const fullname = response.name;
               const userid = response.id;
@@ -285,6 +285,7 @@ class MainJoin extends ReduxMixin(PolymerElement) {
               if (iconURL, this.email, this.name, this.password) {
                 this._storeCredential(iconURL, this.email, this.name, this.password);
               }
+
               this.dispatchAction({
                 type: 'CHANGE_NAME',
                 fullname: fullname,
@@ -293,6 +294,11 @@ class MainJoin extends ReduxMixin(PolymerElement) {
               this.dispatchAction({
                 type: 'CHANGE_USERID',
                 userid: userid,
+              });
+
+              this.dispatchAction({
+                type: 'CHANGE_STATUS',
+                loggedin: true,
               });
 
               this.name = '';

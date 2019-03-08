@@ -111,6 +111,7 @@ class PageContact extends ReduxMixin(PolymerElement) {
   }
 
   _send() {
+    console.log('fire');
     const enquiry = this.enquiry;
     const name = this.name;
     const email = this.email;
@@ -130,9 +131,11 @@ class PageContact extends ReduxMixin(PolymerElement) {
         })
         .catch((error) => console.log('Error:', error));
   }
+
   _env() {
     this.reasons = this.env.contactReasons;
   }
+
   _mode() {
     this.updateStyles({'--blue-color': this.color.blue});
     this.updateStyles({'--grey-color': this.color.grey});

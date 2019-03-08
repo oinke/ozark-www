@@ -172,7 +172,6 @@ class PagePassword extends ReduxMixin(PolymerElement) {
             return response.json();
           })
           .then((response) => {
-            console.log(response);
             localStorage.setItem('jwt', response.jwt);
             this.btntext = this.txt.savePassword;
             this.password = '';

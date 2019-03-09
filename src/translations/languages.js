@@ -703,7 +703,7 @@ export const translations = {
     everyone: 'Everyone',
     peopleIFollow: 'People I follow',
     nobody: 'Nobody',
-    savePreferences: 'savePreferences',
+    savePreferences: 'Save Preferences',
     changePassword: 'Change Password',
     newPassword: 'New Password',
     password6Characters: 'New password, at least 6 characters.',

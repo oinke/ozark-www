@@ -495,6 +495,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
           return response.json();
         })
         .then((response) => {
+          window.scrollTo(0, 0);
           this.btntext = this.txt.saveProfile;
         })
         .catch((error) => console.log('Error:', error));
@@ -504,7 +505,6 @@ class PageProfile extends ReduxMixin(PolymerElement) {
     if (this.route.path == '/settings/profile/' || this.route.path == '/settings/') {
       const token = localStorage.getItem('jwt');
       const url = `${this.env.apiUrl}/users/profile/`;
-      console.log(url);
       fetch(url, {
         method: 'GET',
         headers: {'Authorization': `Bearer ${token}`},
@@ -513,7 +513,6 @@ class PageProfile extends ReduxMixin(PolymerElement) {
             return response.json();
           })
           .then((response) => {
-            console.log(response);
             if (response.name) this.newfullname = response.name;
             if (response.email) this.email = response.email;
             if (response.username) this.username = response.username;

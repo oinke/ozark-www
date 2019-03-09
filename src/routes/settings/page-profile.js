@@ -353,6 +353,10 @@ class PageProfile extends ReduxMixin(PolymerElement) {
       color: state.color,
     };
   }
+  constructor() {
+    super();
+    this.random = Math.floor(Math.random() * 9000000000) + 1000000000;
+  }
 
   _language() {
     this.txt = translations[this.language];
@@ -406,12 +410,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
           return response.json();
         })
         .then((response) => {
-          this.random = Math.random();
-          console.log(temp);
-          this.dispatchAction({
-            type: 'CHANGE_USERID',
-            userid: '0',
-          });
+          this.random = Math.floor(Math.random() * 9000000000) + 1000000000;
 
           this.dispatchAction({
             type: 'CHANGE_USERID',

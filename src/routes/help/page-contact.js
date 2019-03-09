@@ -74,7 +74,7 @@ class PageContact extends ReduxMixin(PolymerElement) {
                   <textarea rows="8" cols="50" value="{{message::input}}" id="message"></textarea>
                   <small class="issue">[[issueMessage]]</small>
 
-                  <button class="flat-btn button" on-click="_send">Send Enquiry</button>
+                  <button class="flat-btn button" on-click="_send">[[btnText]]</button>
                 </header>
               </section>
             </article>
@@ -102,6 +102,10 @@ class PageContact extends ReduxMixin(PolymerElement) {
       color: {
         type: Object,
         readOnly: true,
+      },
+      btnText: {
+        type: String,
+        value: 'Send Enquiry',
       },
     };
   }
@@ -145,8 +149,14 @@ class PageContact extends ReduxMixin(PolymerElement) {
             return response.json();
           })
           .then((response) => {
-            console.log(response);
-            this.btntext = 'sent';
+            this.enquiry = '';
+            this.name = '';
+            this.email = '';
+            this.message = '';
+            this.btnText = 'sent';
+            setTimeout(() => {
+              this.btnText = 'Send Enquiry';
+            }, 3000);
           })
           .catch((error) => console.log('Error:', error));
     } else {

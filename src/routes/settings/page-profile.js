@@ -92,7 +92,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
 
                 <label for="image" class="clicky">
                   <input type="file" name="image" id="image" style="display:none;" accept="image/gif, image/jpeg, image/png" on-change="_resize" value="{{file::input}}"/>
-                  <img src$="https://s3-us-west-1.amazonaws.com/ozark/[[userid]]/pfp_200x200.jpg?versionId=null" class="photo">
+                  <img src$="https://s3-us-west-1.amazonaws.com/ozark/[[userid]]/pfp_200x200.jpg?versionId=null&rand=[[random]]" class="photo">
                 </label>
                 
                 <label>[[txt.fullName]]</label>
@@ -406,17 +406,17 @@ class PageProfile extends ReduxMixin(PolymerElement) {
           return response.json();
         })
         .then((response) => {
-          const temp = this.userid;
+          this.random = Math.random();
           console.log(temp);
-          // this.dispatchAction({
-          //   type: 'CHANGE_USERID',
-          //   userid: '0',
-          // });
+          this.dispatchAction({
+            type: 'CHANGE_USERID',
+            userid: '0',
+          });
 
-          // this.dispatchAction({
-          //   type: 'CHANGE_USERID',
-          //   userid: temp,
-          // });
+          this.dispatchAction({
+            type: 'CHANGE_USERID',
+            userid: this.userid,
+          });
         })
         .catch((error) => console.log('Error:', error));
   }

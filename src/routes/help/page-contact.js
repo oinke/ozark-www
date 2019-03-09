@@ -54,20 +54,25 @@ class PageContact extends ReduxMixin(PolymerElement) {
                   <h1>Contact Us</h1>
                   <p>Check out our Help Section. If you're still stumped, drop us a line.</p></br>
                   <label for="name">Enquiry type</label>
-                  <select value="{{enquiry::input}}">
-                  <option value="">Select...</option>
+                  <select value="{{enquiry::input}}" id="enquiry">
+                   <option value="">Select...</option>
                     <template is="dom-repeat" items="[[reasons]]">
                       <option value="[[item]]">[[item]]</option>
                     </template>
                   </select>
+                  <small class="issue">[[issueEnquiry]]</small>
+
                   <label for="name">Name</label>
                   <input name="name" id="name" value="{{name::input}}">
+                  <small class="issue">[[issueName]]</small>
 
                   <label for="Email">Email</label>
-                  <input name="Email" id="Email" value="{{email::input}}">
+                  <input name="Email" id="email" value="{{email::input}}">
+                  <small class="issue">[[issueEmail]]</small>
 
                   <label for="Message">Message</label>
-                  <textarea rows="8" cols="50" value="{{message::input}}"></textarea>
+                  <textarea rows="8" cols="50" value="{{message::input}}" id="message"></textarea>
+                  <small class="issue">[[issueMessage]]</small>
 
                   <button class="flat-btn button" on-click="_send">Send Enquiry</button>
                 </header>
@@ -110,26 +115,58 @@ class PageContact extends ReduxMixin(PolymerElement) {
     };
   }
 
+  _validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
   _send() {
-    console.log('fire');
+    this.issueEnquiry = '';
+    this.issueName = '';
+    this.issueEmail = '';
+    this.issueMessage = '';
+    this.shadowRoot.querySelector('#enquiry').classList.remove('error');
+    this.shadowRoot.querySelector('#name').classList.remove('error');
+    this.shadowRoot.querySelector('#email').classList.remove('error');
+    this.shadowRoot.querySelector('#message').classList.remove('error');
     const enquiry = this.enquiry;
     const name = this.name;
     const email = this.email;
     const message = this.message;
     const data = {enquiry, name, email, message};
     const url = `${this.env.apiUrl}/help/contact/`;
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {'Content-Type': 'application/json'},
-    })
-        .then((response) => {
-          return response.json();
-        })
-        .then((response) => {
-          this.btntext = 'sent';
-        })
-        .catch((error) => console.log('Error:', error));
+    if (enquiry && name && email && data && url) {
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {'Content-Type': 'application/json'},
+      })
+          .then((response) => {
+            return response.json();
+          })
+          .then((response) => {
+            console.log(response);
+            this.btntext = 'sent';
+          })
+          .catch((error) => console.log('Error:', error));
+    } else {
+      if (!enquiry) {
+        this.issueEnquiry = 'Select one';
+        this.shadowRoot.querySelector('#enquiry').classList.add('error');
+      };
+      if (!name) {
+        this.issueName = 'What\'s your name';
+        this.shadowRoot.querySelector('#name').classList.add('error');
+      };
+      if (!email) {
+        this.issueEmail = 'Invalid email';
+        this.shadowRoot.querySelector('#email').classList.add('error');
+      };
+      if (!message) {
+        this.issueMessage = 'Enter a massage';
+        this.shadowRoot.querySelector('#message').classList.add('error');
+      };
+    }
   }
 
   _env() {

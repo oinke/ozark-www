@@ -99,7 +99,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
                 <input type="text" class="text" id="newfullname" value="{{newfullname::input}}">
                 <small>[[txt.yourRealName]]</small>
                 <label>[[txt.username]]</label>
-                <input type="text" class="text" value="{{username::input}}">
+                <input type="text" class="text" value="{{username::input}}" on-keyup="_search">
                 <small>http://www.ozark.com/[[username]]</small>
                 <label>[[txt.website]]</label>
                 <input type="text" class="text" value="{{website::input}}">
@@ -357,7 +357,31 @@ class PageProfile extends ReduxMixin(PolymerElement) {
     super();
     this.random = Math.floor(Math.random() * 9000000000) + 1000000000;
   }
-
+  _search(e) {
+    const term = this.term;
+    if (e.keyCode === 13) {
+      this._checkUsernames();
+    }
+    if (term && term.length > 2) {
+      this._checkUsernames();
+    }
+  }
+  _checkUsernames() {
+    const url = `${this.env.apiUrl}/users/usernames/`;
+    const term = this.term;
+    const data = {term};
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {'Content-Type': 'application/json'},
+    })
+        .then((response) => {
+          return response.json();
+        })
+        .then((response) => {
+          console.log(response);
+        });
+  }
   _language() {
     this.txt = translations[this.language];
   }
@@ -477,9 +501,10 @@ class PageProfile extends ReduxMixin(PolymerElement) {
   }
 
   _routeChanged() {
-    if (this.route.path == '/settings/profile/') {
+    if (this.route.path == '/settings/profile/' || this.route.path == '/settings/') {
       const token = localStorage.getItem('jwt');
       const url = `${this.env.apiUrl}/users/profile/`;
+      console.log(url);
       fetch(url, {
         method: 'GET',
         headers: {'Authorization': `Bearer ${token}`},
@@ -488,6 +513,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
             return response.json();
           })
           .then((response) => {
+            console.log(response);
             if (response.name) this.newfullname = response.name;
             if (response.email) this.email = response.email;
             if (response.username) this.username = response.username;

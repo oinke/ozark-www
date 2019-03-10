@@ -2,6 +2,7 @@ import {createMixin} from '../../node_modules/polymer-redux';
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {translations} from '../translations/languages.js';
 import store from '../global/store.js';
+import '@polymer/app-route/app-location.js';
 import '../css/shared-styles.js';
 import '../components/loading/loading-circular.js';
 
@@ -64,7 +65,7 @@ class MainLogin extends ReduxMixin(PolymerElement) {
           }
         } 
       </style>
-
+        <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
         <h1>[[txt.login]]</h1>
         <p class="value">[[txt.welcomeBack]] [[env.siteName]]</p>
         <div class="area">
@@ -193,6 +194,9 @@ class MainLogin extends ReduxMixin(PolymerElement) {
                 type: 'CHANGE_USERID',
                 userid: response.id,
               });
+              if (this.route.path === '/login') {
+                this.set('route.path', '/');
+              };
             } else {
               console.log(response);
             }

@@ -6,7 +6,7 @@ import '../../components/main-join.js';
 import store from '../../global/store.js';
 const ReduxMixin = createMixin(store);
 
-class PageSearch extends ReduxMixin(PolymerElement) {
+class PageMenu extends ReduxMixin(PolymerElement) {
   static get template() {
     return html`
       <style include="shared-styles">
@@ -21,40 +21,15 @@ class PageSearch extends ReduxMixin(PolymerElement) {
             padding-top:0px;
             display: block;
         }
-        .search-results{
-          display: var(--show-search, none); 
-          color: var(--placeholder-color);
-          width: 250px;
-          position: relative;
-          left: 12px;
-          padding: 4px 0 1px 0;
+        h1 {
+            font-weight: 200;
+            font-size: 30px;
         }
-        
-        .search-results ul{
-          list-style:none;
-          padding: 0px;
+        p {
+            margin-bottom: 40px;
         }
-        .search-results img {
-          width: 33px;
-          height: 33px;
-          border-radius: 50%;
-          background-color: grey;
-          margin: 6px 12px 6px 0;
-        }
-        .title {
-          margin-top: 6px;
-          font-size: 14px;
-          font-weight: 600;
-          text-transform: capitalize;
-        }
-        .subtitle{
-          font-size: 12px;
-          font-weight: 400;
-        }
-        .result-container{
-          display: flex;
-          padding: 0 12px;
-          padding-bottom: 12px;
+        a {
+            text-decoration: none;
         }
         
       </style>
@@ -64,25 +39,10 @@ class PageSearch extends ReduxMixin(PolymerElement) {
           </div>
           <div slot="body">
               <div class="container">
-                <label for="male">Search</label>
-                <input type="text" name="search" id="search" on-keyup="_search" value="{{term::input}}">
-
-                <div class="search-results">
-                  <ul>
-                    <dom-repeat items="{{results.name}}">
-                      <template>
-                        <li class="result-container">
-                        <img src="https://s3-us-west-1.amazonaws.com/ozark/[[item._id]]/pfp_200x200.jpg?versionId=null">
-                          <div>
-                            <div class="title">[[item.name]]</div>
-                            <div class="subtitle">[[item.lastSeen]]</div> 
-                          </div>
-                        </li>
-                      </template>
-                    </dom-repeat>
-                  </ul>
-                </div>
-
+                  <h1>Ozark is more fun with friends</h1>
+                  <p>Log in to see what your friends are up to.</p>
+                <a href="/join"><button class="modal-btn">Join</button></a>
+                <a href="/login"><button class="modal-btn">Login</button></a>
               </div>
           </div>
       </main-layout>
@@ -120,35 +80,6 @@ class PageSearch extends ReduxMixin(PolymerElement) {
     };
   }
 
-  _search(e) {
-    const term = this.term;
-    if (e.keyCode === 13) {
-      this._getUsers();
-    }
-    if (term && term.length > 2) {
-      this._getUsers();
-    }
-  }
-
-  _getUsers() {
-    const url = `${this.env.apiUrl}/users/search/`;
-    const term = this.term;
-    const data = {term};
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {'Content-Type': 'application/json'},
-    })
-        .then((response) => {
-          return response.json();
-        })
-        .then((response) => {
-          this.updateStyles({'--show-search': 'block'});
-          this.results = response.results;
-          console.log(this.results);
-        });
-  }
-
   _mode() {
     this.updateStyles({'--blue-color': this.color.blue});
     this.updateStyles({'--grey-color': this.color.grey});
@@ -172,4 +103,4 @@ class PageSearch extends ReduxMixin(PolymerElement) {
       this.updateStyles({'--white2-black3': this.color.white2});
     }
   }
-} window.customElements.define('page-search', PageSearch);
+} window.customElements.define('page-menu', PageMenu);

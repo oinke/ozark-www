@@ -38,6 +38,9 @@ class MobileNavigation extends ReduxMixin(PolymerElement) {
         .language{
           background-image: url('./images/mobile-language.png');
         }
+        .menu{
+          background-image: url('./images/mobile-menu.png');
+        }
         .hide {
           line-height: 0; 
           font-size: 0;
@@ -47,8 +50,9 @@ class MobileNavigation extends ReduxMixin(PolymerElement) {
         <div class="mobile-inner">
           <a href="/" class="home hide">Home</a>
           <a href="/search/" class="search hide">Search</a>
-          <a href="/join/" class="join hide">Join</a>
+          <!-- <a href="/join/" class="join hide">Join</a> -->
           <a href="/language/" class="language hide">language</a>
+          <a href="/menu/" class="menu hide">menu</a>
         </div>
 
     `;

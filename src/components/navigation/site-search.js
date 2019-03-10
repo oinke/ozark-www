@@ -99,7 +99,7 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
                   <img src="https://s3-us-west-1.amazonaws.com/ozark/[[item._id]]/pfp_200x200.jpg?versionId=null">
                     <div>
                       <div class="title">[[item.name]]</div>
-                      <div class="subtitle">[[item.email]]</div> 
+                      <div class="subtitle">[[item.lastSeen]]</div> 
                     </div>
                   </li>
                 </template>
@@ -190,6 +190,7 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
         .then((response) => {
           this.updateStyles({'--show-search': 'block'});
           this.results = response.results;
+          console.log(this.results);
         });
   }
 

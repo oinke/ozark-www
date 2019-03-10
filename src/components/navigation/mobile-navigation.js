@@ -29,11 +29,8 @@ class MobileNavigation extends ReduxMixin(PolymerElement) {
         .search{
           background-image: url('./images/mobile-search.png');
         }
-        .join{
-          background-image: url('./images/mobile-join.png');
-        }
-        .login{
-          background-image: url('./images/mobile-join.png');
+        .profile{
+          background-image: url('./images/mobile-profile.png');
         }
         .language{
           background-image: url('./images/mobile-language.png');
@@ -50,8 +47,12 @@ class MobileNavigation extends ReduxMixin(PolymerElement) {
         <div class="mobile-inner">
           <a href="/" class="home hide">Home</a>
           <a href="/search/" class="search hide">Search</a>
-          <!-- <a href="/join/" class="join hide">Join</a> -->
-          <a href="/language/" class="language hide">language</a>
+          <template is="dom-if" if="{{loggedin}}">
+            <a href="/eggs/" class="profile hide">Profile</a>
+            </template>
+          <template is="dom-if" if="{{!loggedin}}">
+            <a href="/language/" class="language hide">language</a>
+          </template>
           <a href="/menu/" class="menu hide">menu</a>
         </div>
 
@@ -72,14 +73,18 @@ class MobileNavigation extends ReduxMixin(PolymerElement) {
         type: Object,
         readOnly: true,
       },
+      loggedin: {
+        type: Boolean,
+        readOnly: true,
+      },
     };
   }
-
   static mapStateToProps(state, element) {
     return {
       language: state.language,
       mode: state.mode,
       color: state.color,
+      loggedin: state.loggedin,
     };
   }
 } window.customElements.define('mobile-navigation', MobileNavigation);

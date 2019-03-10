@@ -38,12 +38,25 @@ class PageMenu extends ReduxMixin(PolymerElement) {
           <div slot="aside">
           </div>
           <div slot="body">
+            <template is="dom-if" if="{{!loggedin}}">
               <div class="container">
                   <h1>Ozark is more fun with friends</h1>
                   <p>Log in to see what your friends are up to.</p>
                 <a href="/join"><button class="modal-btn">Join</button></a>
                 <a href="/login"><button class="modal-btn">Login</button></a>
               </div>
+            </template>
+            <template is="dom-if" if="{{loggedin}}">
+              <ul>
+                <a href="/eggs"><li>Profile</li></a>
+                <li>Switch account</li>
+                <li>Enable dark mode</li>
+                <li>Sign Out</li>
+                <li>Settings</li>
+                <li>Help</li>
+                <li>Feedback</li>
+              </ul>
+            </template>
           </div>
       </main-layout>
     `;
@@ -68,6 +81,10 @@ class PageMenu extends ReduxMixin(PolymerElement) {
         type: Object,
         readOnly: true,
       },
+      loggedin: {
+        type: Boolean,
+        readOnly: true,
+      },
     };
   }
 
@@ -77,6 +94,7 @@ class PageMenu extends ReduxMixin(PolymerElement) {
       mode: state.mode,
       env: state.env,
       color: state.color,
+      loggedin: state.loggedin,
     };
   }
 

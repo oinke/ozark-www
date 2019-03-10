@@ -17,8 +17,8 @@ class PageHome extends ReduxMixin(PolymerElement) {
       </style>
   
       <main-layout> 
-        <div slot="aside">Aside</div>
-        <div slot="body">Body</div>
+        <div slot="aside"></div>
+        <div slot="body"></div>
       </main-layout>
     `;
   }

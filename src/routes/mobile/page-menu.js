@@ -31,6 +31,12 @@ class PageMenu extends ReduxMixin(PolymerElement) {
         a {
             text-decoration: none;
         }
+        ul {
+          list-style: none;
+        }
+        li {
+          line-height: 48px;
+        }
         
       </style>
   
@@ -52,7 +58,7 @@ class PageMenu extends ReduxMixin(PolymerElement) {
                 <li>Switch account</li>
                 <li>Enable dark mode</li>
                 <li>Sign Out</li>
-                <li>Settings</li>
+                <a href="/settings"><li>Settings</li></a>
                 <li>Help</li>
                 <li>Feedback</li>
               </ul>

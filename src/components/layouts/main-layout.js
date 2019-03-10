@@ -21,26 +21,13 @@ class MainLayout extends ReduxMixin(PolymerElement) {
           padding-top:0px;
           background-color: var(--hover-background);
         }
-        @media screen and (min-width: 900px){
-          .vertical-container{
-            padding-top:56px;
-          }
-        } 
         .aside {
           flex: 0 1 280px;
         }
         .body {
           flex: 1;
         }
-        @media screen and (min-width: 900px){
-          .horizontal-container {
-            display: flex;
-            margin: auto;
-            max-width: var(--width-narrow, 75rem); 
-            flex-direction: var(--row-reverse, row);
-          }
-        } 
-        footer {
+        .footer {
           background-color: var(--hover-background);
         }
         footer ul{
@@ -54,7 +41,8 @@ class MainLayout extends ReduxMixin(PolymerElement) {
         footer .inner {
           max-width: var(--width-narrow, 75rem); 
           margin: 0 auto;
-          display: flex;
+          display: -webkit-box;
+          height: 40px;
         }
         footer .inner ul li a{
           font-size: 12px;
@@ -71,6 +59,20 @@ class MainLayout extends ReduxMixin(PolymerElement) {
         .links{
           flex: 1;
         }
+        @media screen and (min-width: 900px){
+          .vertical-container{
+            padding-top:56px;
+          }
+          .horizontal-container {
+            display: flex;
+            margin: auto;
+            max-width: var(--width-narrow, 75rem); 
+            flex-direction: var(--row-reverse, row);
+          }
+          footer .inner {
+            display: flex;
+          }
+        } 
         @media print {    
           .no-print, .no-print * {
             display: none !important;
@@ -94,7 +96,7 @@ class MainLayout extends ReduxMixin(PolymerElement) {
       </div>
 
       <template is="dom-if" if="{{!nofooter}}">
-        <footer>
+        <footer class="footer">
           <div class="inner no-print">
             <div class="links">
               <ul>

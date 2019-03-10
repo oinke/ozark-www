@@ -167,7 +167,7 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
     this.set('route.path', './eggs/');
   }
   _settings() {
-    this.set('route.path', '/settings/');
+    this.set('route.path', '/settings/profile/');
     this._closeDropdown();
   }
   _signOut() {

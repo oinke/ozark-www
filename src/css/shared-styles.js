@@ -58,7 +58,7 @@ $_documentContainer.innerHTML = `
     }
     input, textarea {
       width:100%;
-      max-width: 280px;
+  
       padding: 8px;
       display: block;
       overflow: hidden;
@@ -69,6 +69,7 @@ $_documentContainer.innerHTML = `
       font-size: 14px;
       font-weight: 400;
       background: var(--black1-white2);
+      box-sizing: border-box;
     }
     select {
       height: 35px;

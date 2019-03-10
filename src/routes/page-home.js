@@ -16,7 +16,7 @@ class PageHome extends ReduxMixin(PolymerElement) {
         }
       </style>
   
-      <main-layout> 
+      <main-layout nofooter> 
         <div slot="aside"></div>
         <div slot="body"></div>
       </main-layout>

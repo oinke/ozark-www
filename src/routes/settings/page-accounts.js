@@ -21,6 +21,7 @@ class PageAccounts extends ReduxMixin(PolymerElement) {
           margin-top: 20px;
           background-color: var(--black2-white1);
           border-radius: 3px;
+          box-shadow: 0 1px 0px 0px var(--black3-white3), 0 0px 0px 1px var(--black3-white3);
         }
         .form h1 {
           font-weight: 900;

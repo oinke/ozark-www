@@ -23,6 +23,7 @@ class SettingsNavigation extends ReduxMixin(PolymerElement) {
           padding-bottom: 12px;
           margin-left: 12px;
           box-shadow: 0 1px 0px 0px var(--border-color), 0 0px 0px 1px var(--border-color);
+          display: none;
         }
         .side-nav a {
           color: var(--hover-color);

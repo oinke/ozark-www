@@ -161,7 +161,7 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
     };
   }
 
-  _lastSeen = function(epochTime) {
+  _lastSeen(epochTime) {
     let lastSeen = 'Last seen: ';
     const currentTime = Date.now();
     const elapsed = currentTime - epochTime;

@@ -13,7 +13,7 @@ class PageMenu extends ReduxMixin(PolymerElement) {
         :host {
           display: block;
           background-color: var(--host-background-color);
-          color: var(--host-color);
+          color: var(--white1-black1);
         }
         .container{
             max-width: 300px;
@@ -30,12 +30,16 @@ class PageMenu extends ReduxMixin(PolymerElement) {
         }
         a {
             text-decoration: none;
+            color: var(--white1-black1);
         }
         ul {
           list-style: none;
+          padding: 0px;
+          text-indent: 50px;
         }
         li {
           line-height: 48px;
+          border-bottom: 1px solid var(--black3-white1);
         }
         
       </style>

@@ -27,6 +27,7 @@ class RouterSettings extends PolymerElement {
           <page-password name="password"></page-password>
           <page-notifications name="notifications"></page-notifications>
           <page-accounts name="accounts"></page-accounts>
+          <page-default name="default"></page-default>
         </iron-pages>
       </main>
     `;
@@ -52,8 +53,8 @@ class RouterSettings extends PolymerElement {
 
   _routePageChanged(page) {
     if (!page) {
-      this.page = 'profile';
-    } else if (['profile', 'preferences', 'password', 'notifications', 'accounts'].indexOf(page) !== -1) {
+      this.page = 'default';
+    } else if (['profile', 'preferences', 'password', 'notifications', 'accounts', 'default'].indexOf(page) !== -1) {
       this.page = page;
     }
   }
@@ -76,6 +77,9 @@ class RouterSettings extends PolymerElement {
         break;
       case 'accounts':
         import('./page-accounts.js');
+        break;
+      case 'default':
+        import('./page-default.js');
         break;
     }
   }

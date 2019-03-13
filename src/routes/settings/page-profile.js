@@ -101,7 +101,7 @@ class PageProfile extends ReduxMixin(PolymerElement) {
                 <input type="text" class="text" id="newfullname" value="{{newfullname::input}}">
                 <small>[[txt.yourRealName]]</small>
                 <label>[[txt.username]]</label>
-                <input type="text" class="text" value="{{username::input}}" on-keyup="_search">
+                <input type="text" class="text" value="{{username::input}}" id="username" on-keyup="_search">
                 <small>http://www.ozark.com/[[username]]</small>
                 <label>[[txt.website]]</label>
                 <input type="text" class="text" value="{{website::input}}">
@@ -360,18 +360,18 @@ class PageProfile extends ReduxMixin(PolymerElement) {
     this.random = Math.floor(Math.random() * 9000000000) + 1000000000;
   }
   _search(e) {
-    const term = this.term;
+    const username = this.username;
     if (e.keyCode === 13) {
       this._checkUsernames();
     }
-    if (term && term.length > 2) {
+    if (username && username.length > 2) {
       this._checkUsernames();
     }
   }
   _checkUsernames() {
-    const url = `${this.env.apiUrl}/users/usernames/`;
-    const term = this.term;
-    const data = {term};
+    const url = `${this.env.apiUrl}/users/available/`;
+    const username = this.username;
+    const data = {username};
     fetch(url, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -381,7 +381,10 @@ class PageProfile extends ReduxMixin(PolymerElement) {
           return response.json();
         })
         .then((response) => {
-          console.log(response);
+          if (!response.nameAvailable || !response.allowedWords) {
+            this.shadowRoot.querySelector('#username').classList.add('error');
+            this.username = '';
+          };
         });
   }
   _language() {

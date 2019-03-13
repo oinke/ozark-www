@@ -39,7 +39,7 @@ class PageMenu extends ReduxMixin(PolymerElement) {
         }
         li {
           line-height: 48px;
-          border-bottom: 1px solid var(--black3-white1);
+          border-bottom: 1px solid var(--grey-color);
         }
         
       </style>
@@ -58,11 +58,11 @@ class PageMenu extends ReduxMixin(PolymerElement) {
             </template>
             <template is="dom-if" if="{{loggedin}}">
               <ul>
-                <a href="/eggs"><li>Profile</li></a>
+                <a href="/eggs/"><li>Profile</li></a>
                 <li>Switch account</li>
                 <li>Enable dark mode</li>
                 <li>Sign Out</li>
-                <a href="/settings"><li>Settings</li></a>
+                <a href="/settings/"><li>Settings</li></a>
                 <li>Help</li>
                 <li>Feedback</li>
               </ul>

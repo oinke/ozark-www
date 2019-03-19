@@ -282,6 +282,7 @@ class MainJoin extends ReduxMixin(PolymerElement) {
               localStorage.setItem('id', userid);
               localStorage.setItem('fullname', fullname);
               localStorage.setItem('username', response.username);
+              localStorage.setItem('loggedin', true);
 
               if (iconURL, this.email, this.name, this.password) {
                 this._storeCredential(iconURL, this.email, this.name, this.password);

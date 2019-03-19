@@ -220,7 +220,6 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           this.profile = response;
           this.updateStyles({'--user-pfp': `url('https://s3-us-west-1.amazonaws.com/ozark/${response.id}/pfp_200x200.jpg')`});
           this.updateStyles({'--user-pfb': `url('https://s3-us-west-1.amazonaws.com/ozark/${response.id}/cover_1160x150.png')`});
-          console.log(this.profile);
         })
         .catch((error) => console.log('Error:', error));
   }
@@ -230,7 +229,6 @@ class MainProfile extends ReduxMixin(PolymerElement) {
     const url = `${this.env.apiUrl}/users/profile/follow/`;
     const username = this.profile.username;
     const data = {username};
-    console.log(data);
     fetch(url, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -241,8 +239,6 @@ class MainProfile extends ReduxMixin(PolymerElement) {
         })
         .then((response) => {
           this.profile = response;
-
-          console.log(response);
         })
         .catch((error) => console.log('Error:', error));
   }

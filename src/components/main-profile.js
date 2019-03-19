@@ -148,7 +148,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
                 <h1 class="profile-name">[[profile.name]]</h1>
               </div>
               <div class="right">
-                <button on-click="_editProfile">Edit Profile</button>
+                <button on-click="_follow">Follow</button>
               </div>
             </div>
             <div class="vertical-layout">
@@ -221,6 +221,27 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           this.updateStyles({'--user-pfp': `url('https://s3-us-west-1.amazonaws.com/ozark/${response.id}/pfp_200x200.jpg')`});
           this.updateStyles({'--user-pfb': `url('https://s3-us-west-1.amazonaws.com/ozark/${response.id}/cover_1160x150.png')`});
           console.log(this.profile);
+        })
+        .catch((error) => console.log('Error:', error));
+  }
+
+  _follow() {
+    const token = localStorage.getItem('jwt');
+    const url = `${this.env.apiUrl}/users/profile/follow/`;
+    const username = this.profile.username;
+    const data = {username};
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {'Authorization': `Bearer ${token}`},
+    })
+        .then((response) => {
+          return response.json();
+        })
+        .then((response) => {
+          this.profile = response;
+
+          console.log(response);
         })
         .catch((error) => console.log('Error:', error));
   }

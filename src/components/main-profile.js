@@ -154,7 +154,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
             <div class="vertical-layout">
           <div class="top-line">
 
-              <span>[[profile.username]]</span>
+              <span>@[[profile.username]]</span>
               <span>[[profile.location]]</span>
               <span>[[profile.website]]</span>
     

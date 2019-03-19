@@ -38,7 +38,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           display: block;
           height: 150px;
           background-color: var(--black1-white2) !important;
-          background-image: url('https://s3-us-west-1.amazonaws.com/ozark/5c6bb18d0198f0cc1cc25627/cover_1160x150.png');
+          background-image: var(--user-pfb);
           background-size: 1160px 150px;
         }
         .cover-header{
@@ -68,7 +68,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           border-radius: 50%;
           border: 1px solid var(--black1-white2);
           background-color: var(--black1-white2) !important;
-          background-image: url('https://s3-us-west-1.amazonaws.com/ozark/5c6bb18d0198f0cc1cc25627/pfp_200x200.jpg');
+          background-image: var(--user-pfp);
           background-size: 100px 100px;
           display: block;
           margin: 0 auto;
@@ -145,7 +145,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
               </div>
               <div class="center">
                 <div class="profile-pic"></div>  
-                <h1 class="profile-name">Will Hill</h1>
+                <h1 class="profile-name">[[profile.name]]</h1>
               </div>
               <div class="right">
                 <button on-click="_editProfile">Edit Profile</button>
@@ -154,13 +154,13 @@ class MainProfile extends ReduxMixin(PolymerElement) {
             <div class="vertical-layout">
           <div class="top-line">
 
-              <span>bkawk</span>
-              <span>China</span>
-              <span>www.bkawk.com</span>
+              <span>[[profile.username]]</span>
+              <span>[[profile.location]]</span>
+              <span>[[profile.website]]</span>
     
           </div>
-          <div> Javascript developer focused on Polymer, Ethereum, EOS, IPFS</div>
-          <div class="bottom-cover"> Followers <strong class="gap">740</strong> Following <strong>90</strong></div>
+          <div> [[profile.bio]]</div>
+          <div class="bottom-cover"> Followers <strong class="gap">[[profile.followers]]</strong> Following <strong>[[profile.following]]</strong></div>
         </div>
         </div>
 
@@ -187,6 +187,13 @@ class MainProfile extends ReduxMixin(PolymerElement) {
         type: Object,
         readOnly: true,
       },
+      route: {
+        type: Object,
+        observer: '_routeChanged',
+      },
+      profile: {
+        type: Object,
+      },
     };
   }
 
@@ -197,6 +204,25 @@ class MainProfile extends ReduxMixin(PolymerElement) {
       color: state.color,
       env: state.env,
     };
+  }
+
+  _routeChanged() {
+    const token = localStorage.getItem('jwt');
+    const url = `${this.env.apiUrl}/users/profile/id?username=${this.route.path.split('/')[1]}`;
+    fetch(url, {
+      method: 'GET',
+      headers: {'Authorization': `Bearer ${token}`},
+    })
+        .then((response) => {
+          return response.json();
+        })
+        .then((response) => {
+          this.profile = response;
+          this.updateStyles({'--user-pfp': `url('https://s3-us-west-1.amazonaws.com/ozark/${response.id}/pfp_200x200.jpg')`});
+          this.updateStyles({'--user-pfb': `url('https://s3-us-west-1.amazonaws.com/ozark/${response.id}/cover_1160x150.png')`});
+          console.log(this.profile);
+        })
+        .catch((error) => console.log('Error:', error));
   }
 
   _resize() {

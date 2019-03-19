@@ -179,6 +179,7 @@ class MainLogin extends ReduxMixin(PolymerElement) {
               }
               localStorage.setItem('fullname', fullname);
               localStorage.setItem('jwt', response.jwt);
+              localStorage.setItem('username', response.username);
               localStorage.setItem('id', response.id);
               localStorage.setItem('loggedin', true);
               this.dispatchEvent(new CustomEvent('hideModal', {bubbles: true, composed: true, detail: {action: 'hideModal'}}));
@@ -193,6 +194,10 @@ class MainLogin extends ReduxMixin(PolymerElement) {
               this.dispatchAction({
                 type: 'CHANGE_USERID',
                 userid: response.id,
+              });
+              this.dispatchAction({
+                type: 'CHANGE_USERNAME',
+                username: response.username,
               });
               if (this.route.path === '/login') {
                 this.set('route.path', '/');

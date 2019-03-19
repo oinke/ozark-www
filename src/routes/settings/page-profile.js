@@ -369,13 +369,14 @@ class PageProfile extends ReduxMixin(PolymerElement) {
     }
   }
   _checkUsernames() {
+    const token = localStorage.getItem('jwt');
     const url = `${this.env.apiUrl}/users/available/`;
     const username = this.username;
     const data = {username};
     fetch(url, {
       method: 'POST',
       body: JSON.stringify(data),
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
     })
         .then((response) => {
           return response.json();
@@ -384,6 +385,8 @@ class PageProfile extends ReduxMixin(PolymerElement) {
           if (!response.nameAvailable || !response.allowedWords) {
             this.shadowRoot.querySelector('#username').classList.add('error');
             this.username = '';
+          } else {
+            this._stateUser(this.username);
           };
         });
   }
@@ -520,7 +523,10 @@ class PageProfile extends ReduxMixin(PolymerElement) {
           .then((response) => {
             if (response.name) this.newfullname = response.name;
             if (response.email) this.email = response.email;
-            if (response.username) this.username = response.username;
+            if (response.username) {
+              this.username = response.username;
+              this._stateUser(this.username);
+            }
             if (response.bio) this.bio = response.bio;
             if (response.gender) this.gender = response.gender;
             if (response.location) this.location = response.location;
@@ -539,6 +545,13 @@ class PageProfile extends ReduxMixin(PolymerElement) {
           })
           .catch((error) => console.log('Error:', error));
     }
+  }
+  _stateUser(username) {
+    localStorage.setItem('username', username);
+    this.dispatchAction({
+      type: 'CHANGE_USERNAME',
+      username: username,
+    });
   }
   _mode() {
     this.updateStyles({'--blue-color': this.color.blue});

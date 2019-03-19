@@ -144,6 +144,9 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
       fullname: {
         type: String,
       },
+      username: {
+        type: String,
+      },
     };
   }
 
@@ -154,6 +157,7 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
       mode: state.mode,
       color: state.color,
       userid: state.userid,
+      username: state.username,
     };
   }
   _language() {
@@ -164,7 +168,7 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
     this.dispatchEvent(new CustomEvent('modal', {bubbles: true, composed: true, detail: {action: 'feedback', language: this.language}}));
   }
   _profile() {
-    this.set('route.path', './eggs/');
+    this.set('route.path', `./${this.username}/`);
   }
   _settings() {
     this.set('route.path', '/settings/profile/');

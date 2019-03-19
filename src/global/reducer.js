@@ -9,6 +9,10 @@ if (localStorage.getItem('loggedin')) {
   loggedin = false;
   localStorage.setItem('loggedin', 'false');
 }
+let username;
+if (localStorage.getItem('username')) {
+  username = localStorage.getItem('username');
+}
 
 let mode;
 if (localStorage.getItem('mode')) {
@@ -41,6 +45,7 @@ import {env} from '../../env.js';
 
 const initial = {
   fullname: fullname,
+  username: username,
   userid: userid,
   language: language,
   mode: mode,
@@ -77,6 +82,10 @@ export default (state = initial, action) => {
     case 'CHANGE_NAME':
       return Object.assign({}, state, {
         fullname: action.fullname,
+      });
+    case 'CHANGE_USERNAME':
+      return Object.assign({}, state, {
+        username: action.username,
       });
     case 'CHANGE_USERID':
       return Object.assign({}, state, {

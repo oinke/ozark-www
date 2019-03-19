@@ -281,10 +281,16 @@ class MainJoin extends ReduxMixin(PolymerElement) {
               const iconURL = `https://s3-us-west-1.amazonaws.com/ozark/${response.id}/pfp_200x200.jpg?versionId=null`;
               localStorage.setItem('id', userid);
               localStorage.setItem('fullname', fullname);
+              localStorage.setItem('username', response.username);
 
               if (iconURL, this.email, this.name, this.password) {
                 this._storeCredential(iconURL, this.email, this.name, this.password);
               }
+
+              this.dispatchAction({
+                type: 'CHANGE_USERNAME',
+                username: response.username,
+              });
 
               this.dispatchAction({
                 type: 'CHANGE_NAME',

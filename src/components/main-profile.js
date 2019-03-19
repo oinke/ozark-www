@@ -230,10 +230,11 @@ class MainProfile extends ReduxMixin(PolymerElement) {
     const url = `${this.env.apiUrl}/users/profile/follow/`;
     const username = this.profile.username;
     const data = {username};
+    console.log(data);
     fetch(url, {
       method: 'POST',
       body: JSON.stringify(data),
-      headers: {'Authorization': `Bearer ${token}`},
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
     })
         .then((response) => {
           return response.json();

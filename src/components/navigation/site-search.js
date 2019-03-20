@@ -87,24 +87,28 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
           height: 15px;
           padding: 0 12px 3px 12px;
         }
+        a {
+          color: var(--search-color);
+          text-decoration: none;
+        }
       </style>
-          <input class="search-box" placeholder="[[txt.search]] [[siteName]]" autocomplete="off" value="{{term::input}}" on-keyup="_search" on-blur="_close";>  
+          <input class="search-box" placeholder="[[txt.search]] [[siteName]]" autocomplete="off" value="{{term::input}}" on-keyup="_search";>  
           <div class="search-results">
-            <ul>
+            <ul on-mouseleave="_close">
               <li class="header">Name</li>
-              
               <dom-repeat items="{{results}}">
-                <template>
-                  <li class="container">
-                  <img src="https://s3-us-west-1.amazonaws.com/ozark/[[item._id]]/pfp_200x200.jpg?versionId=null">
-                    <div>
-                      <div class="title">[[item.name]]</div>
-                      <div class="subtitle">[[item.lastSeen]]</div> 
-                    </div>
-                  </li>
-                </template>
+                  <template>
+                  <a href="./[[item.username]]">
+                    <li class="container" >
+                    <img src="https://s3-us-west-1.amazonaws.com/ozark/[[item._id]]/pfp_200x200.jpg?versionId=null">
+                      <div>
+                        <div class="title">[[item.name]]</div>
+                        <div class="subtitle">[[item.lastSeen]]</div> 
+                      </div>
+                    </li>
+                    </a>
+                  </template>
               </dom-repeat>
-
             </ul>
           </div>
     `;
@@ -192,7 +196,6 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
             this.updateStyles({'--show-search': 'block'});
             this.results = response.results.name.map((e) => {
               e.lastSeen = this._lastSeen(e.lastSeen);
-              console.log(e)
               return e;
             });
           }

@@ -141,14 +141,25 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           </div>
           <div class="cover-layout">
               <div>
-                <button>Share Profile</button>
+              <template is="dom-if" if="{{!profile.isMine}}">
+                <button on-click="_follow">Follow</button>
+              </template>
+              <template is="dom-if" if="{{profile.isMine}}">
+                <button on-click="_follow">Share Profile</button>
+              </template>
+                
               </div>
               <div class="center">
                 <div class="profile-pic"></div>  
                 <h1 class="profile-name">[[profile.name]]</h1>
               </div>
               <div class="right">
-                <button on-click="_follow">Follow</button>
+                <template is="dom-if" if="{{!profile.isMine}}">
+                  <button>Message</button>
+                </template>
+                <template is="dom-if" if="{{profile.isMine}}">
+                  <button on-click="_editProfile">Edit Profile</button>
+                </template>
               </div>
             </div>
             <div class="vertical-layout">
@@ -207,21 +218,25 @@ class MainProfile extends ReduxMixin(PolymerElement) {
   }
 
   _routeChanged() {
-    const token = localStorage.getItem('jwt');
-    const url = `${this.env.apiUrl}/users/profile/id?username=${this.route.path.split('/')[1]}`;
-    fetch(url, {
-      method: 'GET',
-      headers: {'Authorization': `Bearer ${token}`},
-    })
-        .then((response) => {
-          return response.json();
-        })
-        .then((response) => {
-          this.profile = response;
-          this.updateStyles({'--user-pfp': `url('https://s3-us-west-1.amazonaws.com/ozark/${response.id}/pfp_200x200.jpg')`});
-          this.updateStyles({'--user-pfb': `url('https://s3-us-west-1.amazonaws.com/ozark/${response.id}/cover_1160x150.png')`});
-        })
-        .catch((error) => console.log('Error:', error));
+    const page = this.route.path.split('/')[1];
+    if (page != 'settings') {
+      const token = localStorage.getItem('jwt');
+      const url = `${this.env.apiUrl}/users/profile/id?username=${page}`;
+      fetch(url, {
+        method: 'GET',
+        headers: {'Authorization': `Bearer ${token}`},
+      })
+          .then((response) => {
+            return response.json();
+          })
+          .then((response) => {
+            console.log(response);
+            this.profile = response;
+            this.updateStyles({'--user-pfp': `url('https://s3-us-west-1.amazonaws.com/ozark/${response.id}/pfp_200x200.jpg')`});
+            this.updateStyles({'--user-pfb': `url('https://s3-us-west-1.amazonaws.com/ozark/${response.id}/cover_1160x150.png')`});
+          })
+          .catch((error) => console.log('Error:', error));
+    }
   }
 
   _follow() {
@@ -324,7 +339,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
   }
 
   _editProfile() {
-    this.set('route.path', './settings/');
+    this.set('route.path', './settings/profile/');
   }
 
   _mode() {

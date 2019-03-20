@@ -90,7 +90,8 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           text-align: center;
         }
         .top-line span:nth-child(-n+2){
-          margin-right: 48px;
+          margin-right: 24px;
+          margin-left: 24px;
         }
         .top-line {
           margin: 24px 0 12px 0;

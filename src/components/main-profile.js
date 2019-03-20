@@ -154,9 +154,9 @@ class MainProfile extends ReduxMixin(PolymerElement) {
             <div class="vertical-layout">
           <div class="top-line">
 
-              <span>@[[profile.username]]</span>
-              <span>[[profile.location]]</span>
-              <span>[[profile.website]]</span>
+          <template is="dom-if" if="{{profile.username}}"><span>@[[profile.username]]</span></template>
+          <template is="dom-if" if="{{profile.location}}"><span>[[profile.location]]</span></template>
+          <template is="dom-if" if="{{profile.website}}"><span>[[profile.website]]</span></template>
     
           </div>
           <div> [[profile.bio]]</div>

@@ -89,7 +89,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
         .vertical-layout{
           text-align: center;
         }
-        .top-line span:nth-child(-n+2){
+        .top-line span:{
           margin-right: 24px;
           margin-left: 24px;
         }

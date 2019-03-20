@@ -119,8 +119,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
               <label for="image" class="clicky">
                 <input type="file" name="image" id="image" style="display:none;" accept="image/gif, image/jpeg, image/png" on-change="_resize" value="{{file::input}}"/>
                   <div class="cover-button">
-                  <svg width="28px" height
-                    cursor: pointer;="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <svg width="28px" cursor: pointer;="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <defs>
                             <path d="M14,2 C8.5,2 4,6.5 4,12 C4,17.5 8.5,22 14,22 C19.5,22 24,17.5 24,12 C24,6.5 19.5,2 14,2 Z M19,12.8 C19,12.9 18.9,13 18.8,13 L15,13 L15,16.8 C15,16.9 14.9,17 14.8,17 L13.2,17 C13.1,17 13,16.9 13,16.8 L13,13 L9.2,13 C9.1,13 9,12.9 9,12.8 L9,11.2 C9,11.1 9.1,11 9.2,11 L13,11 L13,7.2 C13,7.1 13.1,7 13.2,7 L14.8,7 C14.9,7 15,7.1 15,7.2 L15,11 L18.8,11 C18.9,11 19,11.1 19,11.2 L19,12.8 Z" id="path-1"></path>
                             <filter x="-35.0%" y="-25.0%" width="170.0%" height="170.0%" filterUnits="objectBoundingBox" id="filter-2">

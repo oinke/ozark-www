@@ -93,29 +93,13 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
             <ul>
               <li class="header">Name</li>
               
-              <dom-repeat items="{{results.name}}">
+              <dom-repeat items="{{results}}">
                 <template>
                   <li class="container">
                   <img src="https://s3-us-west-1.amazonaws.com/ozark/[[item._id]]/pfp_200x200.jpg?versionId=null">
                     <div>
                       <div class="title">[[item.name]]</div>
                       <div class="subtitle">[[item.lastSeen]]</div> 
-                    </div>
-                  </li>
-                </template>
-              </dom-repeat>
-
-            </ul>
-            <ul>
-              <li class="header">Email</li>
-              
-              <dom-repeat items="{{results.email}}">
-                <template>
-                  <li class="container">
-                    <img src="https://s3-us-west-1.amazonaws.com/ozark/[[item._id]]/pfp_200x200.jpg?versionId=null">
-                    <div>
-                      <div class="title">[[item.name]]</div>
-                      <div class="subtitle">[[item.email]]</div>
                     </div>
                   </li>
                 </template>
@@ -204,9 +188,14 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
           return response.json();
         })
         .then((response) => {
-          this.updateStyles({'--show-search': 'block'});
-          this.results = response.results;
-          console.log(this.results);
+          if (response) {
+            this.updateStyles({'--show-search': 'block'});
+            this.results = response.results.name.map((e) => {
+              e.lastSeen = this._lastSeen(e.lastSeen);
+              console.log(e)
+              return e;
+            });
+          }
         });
   }
 

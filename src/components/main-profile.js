@@ -175,18 +175,16 @@ class MainProfile extends ReduxMixin(PolymerElement) {
             <div class="vertical-layout">
             <div class="following">[[_lastSeen(profile.followerSince)]]</div>
           <div class="top-line">
-
-          <template is="dom-if" if="{{profile.username}}"><span>@[[profile.username]]</span></template>
-          <template is="dom-if" if="{{profile.location}}"><span>[[profile.location]]</span></template>
-          <template is="dom-if" if="{{profile.website}}"><span>[[profile.website]]</span></template>
-    
+            <template is="dom-if" if="{{profile.username}}"><span>@[[profile.username]]</span></template>
+            <template is="dom-if" if="{{profile.location}}"><span>[[profile.location]]</span></template>
+            <template is="dom-if" if="{{profile.website}}"><span>[[profile.website]]</span></template>
           </div>
-          
-          
           <div class="bottom-cover"> 
             <a on-click="_followers">Followers <strong class="gap">[[profile.followers]]</strong></a>
             <a on-click="_following">Following <strong>[[profile.following]]</strong></a>
           </div>
+          <template is="dom-if" if="{{followers}}">Followers</template>
+          <template is="dom-if" if="{{following}}">Following</template>
         </div>
         </div>
 
@@ -243,7 +241,9 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           return response.json();
         })
         .then((response) => {
-          console.log(response);
+          this.followers = response.followers;
+          this.showFollowers = true;
+          this.showFollowing = false;
         })
         .catch((error) => console.log('Error:', error));
   }
@@ -259,7 +259,9 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           return response.json();
         })
         .then((response) => {
-          console.log(response);
+          this.following = response.following;
+          this.showFollowers = false;
+          this.showFollowing = true;
         })
         .catch((error) => console.log('Error:', error));
   }

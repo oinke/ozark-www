@@ -233,9 +233,8 @@ class MainProfile extends ReduxMixin(PolymerElement) {
   }
 
   _followers() {
-    console.log(this.profile);
     const token = localStorage.getItem('jwt');
-    const url = `${this.env.apiUrl}/users/profile/id/followers/?username=bkawk`;
+    const url = `${this.env.apiUrl}/users/profile/id/followers/?username=${this.profile.username}`;
     fetch(url, {
       method: 'GET',
       body: JSON.stringify(data),
@@ -251,9 +250,8 @@ class MainProfile extends ReduxMixin(PolymerElement) {
   }
 
   _following() {
-    console.log(this.profile);
     const token = localStorage.getItem('jwt');
-    const url = `${this.env.apiUrl}/users/profile/id/following/?username=bkawk`;
+    const url = `${this.env.apiUrl}/users/profile/id/following/?username=${this.profile.username}`;
     const username = this.profile.username;
     const data = {username};
     fetch(url, {

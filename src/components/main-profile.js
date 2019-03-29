@@ -237,7 +237,6 @@ class MainProfile extends ReduxMixin(PolymerElement) {
     const url = `${this.env.apiUrl}/users/profile/id/followers/?username=${this.profile.username}`;
     fetch(url, {
       method: 'GET',
-      body: JSON.stringify(data),
       headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
     })
         .then((response) => {
@@ -252,11 +251,8 @@ class MainProfile extends ReduxMixin(PolymerElement) {
   _following() {
     const token = localStorage.getItem('jwt');
     const url = `${this.env.apiUrl}/users/profile/id/following/?username=${this.profile.username}`;
-    const username = this.profile.username;
-    const data = {username};
     fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
+      method: 'GET',
       headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
     })
         .then((response) => {

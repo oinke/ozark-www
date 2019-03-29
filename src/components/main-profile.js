@@ -183,8 +183,31 @@ class MainProfile extends ReduxMixin(PolymerElement) {
             <a on-click="_followers">Followers <strong class="gap">[[profile.followers]]</strong></a>
             <a on-click="_following">Following <strong>[[profile.following]]</strong></a>
           </div>
-          <template is="dom-if" if="{{showFollowers}}">Followers</template>
-          <template is="dom-if" if="{{showFollowing}}">Following</template>
+          <template is="dom-if" if="{{showFollowers}}">
+            <dom-repeat items="{{followers}}">
+              <template>
+                Followers
+                [[item.name]]
+                [[item.since]]
+                [[item.userid]]
+                [[item.username]]
+                [[item._id]]
+              </template>
+            </dom-repeat> 
+          </template>
+          <template is="dom-if" if="{{showFollowing}}">
+            <dom-repeat items="{{following}}">
+              <template>
+                Following
+                Followers
+                [[item.name]]
+                [[item.since]]
+                [[item.userid]]
+                [[item.username]]
+                [[item._id]]
+              </template>
+            </dom-repeat> 
+          </template>
         </div>
         </div>
 

@@ -355,7 +355,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
         })
         .then((response) => {
           this.random = Math.floor(Math.random() * 9000000000) + 1000000000;
-          this.updateStyles({'--user-pfb': `url('https://s3-us-west-1.amazonaws.com/ozark/${response.id}/pfb_1160x150.jpg?id=${this.random}')`});
+          this.updateStyles({'--user-pfb': `url('https://s3-us-west-1.amazonaws.com/ozark/${response.id}/pfb_1160x150.jpg?versionId=null')`});
         })
         .catch((error) => console.log('Error:', error));
   }

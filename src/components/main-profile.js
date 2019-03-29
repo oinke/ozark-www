@@ -183,7 +183,10 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           </div>
           
           
-          <div class="bottom-cover"> Followers <strong class="gap">[[profile.followers]]</strong> Following <strong>[[profile.following]]</strong></div>
+          <div class="bottom-cover"> 
+            <a on-click="_followers">Followers <strong class="gap">[[profile.followers]]</strong></a>
+            <a on-click="_following">Following <strong>[[profile.following]]</strong></a>
+          </div>
         </div>
         </div>
 
@@ -227,6 +230,44 @@ class MainProfile extends ReduxMixin(PolymerElement) {
       color: state.color,
       env: state.env,
     };
+  }
+
+  _followers() {
+    console.log(this.profile);
+    const token = localStorage.getItem('jwt');
+    const url = `${this.env.apiUrl}/users/profile/id/followers/?username=bkawk`;
+    fetch(url, {
+      method: 'GET',
+      body: JSON.stringify(data),
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
+    })
+        .then((response) => {
+          return response.json();
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => console.log('Error:', error));
+  }
+
+  _following() {
+    console.log(this.profile);
+    const token = localStorage.getItem('jwt');
+    const url = `${this.env.apiUrl}/users/profile/id/following/?username=bkawk`;
+    const username = this.profile.username;
+    const data = {username};
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
+    })
+        .then((response) => {
+          return response.json();
+        })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => console.log('Error:', error));
   }
 
   _lastSeen(epochTime) {

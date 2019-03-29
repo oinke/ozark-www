@@ -109,6 +109,9 @@ class MainProfile extends ReduxMixin(PolymerElement) {
         .clicky {
           margin: 0px;
         }
+        .following{
+          margin-top: 6px;
+        }
       </style>
       <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
         <div class="header">
@@ -142,7 +145,14 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           <div class="cover-layout">
               <div>
               <template is="dom-if" if="{{!profile.isMine}}">
-                <button on-click="_follow">Follow</button>
+
+                <template is="dom-if" if="{{!profile.imFollowing}}">
+                  <button on-click="_follow">Follow</button>
+                </template>
+                <template is="dom-if" if="{{profile.imFollowing}}">
+                  <button on-click="_unfollow">Unfollow</button>
+                </template>
+
               </template>
               <template is="dom-if" if="{{profile.isMine}}">
                 <button on-click="_follow">Share Profile</button>
@@ -163,6 +173,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
               </div>
             </div>
             <div class="vertical-layout">
+            <div class="following">[[_lastSeen(profile.followerSince)]]</div>
           <div class="top-line">
 
           <template is="dom-if" if="{{profile.username}}"><span>@[[profile.username]]</span></template>
@@ -170,7 +181,8 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           <template is="dom-if" if="{{profile.website}}"><span>[[profile.website]]</span></template>
     
           </div>
-          <div> [[profile.bio]]</div>
+          
+          
           <div class="bottom-cover"> Followers <strong class="gap">[[profile.followers]]</strong> Following <strong>[[profile.following]]</strong></div>
         </div>
         </div>
@@ -217,6 +229,24 @@ class MainProfile extends ReduxMixin(PolymerElement) {
     };
   }
 
+  _lastSeen(epochTime) {
+    if (epochTime) {
+      let lastSeen = 'Began following you ';
+      const currentTime = Date.now();
+      const elapsed = currentTime - epochTime;
+      const toMins = (mins) => Math.floor((mins/1000)/60);
+      const toHours = (hours) => Math.floor(toMins(hours)/60);
+      const toDays = (days) => Math.floor(toHours(days)/24);
+      elapsed < 120000 ? lastSeen += 'moments ago'
+      : elapsed < 3600000 ? lastSeen += toMins(elapsed) + ' minutes ago.'
+      : elapsed < 7000000 ? lastSeen += '1 hour ago'
+      : elapsed < 86400000 ? lastSeen += toHours(elapsed) + ' hours ago.'
+      : elapsed < 172000000 ? lastSeen += '1 day ago'
+      : lastSeen += toDays(elapsed) + ' days ago';
+      return lastSeen;
+    }
+  }
+
   _routeChanged() {
     const page = this.route.path.split('/')[1];
     if (page != 'settings') {
@@ -230,10 +260,9 @@ class MainProfile extends ReduxMixin(PolymerElement) {
             return response.json();
           })
           .then((response) => {
-            console.log(response);
             this.profile = response;
             this.updateStyles({'--user-pfp': `url('https://s3-us-west-1.amazonaws.com/ozark/${response.id}/pfp_200x200.jpg')`});
-            this.updateStyles({'--user-pfb': `url('https://s3-us-west-1.amazonaws.com/ozark/${response.id}/cover_1160x150.png')`});
+            this.updateStyles({'--user-pfb': `url('https://s3-us-west-1.amazonaws.com/ozark/${response.id}/pfb_1160x150.jpg')`});
           })
           .catch((error) => console.log('Error:', error));
     }
@@ -242,6 +271,25 @@ class MainProfile extends ReduxMixin(PolymerElement) {
   _follow() {
     const token = localStorage.getItem('jwt');
     const url = `${this.env.apiUrl}/users/profile/follow/`;
+    const username = this.profile.username;
+    const data = {username};
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`},
+    })
+        .then((response) => {
+          return response.json();
+        })
+        .then((response) => {
+          this.profile = response;
+        })
+        .catch((error) => console.log('Error:', error));
+  }
+
+  _unfollow() {
+    const token = localStorage.getItem('jwt');
+    const url = `${this.env.apiUrl}/users/profile/unfollow/`;
     const username = this.profile.username;
     const data = {username};
     fetch(url, {
@@ -296,7 +344,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
     const formData = new FormData();
     formData.append('image', file);
     const token = localStorage.getItem('jwt');
-    const url = `${this.env.apiUrl}/users/profile/upload-pfc/`;
+    const url = `${this.env.apiUrl}/users/profile/upload-pfb/`;
     fetch(url, {
       method: 'POST',
       body: formData,

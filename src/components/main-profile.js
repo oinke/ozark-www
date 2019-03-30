@@ -112,6 +112,18 @@ class MainProfile extends ReduxMixin(PolymerElement) {
         .following{
           margin-top: 6px;
         }
+        .container{
+          display: flex;
+          flex-wrap: wrap;
+          margin: 12px;
+        }
+        .miniProfile {
+          height: 300px;
+          width: 250px;
+          background-color: white;
+          margin-right: 12px;
+          padding: 12px;
+        }
       </style>
       <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
         <div class="header">
@@ -183,34 +195,37 @@ class MainProfile extends ReduxMixin(PolymerElement) {
             <a on-click="_followers">Followers <strong class="gap">[[profile.followers]]</strong></a>
             <a on-click="_following">Following <strong>[[profile.following]]</strong></a>
           </div>
+        </div>
+        </div>
+
+        <div class="container">
           <template is="dom-if" if="{{showFollowers}}">
             <dom-repeat items="{{followers}}">
               <template>
-                Followers
-                [[item.name]]
-                [[item.since]]
-                [[item.userid]]
-                [[item.username]]
-                [[item._id]]
+                <div class="miniProfile">
+                  [[item.name]]
+                  [[item.since]]
+                  [[item.userid]]
+                  [[item.username]]
+                  [[item._id]]
+                </div>
               </template>
             </dom-repeat> 
           </template>
           <template is="dom-if" if="{{showFollowing}}">
             <dom-repeat items="{{following}}">
               <template>
-                Following
-                Followers
-                [[item.name]]
-                [[item.since]]
-                [[item.userid]]
-                [[item.username]]
-                [[item._id]]
+                <div class="miniProfile">
+                  [[item.name]]
+                  [[item.since]]
+                  [[item.userid]]
+                  [[item.username]]
+                  [[item._id]]
+                </div>
               </template>
             </dom-repeat> 
           </template>
         </div>
-        </div>
-
     `;
   }
 

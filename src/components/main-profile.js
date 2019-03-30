@@ -100,6 +100,9 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           margin: 12px 0;
           color: var(--grey-color);
         }
+        .bottom-cover a{
+          cursor: pointer;
+        }
         .bottom-cover strong {
           color: var(--white2-black2);
         }
@@ -116,6 +119,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           display: flex;
           flex-wrap: wrap;
           margin: 12px;
+          cursor: pointer;
         }
         .miniProfile {
           height: 300px;
@@ -203,6 +207,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
             <dom-repeat items="{{followers}}">
               <template>
                 <div class="miniProfile" id="[[item.username]]" on-click="_goToProfile">
+                <img src$="https://s3-us-west-1.amazonaws.com/ozark/{{item._id}}/pfp_200x200.jpg">
                   [[item.name]]
                   [[item.since]]
                   [[item.userid]]
@@ -270,6 +275,8 @@ class MainProfile extends ReduxMixin(PolymerElement) {
 
   _goToProfile(e) {
     const username = e.model.__data.item.username;
+    this.showFollowers = false;
+    this.showFollowing = false;
     this.set('route.path', `./${username}`);
   }
   _followers() {

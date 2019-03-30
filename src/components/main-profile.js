@@ -120,7 +120,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
         .miniProfile {
           height: 300px;
           width: 250px;
-          background-color: white;
+          background-color: var(--black2-white1);
           margin-right: 12px;
           padding: 12px;
         }
@@ -202,7 +202,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           <template is="dom-if" if="{{showFollowers}}">
             <dom-repeat items="{{followers}}">
               <template>
-                <div class="miniProfile">
+                <div class="miniProfile" id="[[item.username]]" on-click="_goToProfile">
                   [[item.name]]
                   [[item.since]]
                   [[item.userid]]
@@ -268,6 +268,10 @@ class MainProfile extends ReduxMixin(PolymerElement) {
     };
   }
 
+  _goToProfile(e) {
+    const username = e.model.__data.item.username;
+    this.set('route.path', `./${username}`);
+  }
   _followers() {
     const token = localStorage.getItem('jwt');
     const url = `${this.env.apiUrl}/users/profile/id/followers/?username=${this.profile.username}`;

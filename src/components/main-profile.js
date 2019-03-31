@@ -122,7 +122,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           cursor: pointer;
         }
         .miniProfile {
-          height: 150px;
+          height: 135px;
           width: 250px;
           background-color: var(--black2-white1);
           margin-right: 12px;
@@ -135,6 +135,15 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           position: relative;
           top: -27px;
           left: 10px;
+        }
+        .mini-name {
+          font-size: 18px;
+          margin: 0;
+          text-transform: capitalize;
+          margin-bottom: 4px;
+        }
+        .profilebg{
+          max-width: 250px;
         }
       </style>
       <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
@@ -215,11 +224,10 @@ class MainProfile extends ReduxMixin(PolymerElement) {
             <dom-repeat items="{{followers}}">
               <template>
                 <div class="miniProfile" id="[[item.username]]" on-click="_goToProfile">
-                <img src$="https://s3-us-west-1.amazonaws.com/ozark/{{item.userid}}/pfb_300x39.jpg">
+                <img src$="https://s3-us-west-1.amazonaws.com/ozark/{{item.userid}}/pfb_300x39.jpg" class="profilebg">
                 <img src$="https://s3-us-west-1.amazonaws.com/ozark/{{item.userid}}/pfp_200x200.jpg" class="profile">
-                
-                  [[item.name]]
-                  [[item.since]]
+                <p class="mini-name">[[item.name]]</p>
+                  <!-- [[item.since]] -->
                   @[[item.username]]
                 </div>
               </template>
@@ -229,11 +237,10 @@ class MainProfile extends ReduxMixin(PolymerElement) {
             <dom-repeat items="{{following}}">
               <template>
                 <div class="miniProfile">
-                <img src$="https://s3-us-west-1.amazonaws.com/ozark/{{item.userid}}/pfb_300x39.jpg">
+                <img src$="https://s3-us-west-1.amazonaws.com/ozark/{{item.userid}}/pfb_300x39.jpg" class="profilebg">
                 <img src$="https://s3-us-west-1.amazonaws.com/ozark/{{item.userid}}/pfp_200x200.jpg" class="profile">
-                
-                  [[item.name]]
-                  [[item.since]]
+                <p class="mini-name">[[item.name]]</p>
+                  <!-- [[item.since]] -->
                   @[[item.username]]
                 </div>
               </template>

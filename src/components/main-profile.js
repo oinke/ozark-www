@@ -352,6 +352,8 @@ class MainProfile extends ReduxMixin(PolymerElement) {
   }
 
   _routeChanged() {
+    this.showFollowers = false;
+    this.showFollowing = false;
     const page = this.route.path.split('/')[1];
     if (page != 'settings') {
       const token = localStorage.getItem('jwt');

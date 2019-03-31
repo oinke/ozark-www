@@ -207,7 +207,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
             <dom-repeat items="{{followers}}">
               <template>
                 <div class="miniProfile" id="[[item.username]]" on-click="_goToProfile">
-                <img src$="https://s3-us-west-1.amazonaws.com/ozark/{{item._id}}/pfp_200x200.jpg">
+                <img src$="https://s3-us-west-1.amazonaws.com/ozark/{{item.userid}}/pfp_200x200.jpg">
                   [[item.name]]
                   [[item.since]]
                   [[item.userid]]
@@ -290,6 +290,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           return response.json();
         })
         .then((response) => {
+          console.log(response);
           this.followers = response.followers;
           this.showFollowers = true;
           this.showFollowing = false;
@@ -308,6 +309,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           return response.json();
         })
         .then((response) => {
+          console.log(response);
           this.following = response.following;
           this.showFollowers = false;
           this.showFollowing = true;
@@ -347,6 +349,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           })
           .then((response) => {
             this.profile = response;
+            console.log(response.thumbnail);
             this.updateStyles({'--user-pfp': `url('https://s3-us-west-1.amazonaws.com/ozark/${response.id}/pfp_200x200.jpg')`});
             this.updateStyles({'--user-pfb': `url('https://s3-us-west-1.amazonaws.com/ozark/${response.id}/pfb_1160x150.jpg')`});
           })

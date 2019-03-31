@@ -122,11 +122,19 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           cursor: pointer;
         }
         .miniProfile {
-          height: 300px;
+          height: 150px;
           width: 250px;
           background-color: var(--black2-white1);
           margin-right: 12px;
           padding: 12px;
+        }
+        .profile {
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          position: relative;
+          top: -27px;
+          left: 10px;
         }
       </style>
       <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
@@ -207,12 +215,12 @@ class MainProfile extends ReduxMixin(PolymerElement) {
             <dom-repeat items="{{followers}}">
               <template>
                 <div class="miniProfile" id="[[item.username]]" on-click="_goToProfile">
-                <img src$="https://s3-us-west-1.amazonaws.com/ozark/{{item.userid}}/pfp_200x200.jpg">
+                <img src$="https://s3-us-west-1.amazonaws.com/ozark/{{item.userid}}/pfb_300x39.jpg">
+                <img src$="https://s3-us-west-1.amazonaws.com/ozark/{{item.userid}}/pfp_200x200.jpg" class="profile">
+                
                   [[item.name]]
                   [[item.since]]
-                  [[item.userid]]
-                  [[item.username]]
-                  [[item._id]]
+                  @[[item.username]]
                 </div>
               </template>
             </dom-repeat> 
@@ -221,11 +229,12 @@ class MainProfile extends ReduxMixin(PolymerElement) {
             <dom-repeat items="{{following}}">
               <template>
                 <div class="miniProfile">
+                <img src$="https://s3-us-west-1.amazonaws.com/ozark/{{item.userid}}/pfb_300x39.jpg">
+                <img src$="https://s3-us-west-1.amazonaws.com/ozark/{{item.userid}}/pfp_200x200.jpg" class="profile">
+                
                   [[item.name]]
                   [[item.since]]
-                  [[item.userid]]
-                  [[item.username]]
-                  [[item._id]]
+                  @[[item.username]]
                 </div>
               </template>
             </dom-repeat> 

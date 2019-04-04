@@ -4,3 +4,4 @@ test/**
 index.html
 shared-styles.js
 email*.html
+socket.io.js

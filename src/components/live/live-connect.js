@@ -24,11 +24,12 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
     };
   }
 
+  // TODO: on logout discconnect the socket
+
   _connect() {
     this.jwt = localStorage.getItem('jwt');
     this.socket = io('https://ozark-chat-api.herokuapp.com', {query: `jwt=${this.jwt}`});
     this.socket.on('connect', () => {
-      this._sendMessage('colinskeep83112', 'chat', 'hello');
       this.socket.on('chat', (data) => {
         this._incomingChat(data);
       });
@@ -37,13 +38,17 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
       });
     });
   }
+
   _incomingChat(message) {
     console.log(message);
   }
+
   _incomingNotifications(message) {
     console.log(message);
   }
-  _sendMessage(username, type, message) {
+
+  sendMessage(username, type, message) {
+    console.log('sending');
     if (this.socket.connected) {
       this.socket.emit(type, {username, type, message});
     }

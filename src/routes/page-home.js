@@ -2,6 +2,7 @@ import {createMixin} from '../../node_modules/polymer-redux';
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import '../css/shared-styles.js';
 import '../components/layouts/main-layout.js';
+import '../components/live/live-chat.js';
 import store from '../global/store.js';
 const ReduxMixin = createMixin(store);
 
@@ -18,7 +19,9 @@ class PageHome extends ReduxMixin(PolymerElement) {
   
       <main-layout nofooter> 
         <div slot="aside"></div>
-        <div slot="body"></div>
+        <div slot="body">
+          <live-chat></live-chat>
+        </div>
       </main-layout>
     `;
   }

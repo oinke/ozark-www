@@ -45,7 +45,7 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
   }
   _sendMessage(username, type, message) {
     if (this.socket.connected) {
-      this.socket.emit('message', {username, type, message});
+      this.socket.emit(type, {username, type, message});
     }
   }
 } window.customElements.define('live-connect', LiveConnect);

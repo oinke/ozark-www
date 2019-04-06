@@ -51,9 +51,11 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
     this.socket = io('https://ozark-chat-api.herokuapp.com', {query: `jwt=${this.jwt}`});
     this.socket.on('connect', () => {
       this.socket.on('message', (data) => {
+        console.log(data);
         this._incomingMessages(data);
       });
       this.socket.on('notifcations', (data) => {
+        console.log(data);
         this._incomingNotifications(data);
       });
     });
@@ -79,6 +81,7 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
 
   _sendMessage(username, message) {
     if (this.socket.connected) {
+      console.log('FIRE!');
       this.socket.emit('message', {username, message});
     }
   }

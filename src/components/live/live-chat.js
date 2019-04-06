@@ -68,6 +68,7 @@ class LiveChat extends ReduxMixin(PolymerElement) {
 
   _sendMessage() {
     console.log('Send Message');
+    // this.dispatchEvent(new CustomEvent('modal', {bubbles: true, composed: true, detail: {action: 'feedback', language: this.language}}));
     this.dispatchEvent(new CustomEvent('sendMessage', {bubbles: true, composed: true, detail: {username: this.username, message: this.message}}));
   }
 

@@ -37,8 +37,9 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
   ready() {
     super.ready();
     window.addEventListener('sendMessage', (e) => {
-      this.username = e.detail.username;
-      this.message = e.detail.message;
+      const username = e.detail.username;
+      const message = e.detail.message;
+      this._sendMessage(username, message);
     });
     window.addEventListener('logOut', () => {
       this._logout();

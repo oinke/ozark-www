@@ -63,6 +63,19 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
           box-shadow: 0 4px 8px rgba(0, 0, 0, .2), 0 0 1px rgba(0,0,0,0.3);
           overflow:hidden;
         }
+        .chatbox{
+          visibility: var(--chatbox-visibility, hidden);
+          opacity: var(--chatbox-opacity, 0);  
+          background: var(--header-background-color);
+          position:absolute;
+          width: 200px;
+          right:0;
+          padding:6px 0;
+          box-shadow: inset 0 1px 0 var(--hover-background), 0 1px 0px rgba(0,0,0,0.08), 0 2px 2px rgba(0,0,0,0.05);
+          transition: opacity 0.3s ease-in-out;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, .2), 0 0 1px rgba(0,0,0,0.3);
+          overflow:hidden;
+        }
         .dropdown li a {
           color: var(--placeholder-color);
           display: block;
@@ -103,7 +116,10 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
         <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
         <div class="container">
             <ul class="navigation">
-              <li><a on-click="_inbox"><img src="./images/inbox.png" class="inbox"></a></li>
+              <li><a on-click="_inbox"><img src="./images/inbox.png" class="inbox"></a>
+              <div class="chatbox" on-mouseleave="_closeChatbox">Chat Box</div>
+              </li>
+              
               <li><a on-click="_dropdown"><img src$="https://s3-us-west-1.amazonaws.com/ozark/[[userid]]/pfp_200x200.jpg?versionId=null" class="avatar">[[fullname]]</a>
                 <ul class="dropdown" on-mouseleave="_closeDropdown">
                   <li><a on-click="_profile">[[txt.profile]]</a></li>
@@ -201,6 +217,10 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
     });
   }
 
+  _inbox(e) {
+    this.updateStyles({'--chatbox-visibility': `visible`});
+    this.updateStyles({'--chatbox-opacity': `1`});
+  }
   _dropdown(e) {
     this.updateStyles({'--dropdown-visibility': `visible`});
     this.updateStyles({'--dropdown-opacity': `1`});
@@ -209,6 +229,10 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
   _closeDropdown() {
     this.updateStyles({'--dropdown-visibility': `hidden`});
     this.updateStyles({'--dropdown-opacity': `0`});
+  }
+  _closeChatbox() {
+    this.updateStyles({'--chatbox-visibility': `hidden`});
+    this.updateStyles({'--chatbox-opacity': `0`});
   }
 
   _mode() {

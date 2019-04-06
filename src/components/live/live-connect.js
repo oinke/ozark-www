@@ -26,7 +26,7 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
 
   static get template() {
     return html `
-      <audio controls id="audio" src="../../audio/whoosh.mp3">
+      <audio id="audio" src="../../audio/whoosh.mp3">
     `;
   }
 

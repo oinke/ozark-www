@@ -2,7 +2,8 @@
   "entrypoint": "index.html",
   "shell": "src/app-shell.js",
   "sources": [
-    "images/**/*"
+    "images/**/*",
+	"audio/*"
   ],
   "fragments": [
     "env.js"

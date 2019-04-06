@@ -5,6 +5,7 @@ import '@polymer/app-route/app-location.js';
 import '@polymer/app-route/app-route.js';
 import store from '../../global/store.js';
 import '../../css/shared-styles.js';
+import '../../components/live/live-messages.js';
 
 const ReduxMixin = createMixin(store);
 class LoggedIn extends ReduxMixin(PolymerElement) {
@@ -117,7 +118,8 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
         <div class="container">
             <ul class="navigation">
               <li><a on-click="_inbox"><img src="./images/inbox.png" class="inbox"></a>
-              <div class="chatbox" on-mouseleave="_closeChatbox">Chat Box</div>
+              <div class="chatbox" on-mouseleave="_closeChatbox">
+              <live-messages></live-messages></div>
               </li>
               
               <li><a on-click="_dropdown"><img src$="https://s3-us-west-1.amazonaws.com/ozark/[[userid]]/pfp_200x200.jpg?versionId=null" class="avatar">[[fullname]]</a>

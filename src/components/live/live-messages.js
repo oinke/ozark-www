@@ -1,10 +1,10 @@
-import {createMixin} from '../../../node_modules/polymer-redux';
+import {createMixin} from 'polymer-redux';
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import store from '../../global/store.js';
 import '../../css/shared-styles.js';
 
 const ReduxMixin = createMixin(store);
-class LiveChat extends ReduxMixin(PolymerElement) {
+class LiveMessages extends ReduxMixin(PolymerElement) {
   static get template() {
     return html`
       <style include="shared-styles">
@@ -83,4 +83,4 @@ class LiveChat extends ReduxMixin(PolymerElement) {
       this.updateStyles({'--hover-background': this.color.black1});
     }
   }
-} window.customElements.define('live-chat', LiveChat);
+} window.customElements.define('live-messages', LiveMessages);

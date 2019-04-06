@@ -2,7 +2,6 @@ import {createMixin} from '../../../node_modules/polymer-redux';
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import store from '../../global/store.js';
 import '../../css/shared-styles.js';
-import './live-connect.js';
 
 const ReduxMixin = createMixin(store);
 class LiveChat extends ReduxMixin(PolymerElement) {
@@ -20,17 +19,12 @@ class LiveChat extends ReduxMixin(PolymerElement) {
         }
       </style>
 
-    <live-connect id="live"></live-connect>
-    <label for="username">Username</label><br>
-    <input name="username" id="username" value="{{username::input}}">
-
-    <label for="message">Message</label><br>
-    <input name="message" id="message" value="{{message::input}}">
-
-    <label for="type">Type</label><br>
-    <input name="type" id="type" value="{{type::input}}">
-
-    <button type="button" on-click="_sendMessage">Send</button>
+      <label for="username">Username</label><br>
+      <input name="username" id="username" value="{{username::input}}">
+      <label for="message">Message</label><br>
+      <input name="message" id="message" value="{{message::input}}">
+      </br>
+      <button type="button" on-click="_sendMessage">Send</button>
 
     `;
   }
@@ -73,8 +67,8 @@ class LiveChat extends ReduxMixin(PolymerElement) {
   }
 
   _sendMessage() {
-    this.$.live.sendMessage(this.username, this.type, this.message);
     console.log('Send Message');
+    this.dispatchEvent(new CustomEvent('sendMessage', {bubbles: true, composed: true, detail: {username: this.username, message: this.message}}));
   }
 
   _mode() {

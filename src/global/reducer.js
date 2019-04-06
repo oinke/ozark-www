@@ -43,7 +43,12 @@ if (localStorage.getItem('language')) {
 const userid = localStorage.getItem('id');
 import {env} from '../../env.js';
 
+const notifications = [];
+const messages = [];
+
 const initial = {
+  notifications: notifications,
+  messages: messages,
   fullname: fullname,
   username: username,
   userid: userid,
@@ -90,6 +95,14 @@ export default (state = initial, action) => {
     case 'CHANGE_USERID':
       return Object.assign({}, state, {
         userid: action.userid,
+      });
+    case 'CHANGE_MESSAGES':
+      return Object.assign({}, state, {
+        messages: action.messages,
+      });
+    case 'CHANGE_NOTIFICATIONS':
+      return Object.assign({}, state, {
+        notifications: action.notifications,
       });
     default:
       return state;

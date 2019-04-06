@@ -13,6 +13,14 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
         value: false,
         observer: '_connect',
       },
+      messages: {
+        type: Array,
+        readOnly: true,
+      },
+      notifications: {
+        type: Array,
+        readOnly: true,
+      },
     };
   }
 
@@ -21,17 +29,28 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
       language: state.language,
       mode: state.mode,
       color: state.color,
+      messages: state.messages,
+      notifications: state.notifications,
     };
   }
 
-  // TODO: on logout discconnect the socket
+  ready() {
+    super.ready();
+    window.addEventListener('sendMessage', (e) => {
+      this.username = e.detail.username;
+      this.message = e.detail.message;
+    });
+    window.addEventListener('logOut', () => {
+      this._logout();
+    });
+  }
 
   _connect() {
     this.jwt = localStorage.getItem('jwt');
     this.socket = io('https://ozark-chat-api.herokuapp.com', {query: `jwt=${this.jwt}`});
     this.socket.on('connect', () => {
-      this.socket.on('chat', (data) => {
-        this._incomingChat(data);
+      this.socket.on('message', (data) => {
+        this._incomingMessages(data);
       });
       this.socket.on('notifcations', (data) => {
         this._incomingNotifications(data);
@@ -39,19 +58,31 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
     });
   }
 
-  _incomingChat(message) {
-    console.log(message);
+  _incomingMessages(message) {
+    const messages = this.messages;
+    messages.push(message);
+    this.dispatchAction({
+      type: 'CHANGE_MESSAGES',
+      messages: messages,
+    });
   }
 
-  _incomingNotifications(message) {
-    console.log(message);
+  _incomingNotifications(notification) {
+    const notifications = this.notifications;
+    notifications.push(notification);
+    this.dispatchAction({
+      type: 'CHANGE_NOTIFICATIONS',
+      notifications: notifications,
+    });
   }
 
-  sendMessage(username, type, message) {
-    console.log('sending');
+  _sendMessage(username, message) {
     if (this.socket.connected) {
-      this.socket.emit(type, {username, type, message});
+      this.socket.emit('message', {username, message});
     }
+  }
+  _logout() {
+    this.socket.disconnect(true);
   }
 } window.customElements.define('live-connect', LiveConnect);
 

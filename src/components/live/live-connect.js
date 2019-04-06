@@ -1,6 +1,6 @@
 
 import {createMixin} from '../../../node_modules/polymer-redux';
-import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import store from '../../global/store.js';
 import '@polymer/app-route/app-location.js';
 
@@ -23,6 +23,13 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
       },
     };
   }
+
+  static get template() {
+    return html `
+      <audio controls id="audio" src="../../audio/whoosh.mp3">
+    `;
+  }
+
 
   static mapStateToProps(state, element) {
     return {
@@ -62,6 +69,7 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
   }
 
   _incomingMessages(message) {
+    this.$.audio.play();
     const messages = this.messages;
     messages.push(message);
     this.dispatchAction({
@@ -89,5 +97,3 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
     this.socket.disconnect(true);
   }
 } window.customElements.define('live-connect', LiveConnect);
-
-

@@ -15,6 +15,7 @@ class CenterLayout extends ReduxMixin(PolymerElement) {
           display: flex;
           height: 100vh;
           flex-direction: column;
+          background-color: red;
         }
         .vertical-container{
           flex: 1 0 auto;

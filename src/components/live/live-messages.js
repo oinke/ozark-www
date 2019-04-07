@@ -15,21 +15,21 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
           z-index: 8888;
           padding: 12px;
         }
-        input{
+        input {
             border: 1px solid black;
         }
       </style>
 
       <template is='dom-repeat' items='[[messageDisaply]]'>
-      <p>@[[item.from]] [[item.time]]</p>
-      <p>[[item.message]]</p>
-      <hr/>
+        <p>@[[item.from]] [[item.time]]</p>
+        <p>[[item.message]]</p>
+        <hr/>
       </template>
 
-      <label for="username">Username</label><br>
-      <input name="username" id="username" value="{{username::input}}">
-      <label for="message">Message</label><br>
-      <input name="message" id="message" value="{{message::input}}">
+      <label>Username</label><br>
+      <input name="username" type="text" class="text" id="username" value="{{username::input}}">
+      <label>Message</label><br>
+      <input name="message" type="text" class="text" id="message" value="{{message::input}}">
       </br>
       <button class="flat-btn" type="button" on-click="_sendMessage">Send Message</button>
 
@@ -108,14 +108,14 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
   }
 
   _mode() {
-    if (this.mode === 'light') {
-      this.updateStyles({'--header-background-color': this.color.white1});
-      this.updateStyles({'--host-logo': `url(./images/light-logo.svg) no-repeat`});
-      this.updateStyles({'--hover-background': this.color.white2});
-    } else {
-      this.updateStyles({'--header-background-color': this.color.black2});
-      this.updateStyles({'--host-logo': `url(./images/dark-logo.svg) no-repeat`});
-      this.updateStyles({'--hover-background': this.color.black1});
-    }
+    // if (this.mode === 'light') {
+    //   this.updateStyles({'--header-background-color': this.color.white1});
+    //   this.updateStyles({'--host-logo': `url(./images/light-logo.svg) no-repeat`});
+    //   this.updateStyles({'--hover-background': this.color.white2});
+    // } else {
+    //   this.updateStyles({'--header-background-color': this.color.black2});
+    //   this.updateStyles({'--host-logo': `url(./images/dark-logo.svg) no-repeat`});
+    //   this.updateStyles({'--hover-background': this.color.black1});
+    // }
   }
 } window.customElements.define('live-messages', LiveMessages);

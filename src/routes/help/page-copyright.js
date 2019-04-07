@@ -136,12 +136,36 @@ class PageCopyright extends ReduxMixin(PolymerElement) {
   }
 
   _mode() {
+    this.updateStyles({'--blue-color': this.color.blue});
+    this.updateStyles({'--grey-color': this.color.grey});
+    this.updateStyles({'--red-color': this.color.red});
+    this.updateStyles({'--green-color': this.color.green});
     if (this.mode === 'light') {
       this.updateStyles({'--host-background-color': this.color.white2});
       this.updateStyles({'--host-color': this.color.black2});
+      this.updateStyles({'--black1-white2': this.color.white2});
+      this.updateStyles({'--black3-white3': this.color.white3});
+      this.updateStyles({'--white1-black1': this.color.black1});
+      this.updateStyles({'--white2-black2': this.color.black2});
+      this.updateStyles({'--black3-white1': this.color.white1});
+      this.updateStyles({'--black1-white2': this.color.white2});
+      this.updateStyles({'--black1-white3': this.color.white3});
+      this.updateStyles({'--white2-black3': this.color.black3});
+      this.updateStyles({'--black2-white1': this.color.white1});
+      this.updateStyles({'--black2-white3': this.color.white3});
     } else {
       this.updateStyles({'--host-background-color': this.color.black2});
       this.updateStyles({'--host-color': this.color.white1});
+      this.updateStyles({'--black1-white2': this.color.black1});
+      this.updateStyles({'--black3-white3': this.color.black3});
+      this.updateStyles({'--white1-black1': this.color.white1});
+      this.updateStyles({'--white2-black2': this.color.white2});
+      this.updateStyles({'--black3-white1': this.color.black3});
+      this.updateStyles({'--black1-white2': this.color.black1});
+      this.updateStyles({'--black1-white3': this.color.black1});
+      this.updateStyles({'--white2-black3': this.color.white2});
+      this.updateStyles({'--black2-white1': this.color.black2});
+      this.updateStyles({'--black2-white3': this.color.black2});
     }
   }
 } window.customElements.define('page-copyright', PageCopyright);

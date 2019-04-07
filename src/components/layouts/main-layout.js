@@ -15,6 +15,7 @@ class MainLayout extends ReduxMixin(PolymerElement) {
           display: flex;
           height: 100vh;
           flex-direction: column;
+          
         }
         .vertical-container{
           flex: 1 0 auto;

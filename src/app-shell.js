@@ -8,7 +8,6 @@ import '@polymer/iron-pages/iron-pages.js';
 import './components/main-modal.js';
 import './components/live/live-connect.js';
 
-
 import store from './global/store.js';
 const ReduxMixin = createMixin(store);
 
@@ -23,7 +22,6 @@ class AppShell extends ReduxMixin(PolymerElement) {
           display: block;
         }
       </style>
-      <!-- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=[[env.googleTagManager]]" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> -->
       <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
       <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}"></app-route>
       <main-modal></main-modal>

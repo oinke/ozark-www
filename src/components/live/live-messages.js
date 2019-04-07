@@ -21,7 +21,9 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
       </style>
 
       <template is='dom-repeat' items='[[messageDisaply]]'>
+      <p>@[[item.from]] [[item.time]]</p>
       <p>[[item.message]]</p>
+      <hr/>
       </template>
 
       <label for="username">Username</label><br>
@@ -29,7 +31,7 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
       <label for="message">Message</label><br>
       <input name="message" id="message" value="{{message::input}}">
       </br>
-      <button type="button" on-click="_sendMessage">Send</button>
+      <button class="flat-btn" type="button" on-click="_sendMessage">Send Message</button>
 
     `;
   }
@@ -81,7 +83,9 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
     };
   }
 
+  // TODO: delete this
   _test() {
+    console.log(this.messages);
     this.messageDisplay = [];
     this.messages.map((item) => {
       if (this.messageDisaply.indexOf(item) === -1) {

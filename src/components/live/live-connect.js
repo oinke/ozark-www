@@ -75,6 +75,7 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
   _incomingMessages(message) {
     // TODO:
     // get messages from local storage
+    // const messages = JSON.parse(localStorage.getItem('messages'));
     // parse the json
     // insert each message from the message array if its no already there
     // stringify and send to local storage and redux

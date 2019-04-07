@@ -1,4 +1,4 @@
-import {createMixin} from 'polymer-redux';
+import {createMixin} from '../../../node_modules/polymer-redux';
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import store from '../../global/store.js';
 import '../../css/shared-styles.js';
@@ -9,15 +9,20 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
     return html`
       <style include="shared-styles">
         :host {
-          display: box;
+          display: block;
           background-color: var(--header-background-color);
           box-shadow: inset 0 1px 0 var(--header-background-color), 0 1px 0px rgba(0,0,0,0.08), 0 2px 2px rgba(0,0,0,0.05);
           z-index: 8888;
+          padding: 12px;
         }
         input{
             border: 1px solid black;
         }
       </style>
+
+      <template is='dom-repeat' items='[[messageDisaply]]'>
+      <p>[[item.message]]</p>
+      </template>
 
       <label for="username">Username</label><br>
       <input name="username" id="username" value="{{username::input}}">
@@ -55,6 +60,15 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
         type: Boolean,
         readOnly: true,
       },
+      messages: {
+        type: Array,
+        // TODO: add an observer to fire a function that parses the string and populates the dom-repeat
+      },
+      // TODO: delete this
+      messageDisaply: {
+        type: Array,
+        value: [],
+      },
     };
   }
 
@@ -63,13 +77,30 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
       mode: state.mode,
       color: state.color,
       loggedin: state.loggedin,
+      messages: state.messages,
     };
   }
 
+  _test() {
+    this.messageDisplay = [];
+    this.messages.map((item) => {
+      if (this.messageDisaply.indexOf(item) === -1) {
+        this.push('messageDisaply', item);
+      };
+    });
+  }
+
   _sendMessage() {
-    console.log('Send Message');
-    // this.dispatchEvent(new CustomEvent('modal', {bubbles: true, composed: true, detail: {action: 'feedback', language: this.language}}));
     this.dispatchEvent(new CustomEvent('sendMessage', {bubbles: true, composed: true, detail: {username: this.username, message: this.message}}));
+  }
+
+
+  // TODO: delete the below
+  ready() {
+    super.ready();
+    window.addEventListener('incomingMessages', () => {
+      this._test();
+    });
   }
 
   _mode() {

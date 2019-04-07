@@ -43,6 +43,7 @@ if (localStorage.getItem('language')) {
 const userid = localStorage.getItem('id');
 import {env} from '../../env.js';
 
+// TODO: update these to get the values from local storage and parse them
 const notifications = [];
 const messages = [];
 

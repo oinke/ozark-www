@@ -69,7 +69,7 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
           opacity: var(--chatbox-opacity, 0);  
           background: var(--header-background-color);
           position:absolute;
-          width: 200px;
+          width: 280px;
           right:0;
           padding:6px 0;
           box-shadow: inset 0 1px 0 var(--hover-background), 0 1px 0px rgba(0,0,0,0.08), 0 2px 2px rgba(0,0,0,0.05);

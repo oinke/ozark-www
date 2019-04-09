@@ -95,6 +95,7 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
   }
 
   _sendMessage() {
+    console.log('dispatching message');
     this.dispatchEvent(new CustomEvent('sendMessage', {bubbles: true, composed: true, detail: {username: this.username, message: this.message}}));
   }
 

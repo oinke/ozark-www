@@ -21,7 +21,7 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
       </style>
 
       <template is='dom-repeat' items='[[messageDisaply]]'>
-        <p>@[[item.from]] [[item.time]]</p>
+        <p>@[[item.fromUser]] [[item.time]]</p>
         <p>[[item.message]]</p>
         <hr/>
       </template>

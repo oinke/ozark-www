@@ -76,8 +76,6 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
   }
 
   _incomingMessages(incomingMessages) {
-    // this.$.audio.play();
-    console.log(incomingMessages);
     if (localStorage.getItem('messages')) {
       const existingMessages = JSON.parse(localStorage.getItem('messages'));
       const mappedExisting = existingMessages.map(function(e) {
@@ -103,6 +101,7 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
         messages: JSON.stringify(incomingMessages),
       });
     }
+    this.$.audio.play();
   }
 
   _incomingNotifications(notification) {

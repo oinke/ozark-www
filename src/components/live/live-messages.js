@@ -63,10 +63,9 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
         readOnly: true,
       },
       messages: {
-        type: Array,
-        // TODO: add an observer to fire a function that parses the string and populates the dom-repeat
+        type: String,
+        observer: '_messages',
       },
-      // TODO: delete this
       messageDisaply: {
         type: Array,
         value: [],
@@ -83,29 +82,13 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
     };
   }
 
-  // TODO: delete this
-  _test() {
-    console.log(this.messages);
-    this.messageDisplay = [];
-    this.messages.map((item) => {
-      if (this.messageDisaply.indexOf(item) === -1) {
-        this.push('messageDisaply', item);
-      };
-    });
+  _messages() {
+    this.messageDisaply = JSON.parse(this.messages);
   }
 
   _sendMessage() {
     console.log('dispatching message');
     this.dispatchEvent(new CustomEvent('sendMessage', {bubbles: true, composed: true, detail: {username: this.username, message: this.message}}));
-  }
-
-
-  // TODO: delete the below
-  ready() {
-    super.ready();
-    window.addEventListener('incomingMessages', () => {
-      this._test();
-    });
   }
 
   _mode() {

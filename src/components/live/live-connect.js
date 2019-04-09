@@ -47,7 +47,6 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
       const username = e.detail.username;
       const message = e.detail.message;
       this._sendMessage(username, message);
-      console.log('recieved message to send');
     });
     window.addEventListener('logOut', () => {
       this._logout();
@@ -77,7 +76,8 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
   }
 
   _incomingMessages(incomingMessages) {
-    this.$.audio.play();
+    // this.$.audio.play();
+    console.log(incomingMessages);
     const existingMessages = JSON.parse(localStorage.getItem('messages'));
     const mappedExisting = existingMessages.map(function(e) {
       return e._id;
@@ -108,9 +108,6 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
 
   _sendMessage(username, message) {
     if (this.socket.connected) {
-      console.log('emit message');
-      console.log(username);
-      console.log(message);
       this.socket.emit('message', {username, message});
     }
   }

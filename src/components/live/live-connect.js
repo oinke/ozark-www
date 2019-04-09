@@ -78,23 +78,25 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
   _incomingMessages(incomingMessages) {
     // this.$.audio.play();
     console.log(incomingMessages);
-    const existingMessages = JSON.parse(localStorage.getItem('messages') || []);
-    const mappedExisting = existingMessages.map(function(e) {
-      return e._id;
-    });
-    const mappedIncoming = incomingMessages.map(function(f) {
-      return f._id;
-    });
-    for (let i = 0; i < mappedIncoming.length; i++) {
-      if (mappedExisting.indexOf(mappedIncoming[i]) < 0) {
-        existingMessages.push(incomingMessages[i]);
+    if (localStorage.getItem('messages')) {
+      const existingMessages = JSON.parse(localStorage.getItem('messages'));
+      const mappedExisting = existingMessages.map(function(e) {
+        return e._id;
+      });
+      const mappedIncoming = incomingMessages.map(function(f) {
+        return f._id;
+      });
+      for (let i = 0; i < mappedIncoming.length; i++) {
+        if (mappedExisting.indexOf(mappedIncoming[i]) < 0) {
+          existingMessages.push(incomingMessages[i]);
+        }
       }
+      localStorage.setItem('messages', JSON.stringify(existingMessages));
+      this.dispatchAction({
+        type: 'CHANGE_MESSAGES',
+        messages: JSON.stringify(existingMessages),
+      });
     }
-    localStorage.setItem('messages', JSON.stringify(existingMessages));
-    this.dispatchAction({
-      type: 'CHANGE_MESSAGES',
-      messages: JSON.stringify(existingMessages),
-    });
   }
 
   _incomingNotifications(notification) {

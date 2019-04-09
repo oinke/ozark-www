@@ -96,6 +96,12 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
         type: 'CHANGE_MESSAGES',
         messages: JSON.stringify(existingMessages),
       });
+    } else {
+      localStorage.setItem('messages', JSON.stringify(incomingMessages));
+      this.dispatchAction({
+        type: 'CHANGE_MESSAGES',
+        messages: JSON.stringify(incomingMessages),
+      });
     }
   }
 

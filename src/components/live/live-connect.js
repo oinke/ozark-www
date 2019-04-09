@@ -55,12 +55,15 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
   }
 
   _connect() {
-    // TODO:
-    // get meeages from local storage
-    // parse the json
-    // find the epoch of the last recieved
-    // send epoch of there is on if not send 0
-    const lastMessage = 0;
+    let lastMessage = 0;
+    const messages = JSON.parse(localStorage.getItem('messages'));
+    if (messages) {
+      for (let i = 0, len = messages.length; i < len; i++) {
+        if (messages[i].datetime > lastMessage) {
+          lastMessage = messages[i].datetime;
+        }
+      }
+    }
     this.jwt = localStorage.getItem('jwt');
     this.socket = io('https://ozark-chat-api.herokuapp.com', {query: `jwt=${this.jwt}&lastMessage=${lastMessage}`});
     this.socket.on('connect', () => {
@@ -73,24 +76,25 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
     });
   }
 
-  _incomingMessages(message) {
-    console.log('incomming msg');
-    console.log(message);
-    // TODO:
-    // get messages from local storage
-    // const messages = JSON.parse(localStorage.getItem('messages'));
-    // parse the json
-    // insert each message from the message array if its no already there
-    // stringify and send to local storage and redux
+  _incomingMessages(incomingMessages) {
     this.$.audio.play();
-    const messages = this.messages;
-    messages.push(message);
+    const existingMessages = JSON.parse(localStorage.getItem('messages'));
+    const mappedExisting = existingMessages.map(function(e) {
+      return e._id;
+    });
+    const mappedIncoming = incomingMessages.map(function(f) {
+      return f._id;
+    });
+    for (let i = 0; i < mappedIncoming.length; i++) {
+      if (mappedExisting.indexOf(mappedIncoming[i]) < 0) {
+        existingMessages.push(incomingMessages[i]);
+      }
+    }
+    localStorage.setItem('messages', JSON.stringify(existingMessages));
     this.dispatchAction({
       type: 'CHANGE_MESSAGES',
-      messages: messages,
+      messages: JSON.stringify(existingMessages),
     });
-    // stop sending this
-    this.dispatchEvent(new CustomEvent('incomingMessages', {bubbles: true, composed: true}));
   }
 
   _incomingNotifications(notification) {

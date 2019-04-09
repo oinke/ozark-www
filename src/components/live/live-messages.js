@@ -83,7 +83,11 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
   }
 
   _messages() {
-    this.messageDisaply = JSON.parse(this.messages);
+    console.log('messages recieved');
+    console.log(this.messages);
+    if (this.messages) {
+      this.messageDisaply = JSON.parse(this.messages);
+    }
   }
 
   _sendMessage() {

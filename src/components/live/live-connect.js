@@ -78,7 +78,6 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
 
   _incomingMessages(incomingMessages) {
     if (localStorage.getItem('messages')) {
-      console.log(incomingMessages);
       const existingMessages = JSON.parse(localStorage.getItem('messages'));
       const mappedExisting = existingMessages.map(function(e) {
         return e._id;
@@ -86,10 +85,8 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
       const mappedIncoming = incomingMessages.map(function(f) {
         return f._id;
       });
-      console.log(mappedIncoming);
       for (let i = 0; i < mappedIncoming.length; i++) {
         if (mappedExisting.indexOf(mappedIncoming[i]) < 0) {
-          console.log("push");
           existingMessages.push(incomingMessages[i]);
         }
       }

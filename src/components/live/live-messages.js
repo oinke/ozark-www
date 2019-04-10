@@ -18,13 +18,60 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
         input {
             border: 1px solid black;
         }
+        .max-height {
+          max-height: 500px;
+          overflow: scroll;
+        }
+        .avatar {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          margin-right: 6px;
+        }
+        .message {
+          display: flex;
+          margin: 12px 0;
+        }
+        .message-avatar {
+          flex: 1;
+          max-width: 40px;
+        }
+        .message-details {
+          flex: 1;
+          padding-left: 12px;
+        }
+        .name{
+          font-size: 16px;
+          font-weight: 700;
+          margin: 0px;
+        }
+        .name span {
+          font-size: 12px;
+          font-weight: 400;
+        }
+        .message-text{
+          margin: 0px;
+          font-size: 14px;
+          padding-top: 6px;
+        }
+
       </style>
 
-      <template is='dom-repeat' items='[[messageDisaply]]'>
-        <p>@[[item.fromUser]] [[item.time]]</p>
-        <p>[[item.message]]</p>
-        <hr/>
-      </template>
+      <div class="max-height" id="scrollBox">
+        <template is='dom-repeat' items='[[messageDisaply]]'>
+
+          <div class="message">
+            <div class="message-avatar">
+              <img class="avatar" src='https://s3-us-west-1.amazonaws.com/ozark/[[item.fromUserId]]/pfp_200x200.jpg?versionId=null'>
+            </div>
+            <div class="message-details">
+              <p class="name">@[[item.fromUser]] <span>[[item.datetime]]</span></p>
+              <p class="message-text">[[item.message]]</p>
+            </div>
+          </div>
+
+        </template>
+      </div>
 
       <label>Username</label><br>
       <input name="username" type="text" class="text" id="username" value="{{username::input}}">
@@ -83,11 +130,12 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
   }
 
   _messages() {
-    console.log('FIRE');
     if (this.messages) {
-      console.log('FIRE2');
-      console.log(this.messages);
       this.messageDisaply = JSON.parse(this.messages);
+      setTimeout(() => {
+        const objDiv = this.shadowRoot.querySelector('#scrollBox');
+        objDiv.scrollTop = objDiv.scrollHeight;
+      }, 30);
     }
   }
 

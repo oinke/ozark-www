@@ -1,9 +1,11 @@
 import {createMixin} from '../../../node_modules/polymer-redux';
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
+import {translations} from '../../translations/languages.js';
 import '../../css/shared-styles.js';
 import '../../components/layouts/main-layout.js';
 import '../../components/main-join.js';
 import store from '../../global/store.js';
+import '@polymer/app-route/app-location.js';
 const ReduxMixin = createMixin(store);
 
 class PageMenu extends ReduxMixin(PolymerElement) {
@@ -15,7 +17,7 @@ class PageMenu extends ReduxMixin(PolymerElement) {
           background-color: var(--host-background-color);
           color: var(--white1-black1);
         }
-        .container{
+        .container {
             max-width: 300px;
             margin: 0 auto;
             padding-top:0px;
@@ -43,7 +45,8 @@ class PageMenu extends ReduxMixin(PolymerElement) {
         }
         
       </style>
-  
+
+      <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
       <main-layout> 
           <div slot="aside">
           </div>
@@ -58,13 +61,13 @@ class PageMenu extends ReduxMixin(PolymerElement) {
             </template>
             <template is="dom-if" if="{{loggedin}}">
               <ul>
-                <a href="/eggs/"><li>Profile</li></a>
-                <li>Switch account</li>
-                <li>Enable dark mode</li>
-                <li>Sign Out</li>
-                <a href="/settings/"><li>Settings</li></a>
-                <li>Help</li>
-                <li>Feedback</li>
+                <a on-click="_profile"><li>Profile</li></a>
+                <a on-click="_switch"><li>Switch account</li></a>
+                <a on-click="_changeMode"><li>[[switchName]]</li></a>
+                <a on-click="_signOut"><li>Sign Out</li></a>
+                <a on-click="_settings"><li>Settings</li></a>
+                <a on-click="_help"><li>Help</li></a>
+                <a on-click="_feedback"><li>Feedback</li></a>
               </ul>
             </template>
           </div>
@@ -77,6 +80,7 @@ class PageMenu extends ReduxMixin(PolymerElement) {
       language: {
         type: String,
         readOnly: true,
+        observer: '_language',
       },
       mode: {
         type: String,
@@ -105,10 +109,50 @@ class PageMenu extends ReduxMixin(PolymerElement) {
       env: state.env,
       color: state.color,
       loggedin: state.loggedin,
+      username: state.username,
     };
+  }
+  _language() {
+    this.txt = translations[this.language];
+  }
+  _profile() {
+    this.set('route.path', `./${this.username}/`);
+  }
+  _settings() {
+    this.set('route.path', '/settings/profile/');
+  }
+  _signOut() {
+    localStorage.setItem('loggedin', 'false');
+    localStorage.removeItem('id');
+    this.dispatchAction({
+      type: 'CHANGE_STATUS',
+      loggedin: false,
+    });
+    this.set('route.path', '/');
+  }
+  _changeMode() {
+    let newMode = '';
+    if (this.mode == 'light') {
+      newMode = 'dark';
+      document.body.style.backgroundColor = '#121212';
+      localStorage.setItem('mode', 'dark');
+    } else if (this.mode == 'dark') {
+      newMode = 'light';
+      document.body.style.backgroundColor = '#EEEEEE';
+      localStorage.setItem('mode', 'light');
+    }
+    this.dispatchAction({
+      type: 'CHANGE_MODE',
+      mode: newMode,
+    });
   }
 
   _mode() {
+    if (this.mode == 'dark') {
+      this.switchName = this.txt.enableLightMode;
+    } else {
+      this.switchName = this.txt.enableDarkMode;
+    }
     this.updateStyles({'--blue-color': this.color.blue});
     this.updateStyles({'--grey-color': this.color.grey});
     this.updateStyles({'--red-color': this.color.red});

@@ -96,7 +96,7 @@ class PageCopyright extends ReduxMixin(PolymerElement) {
                   </ol>
               </ul>
               <h3>TRADEMARK</h3>
-              <p>[[env.siteName]] respects the trademark rights of others. Content that misleads others or violates another’s trademark may be permanently removed. If you are concerned that someone may be infringing your trademark or service mark on our Site or App, please let us know by contacting our agent below. [[env.siteName]] will review your notice and take whatever action, it deems appropriate, including temporary or permanent removal of the trademark from the [[env.siteName]] Site or App.</p>
+              <p>[[env.siteName]] respects the trademark rights of others. Content that misleads others or violates another’s trademark may be permanently removed. If you are concerned that someone may be infringing your trademark or service mark on our Site, please let us know by contacting our agent below. [[env.siteName]] will review your notice and take whatever action, it deems appropriate, including temporary or permanent removal of the trademark from the [[env.siteName]] Site or App.</p>
               <p>[[env.siteName]] Trademark Agent: <a href="mailto:[[env.supportEmail]]">[[env.supportEmail]]</a></p>
           </article>
         </div>

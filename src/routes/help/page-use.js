@@ -61,7 +61,7 @@ class PageUse extends ReduxMixin(PolymerElement) {
     <section>
         <header>
             <h1>Acceptable Use Policy</h1></header>
-        <p>[[env.siteName]] is a web-based platform ([[env.webAddress]]) (“Site”) offering a suite of tools for users (“users”) to optimize their experience. To preserve the positive experience of all our users, Followers and visitors (collectively, “Users”), you agree that you will use the Site only in a manner consistent with the following Acceptable Use Policy.</p>
+        <p>[[env.siteName]] is a web-based platform ([[env.webAddress]]) (“Site”) offering a suite of tools for users (“users”) to optimize their experience. To preserve the positive experience of all our users and visitors (collectively, “Users”), you agree that you will use the Site only in a manner consistent with the following Acceptable Use Policy.</p>
         <p><strong>You agree not to use the Site to post or display User Content that:</strong></p>
         <ul>
             <li>Creates a risk of harm, loss, physical or mental injury, emotional distress, death, disability, disfigurement, or physical or mental illness to yourself, to any other person, or to any animal;</li>

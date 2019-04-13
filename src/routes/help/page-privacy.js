@@ -68,7 +68,7 @@ class PagePrivacy extends ReduxMixin(PolymerElement) {
                     <p>To register as a user, we will need your full name and your email address. When you register we can see your IP address. This may provide us with a general location for you. We also learn your Social Media account name, but not your password. If you communicate with us by telephone for support questions or other inquiries, we will maintain your telephone number. All of this information is stored on our cloud-based data solution.</p>
                     <p>We do not store any credit card information.</p>
                     <h4 id="p2">When is my information given out? Can third parties access my information?</h4>
-                    <p>We will not give out any personal information without your knowledge. We will never provide personal information to any outside company, including advertisers. We would only disclose the personal information of a user or Follower to cooperate with a criminal investigation or if we were served with a subpoena in a lawsuit. Any information you publicly display in your streams on Social Media or other services or in social media is not considered personal information in [[env.siteName]]’s possession or control and may be considered user Content as described in our <a href="/help/terms">Terms of Service</a>.</p>
+                    <p>We will not give out any personal information without your knowledge. We will never provide personal information to any outside company, including advertisers. We would only disclose the personal information of a user to cooperate with a criminal investigation or if we were served with a subpoena in a lawsuit. Any information you publicly display in your streams on Social Media or other services or in social media is not considered personal information in [[env.siteName]]’s possession or control and may be considered user Content as described in our <a href="/help/terms">Terms of Service</a>.</p>
                     <h4 id="p3">Do You sell my information to third parties?</h4>
                     <p>No. As a matter of policy, we do not, without your consent, sell, rent or lend any of your personal information to third parties other than in accordance with this policy.</p>
                     <h4 id="p4">Does [[env.siteName]] use third party advertisers and analytics?</h4>
@@ -80,7 +80,7 @@ class PagePrivacy extends ReduxMixin(PolymerElement) {
                         <li>Confirm your identity when you log in.</li>
                         <li>Respond to your inquiries.</li>
                         <li>Troubleshoot problems.</li>
-                        <li>Analyze Site usage and determine user and Follower preferences.</li>
+                        <li>Analyze Site usage and determine user preferences.</li>
                         <li>Customize your experience and the Site’s content, layout, and services.</li>
                         <li>Detect and protect us against error, fraud, and other criminal activity.</li>
                         <li>Enforce our <a href="/help/use">Acceptable Use Policy</a>, <a href="/help/copyright">Copyright Policy</a>, and related policies.</li>

@@ -118,7 +118,7 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
         <div class="container">
             <ul class="navigation">
               <li><a on-click="_inbox"><img src="./images/inbox.png" class="inbox"></a>
-              <div class="chatbox">
+              <div class="chatbox" on-click="_prevent">
               <live-messages></live-messages></div>
               </li>
               
@@ -186,6 +186,10 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
         this._closeDropdown();
       }
     });
+  }
+  _prevent(e) {
+    e.preventDefault();
+    e.stopPropagation();
   }
   _language() {
     this.txt = translations[this.language];

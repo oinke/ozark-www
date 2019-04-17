@@ -73,12 +73,9 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
         </template>
       </div>
 
-      <label>Username</label><br>
-      <input name="username" type="text" class="text" id="username" value="{{username::input}}">
-      <label>Message</label><br>
-      <input name="message" type="text" class="text" id="message" value="{{message::input}}">
-      </br>
-      <button class="flat-btn" type="button" on-click="_sendMessage">Send Message</button>
+
+      <input name="message" type="text" class="text" id="message" value="{{message::input}}" placeholder="Send a message">
+
 
     `;
   }
@@ -128,6 +125,7 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
       messages: state.messages,
     };
   }
+
 
   _messages() {
     if (this.messages) {

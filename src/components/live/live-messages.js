@@ -28,15 +28,15 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
           border-radius: 50%;
           margin-right: 6px;
         }
-        .message {
+        .conversation {
           display: flex;
           margin: 12px 0;
         }
-        .message-avatar {
+        .conversation-avatar {
           flex: 1;
           max-width: 40px;
         }
-        .message-details {
+        .conversation-details {
           flex: 1;
           padding-left: 12px;
         }
@@ -54,27 +54,41 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
           font-size: 14px;
           padding-top: 6px;
         }
+        .input:focus, .input {
+          outline: none !important;
+        }
+        .conversation{
+          cursor: pointer;
+        }
 
       </style>
 
       <div class="max-height" id="scrollBox">
-        <template is='dom-repeat' items='[[messageDisaply]]'>
+        <template is='dom-repeat' items='[[conversationsDisaply]]'>
 
-          <div class="message">
-            <div class="message-avatar">
-              <img class="avatar" src='https://s3-us-west-1.amazonaws.com/ozark/[[item.fromUserId]]/pfp_200x200.jpg?versionId=null'>
-            </div>
-            <div class="message-details">
-              <p class="name">@[[item.fromUser]] <span>[[item.datetime]]</span></p>
-              <p class="message-text">[[item.message]]</p>
+          <div class="conversation" id="[[item.conversationId]]" on-click='_openConversation'>
+            <template is='dom-repeat' items='[[item.participantIds]]'>
+              <div class="conversation-avatar">
+                <img class="avatar" src='https://s3-us-west-1.amazonaws.com/ozark/[[item.userId]]/pfp_200x200.jpg?versionId=null'>
+              </div>
+            </template>
+            <div class="conversation-details">
+              <p class="name">
+              
+              <template is='dom-repeat' items='[[item.participantIds]]'>
+              @[[item.username]] 
+              </template>
+              
+              <span>[[item.lastMessage.datetime]]</span></p>
+              <p class="message-text">[[item.lastMessage.fromUser]]: [[item.lastMessage.message]]</p>
             </div>
           </div>
 
         </template>
       </div>
 
-
-      <input name="message" type="text" class="text" id="message" value="{{message::input}}" placeholder="Send a message">
+        <div contenteditable="true" class="input" id="input" on-focus="_hideMessage" on-keydown="_hideMessage" on-keyup="_showMessage">Send a message</div>
+      <!-- <input name="message" type="text" class="text" id="message" value="{{message::input}}" placeholder="Send a message"> -->
 
 
     `;
@@ -106,11 +120,15 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
         type: Boolean,
         readOnly: true,
       },
-      messages: {
+      conversations: {
         type: String,
-        observer: '_messages',
+        observer: '_conversations',
       },
-      messageDisaply: {
+      conversationsDisaply: {
+        type: Array,
+        value: [],
+      },
+      keyHistory: {
         type: Array,
         value: [],
       },
@@ -122,14 +140,34 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
       mode: state.mode,
       color: state.color,
       loggedin: state.loggedin,
-      messages: state.messages,
+      conversations: state.conversations,
     };
   }
-
-
-  _messages() {
-    if (this.messages) {
-      this.messageDisaply = JSON.parse(this.messages);
+  _openConversation(e) {
+    const conversationId = e.model.__data.item.conversationId;
+    this.dispatchEvent(new CustomEvent('getConversation', {bubbles: true, composed: true, detail: {conversationId: conversationId}}));
+  }
+  _hideMessage(e) {
+    this.message = this.$.input.innerText;
+    this.keyHistory.push(e.keyCode);
+    // TODO make sure this doesnt get longer than 2 items
+    if (this.$.input.innerText === 'Send a message') {
+      this.$.input.innerText = '';
+    };
+    console.log(e.keyCode);
+    if (e.keyCode === 13 && this.message.length > 0) {
+      e.preventDefault();
+      this._sendMessage();
+    }
+  }
+  _showMessage() {
+    if (this.$.input.innerText === '') {
+      this.$.input.innerText = 'Send a message';
+    };
+  }
+  _conversations() {
+    if (this.conversations) {
+      this.conversationsDisaply = JSON.parse(this.conversations);
       setTimeout(() => {
         const objDiv = this.shadowRoot.querySelector('#scrollBox');
         objDiv.scrollTop = objDiv.scrollHeight;
@@ -139,7 +177,7 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
 
   _sendMessage() {
     console.log('dispatching message');
-    this.dispatchEvent(new CustomEvent('sendMessage', {bubbles: true, composed: true, detail: {username: this.username, message: this.message}}));
+    this.dispatchEvent(new CustomEvent('sendMessage', {bubbles: true, composed: true, detail: {username: 'colinskeep83112', message: this.message}}));
   }
 
   _mode() {

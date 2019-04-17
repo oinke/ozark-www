@@ -44,11 +44,11 @@ const userid = localStorage.getItem('id');
 import {env} from '../../env.js';
 
 const notifications = localStorage.getItem('notifications') || '';
-const messages = localStorage.getItem('messages') || '';
+const conversations = localStorage.getItem('conversations') || '';
 
 const initial = {
   notifications: notifications,
-  messages: messages,
+  conversations: conversations,
   fullname: fullname,
   username: username,
   userid: userid,
@@ -96,9 +96,9 @@ export default (state = initial, action) => {
       return Object.assign({}, state, {
         userid: action.userid,
       });
-    case 'CHANGE_MESSAGES':
+    case 'CHANGE_CONVERSATIONS':
       return Object.assign({}, state, {
-        messages: action.messages,
+        conversations: action.conversations,
       });
     case 'CHANGE_NOTIFICATIONS':
       return Object.assign({}, state, {

@@ -48,58 +48,65 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
       const message = e.detail.message;
       this._sendMessage(username, message);
     });
+    window.addEventListener('getConversation', (e) => {
+      const conversationId = e.detail.conversationId;
+      this._getConversation(conversationId);
+    });
     window.addEventListener('logOut', () => {
       this._logout();
     });
   }
 
   _connect() {
-    let lastMessage = 0;
-    const messages = JSON.parse(localStorage.getItem('messages'));
-    if (messages) {
-      for (let i = 0, len = messages.length; i < len; i++) {
-        if (messages[i].datetime > lastMessage) {
-          lastMessage = messages[i].datetime;
+    let lastConversation = 0;
+    const conversations = JSON.parse(localStorage.getItem('conversations'));
+    if (conversations) {
+      for (let i = 0, len = conversations.length; i < len; i++) {
+        if (conversations[i].lastMessage.datetime > lastConversation) {
+          lastConversation = conversations[i].lastMessage.datetime;
         }
       }
     }
     this.jwt = localStorage.getItem('jwt');
-    this.socket = io('https://ozark-chat-api.herokuapp.com', {query: `jwt=${this.jwt}&lastMessage=${lastMessage}`});
+    this.socket = io('https://ozark-chat-api.herokuapp.com', {query: `jwt=${this.jwt}&lastConversation=${lastConversation}`});
     this.socket.on('connect', () => {
-      this.socket.on('message', (data) => {
+      this.socket.on('conversations', (data) => {
         console.log(data);
-        this._incomingMessages(data);
+        this._conversations(data);
       });
       this.socket.on('notifcations', (data) => {
         this._incomingNotifications(data);
       });
+      this.socket.on('conversationId', (data) => {
+        this._incomingConversation(data);
+      });
     });
   }
 
-  _incomingMessages(incomingMessages) {
-    if (localStorage.getItem('messages')) {
-      const existingMessages = JSON.parse(localStorage.getItem('messages'));
-      const mappedExisting = existingMessages.map(function(e) {
-        return e._id;
+  _conversations(conversations) {
+    if (localStorage.getItem('conversations')) {
+      const existingConversations = JSON.parse(localStorage.getItem('conversations'));
+      const mappedExisting = existingConversations.map((e) => {
+        return e.conversationId;
       });
-      const mappedIncoming = incomingMessages.map(function(f) {
-        return f._id;
+      const mappedIncoming = conversations.map((f) => {
+        return f.conversationId;
       });
       for (let i = 0; i < mappedIncoming.length; i++) {
         if (mappedExisting.indexOf(mappedIncoming[i]) < 0) {
-          existingMessages.push(incomingMessages[i]);
+          existingConversations.push(conversations[i]);
         }
       }
-      localStorage.setItem('messages', JSON.stringify(existingMessages));
+      localStorage.setItem('conversations', JSON.stringify(existingConversations));
       this.dispatchAction({
-        type: 'CHANGE_MESSAGES',
-        messages: JSON.stringify(existingMessages),
+        type: 'CHANGE_CONVERSATIONS',
+        conversations: JSON.stringify(existingConversations),
       });
     } else {
-      localStorage.setItem('messages', JSON.stringify(incomingMessages));
+      localStorage.setItem('conversations', JSON.stringify(conversations));
       this.dispatchAction({
-        type: 'CHANGE_MESSAGES',
-        messages: JSON.stringify(incomingMessages),
+        type: 'CHANGE_CONVERSATIONS',
+        conversations: JSON.stringify(conversations),
       });
     }
     this.$.audio.play();
@@ -114,9 +121,17 @@ class LiveConnect extends ReduxMixin(PolymerElement) {
     });
   }
 
+  _incomingConversation(conversation) {
+    console.log(conversation);
+  }
+
+  _getConversation(conversationId) {
+    this.socket.emit('conversationId', {conversationId});
+  }
+
   _sendMessage(username, message) {
     if (this.socket.connected) {
-      this.socket.emit('message', {username, message});
+      this.socket.emit('newconvo', {username, message});
     }
   }
   _logout() {

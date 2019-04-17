@@ -94,7 +94,7 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
       </style>
           <input class="search-box" placeholder="[[txt.search]] [[siteName]]" autocomplete="off" value="{{term::input}}" on-keyup="_search";>  
           <div class="search-results">
-            <ul on-mouseleave="_close">
+            <ul>
               <li class="header">Name</li>
               <dom-repeat items="{{results}}">
                   <template>
@@ -147,6 +147,15 @@ class SiteSearch extends ReduxMixin(PolymerElement) {
       color: state.color,
       env: state.env,
     };
+  }
+
+  ready() {
+    super.ready();
+    window.addEventListener('pulldown', (e) => {
+      if (e.detail.action === 'closeDropDowns') {
+        this._close();
+      }
+    });
   }
 
   _lastSeen(epochTime) {

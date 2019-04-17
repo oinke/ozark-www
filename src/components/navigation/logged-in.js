@@ -118,12 +118,12 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
         <div class="container">
             <ul class="navigation">
               <li><a on-click="_inbox"><img src="./images/inbox.png" class="inbox"></a>
-              <div class="chatbox" on-mouseleave="_closeChatbox">
+              <div class="chatbox">
               <live-messages></live-messages></div>
               </li>
               
               <li><a on-click="_dropdown"><img src$="https://s3-us-west-1.amazonaws.com/ozark/[[userid]]/pfp_200x200.jpg?versionId=null" class="avatar">[[fullname]]</a>
-                <ul class="dropdown" on-mouseleave="_closeDropdown">
+                <ul class="dropdown">
                   <li><a on-click="_profile">[[txt.profile]]</a></li>
                   <li><a on-click="_switch">[[txt.switchAccount]]</a></li>
                   <li><a on-click="_changeMode">[[switchName]]</a></li>
@@ -178,6 +178,15 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
       username: state.username,
     };
   }
+  ready() {
+    super.ready();
+    window.addEventListener('pulldown', (e) => {
+      if (e.detail.action === 'closeDropDowns') {
+        this._closeChatbox();
+        this._closeDropdown();
+      }
+    });
+  }
   _language() {
     this.txt = translations[this.language];
   }
@@ -220,10 +229,14 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
   }
 
   _inbox(e) {
+    e.preventDefault();
+    e.stopPropagation();
     this.updateStyles({'--chatbox-visibility': `visible`});
     this.updateStyles({'--chatbox-opacity': `1`});
   }
   _dropdown(e) {
+    e.preventDefault();
+    e.stopPropagation();
     this.updateStyles({'--dropdown-visibility': `visible`});
     this.updateStyles({'--dropdown-opacity': `1`});
   }
@@ -232,6 +245,8 @@ class LoggedIn extends ReduxMixin(PolymerElement) {
     this.updateStyles({'--dropdown-visibility': `hidden`});
     this.updateStyles({'--dropdown-opacity': `0`});
   }
+
+  // TODO: Close chatbox when body is clicked
   _closeChatbox() {
     this.updateStyles({'--chatbox-visibility': `hidden`});
     this.updateStyles({'--chatbox-opacity': `0`});

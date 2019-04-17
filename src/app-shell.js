@@ -28,7 +28,7 @@ class AppShell extends ReduxMixin(PolymerElement) {
       <live-connect></live-connect>
       
       <main>
-        <iron-pages selected="[[page]]" attr-for-selected="name" role="main">
+        <iron-pages selected="[[page]]" attr-for-selected="name" role="main" on-click="_click">
           <page-home name="home"></page-home>
           <router-settings name="settings"></router-settings>
           <router-help name="help"></router-help>
@@ -72,6 +72,9 @@ class AppShell extends ReduxMixin(PolymerElement) {
     ];
   }
 
+  _click() {
+    this.dispatchEvent(new CustomEvent('pulldown', {bubbles: true, composed: true, detail: {action: 'closeDropDowns'}}));
+  }
   _routePageChanged(page) {
     if (!page) {
       this.page = 'home';

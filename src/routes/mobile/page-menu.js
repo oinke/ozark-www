@@ -41,7 +41,7 @@ class PageMenu extends ReduxMixin(PolymerElement) {
         }
         li {
           line-height: 48px;
-          border-bottom: 1px solid var(--grey-color);
+          border-bottom: 1px solid white;
         }
         
       </style>

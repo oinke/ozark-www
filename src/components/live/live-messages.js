@@ -107,11 +107,6 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
         type: Number,
         observer: '_logoSize',
       },
-      mode: {
-        type: Text,
-        readOnly: true,
-        observer: '_mode',
-      },
       color: {
         type: Object,
         readOnly: true,
@@ -178,17 +173,5 @@ class LiveMessages extends ReduxMixin(PolymerElement) {
   _sendMessage() {
     console.log('dispatching message');
     this.dispatchEvent(new CustomEvent('sendMessage', {bubbles: true, composed: true, detail: {username: 'colinskeep83112', message: this.message}}));
-  }
-
-  _mode() {
-    // if (this.mode === 'light') {
-    //   this.updateStyles({'--header-background-color': this.color.white1});
-    //   this.updateStyles({'--host-logo': `url(./images/light-logo.svg) no-repeat`});
-    //   this.updateStyles({'--hover-background': this.color.white2});
-    // } else {
-    //   this.updateStyles({'--header-background-color': this.color.black2});
-    //   this.updateStyles({'--host-logo': `url(./images/dark-logo.svg) no-repeat`});
-    //   this.updateStyles({'--hover-background': this.color.black1});
-    // }
   }
 } window.customElements.define('live-messages', LiveMessages);

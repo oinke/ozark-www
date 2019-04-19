@@ -28,7 +28,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
           border: 1px solid var(--grey-color);
           color: var(--grey-color);
           border-radius: 4px;
-          width: 150px;
+          width: 100px;
           height: 40px;
           font-weight: 600;
           font-size: 13px;
@@ -145,6 +145,20 @@ class MainProfile extends ReduxMixin(PolymerElement) {
         .profilebg{
           max-width: 250px;
         }
+        .mobile-small{
+            display: none;
+          }
+        span {
+          display: inline-block;
+        }
+        @media screen and (min-width: 900px){
+          .mobile-small{
+            display: inline;
+          }
+          button {
+            width: 150px;
+          }
+        } 
       </style>
       <app-location route="{{route}}" url-space-regex="^[[rootPath]]"></app-location>
         <div class="header">
@@ -189,7 +203,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
 
               </template>
               <template is="dom-if" if="{{profile.isMine}}">
-                <button on-click="_share">Share Profile</button>
+                <button on-click="_share">Share<span class="mobile-small"> Profile</span></button>
               </template>
                 
               </div>
@@ -202,7 +216,7 @@ class MainProfile extends ReduxMixin(PolymerElement) {
                   <button>Message</button>
                 </template>
                 <template is="dom-if" if="{{profile.isMine}}">
-                  <button on-click="_editProfile">Edit Profile</button>
+                  <button on-click="_editProfile">Edit<span class="mobile-small"> Profile</span></button>
                 </template>
               </div>
             </div>

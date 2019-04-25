@@ -1,7 +1,7 @@
 import {createMixin} from '../../node_modules/polymer-redux';
 import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
 import '../css/shared-styles.js';
-import '../components/layouts/main-layout.js';
+import '../components/layouts/center-layout.js';
 import store from '../global/store.js';
 const ReduxMixin = createMixin(store);
 
@@ -14,13 +14,18 @@ class PageHome extends ReduxMixin(PolymerElement) {
           background-color: var(--host-background-color);
           color: var(--host-color);
         }
+        iframe {
+          width: 100%;
+          height: calc(100vh - 150px);
+          margin-top: 24px;
+          border: 0px
+        }
       </style>
-  
-      <main-layout> 
-        <div slot="aside"></div>
+      <center-layout> 
         <div slot="body">
+          <iframe src="https://hexagonalchess.online/?token=sdfsdf&gameid=test1"></iframe>
         </div>
-      </main-layout>
+      </center-layout>
     `;
   }
 
